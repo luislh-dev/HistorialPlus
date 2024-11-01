@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,10 +43,10 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
 
         try {
             // Crear el parser con la clave de firma
-            JwtParser parser = Jwts.parser().setSigningKey(jwtSecretKey).build();
+            JwtParser parser = Jwts.parser().verifyWith(jwtSecretKey).build();
 
             // Decodificar y validar el token
-            Claims claims = parser.parseClaimsJws(token).getBody();
+            Claims claims = parser.parseSignedClaims(token).getPayload();
             String username = claims.getSubject();
 
             // Obtener los roles desde el claim "roles"
@@ -55,7 +54,7 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             List<String> roles = rolesList.stream()
                     .filter(role -> role instanceof String)
                     .map(role -> (String) role)
-                    .collect(Collectors.toList());
+                    .toList();
 
             System.out.println("Roles: " + roles);
 
