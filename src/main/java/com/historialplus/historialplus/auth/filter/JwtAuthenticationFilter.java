@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.crypto.SecretKey;
@@ -19,7 +20,9 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -49,8 +52,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         int jwtExpirationInMs = 3600000;
 
         Instant now = Instant.now();
+
+        // Obtener las autoridades y convertirlas en una lista de Strings
+        List<String> roles = authResult.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
+        // Crear el token JWT e incluir las autoridades como un claim llamado "roles"
         String token = Jwts.builder()
                 .subject(username)
+                .claim("roles", roles)  // Agregar el claim de roles
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(now.plusMillis(jwtExpirationInMs)))
                 .signWith(jwtSecretKey)
@@ -59,7 +71,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.addHeader("Authorization", "Bearer " + token);
 
         Map<String, Object> body = Map.of("username", username, "token", token);
-
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
