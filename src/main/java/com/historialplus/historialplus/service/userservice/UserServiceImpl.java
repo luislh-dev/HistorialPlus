@@ -22,7 +22,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(readOnly = true)
     public List<UserModel> findAll() {
-        return (List<UserModel>) this.repository.findAll();
+        return this.repository.findAll();
     }
 
     @Override
