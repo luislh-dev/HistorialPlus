@@ -44,39 +44,36 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
 
         try {
             // Crear el parser con la clave de firma
-            JwtParser parser = Jwts.parser()
-                    .verifyWith(jwtSecretKey)
-                    .build();
+            JwtParser parser = Jwts.parser().setSigningKey(jwtSecretKey).build();
 
             // Decodificar y validar el token
-            Claims claims = parser.parseSignedClaims(token).getPayload();
-
+            Claims claims = parser.parseClaimsJws(token).getBody();
             String username = claims.getSubject();
 
             // Obtener los roles desde el claim "roles"
             List<?> rolesList = claims.get("roles", List.class);
             List<String> roles = rolesList.stream()
-                    .filter(role -> role instanceof String) // Aseguramos que cada rol es una cadena
-                    .map(role -> (String) role) // Hacemos un casting seguro
-                    .toList();
-
-            // Convertir los roles en una colección de GrantedAuthority
-            Collection<GrantedAuthority> authorities = roles.stream()
-                    .map(SimpleGrantedAuthority::new)
+                    .filter(role -> role instanceof String)
+                    .map(role -> (String) role)
                     .collect(Collectors.toList());
 
-            // Validar que el token contiene el username, en caso contrario lanzar excepción
+            System.out.println("Roles: " + roles);
+
+            // Convertir los roles en una colección de GrantedAuthority
+            List<GrantedAuthority> authorities = roles.stream()
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase())) // Asegura el prefijo
+                    .collect(Collectors.toList());
+
+            System.out.println("Authorities: " + authorities);
+
+            // Validar que el token contiene el username
             if (username != null) {
-                // Crear una autenticación basada en el token decodificado
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(username, null, authorities);
-
-                // Establecer autenticación en el contexto de seguridad
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         } catch (Exception e) {
-            // En caso de token inválido, simplemente pasamos la solicitud al siguiente filtro
-            SecurityContextHolder.clearContext();
+            SecurityContextHolder.clearContext(); // Limpiar contexto en caso de fallo
         }
 
         // Continuar con el siguiente filtro

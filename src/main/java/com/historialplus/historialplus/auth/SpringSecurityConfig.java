@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.auth;
 
 import com.historialplus.historialplus.auth.filter.JwtAuthenticationFilter;
+import com.historialplus.historialplus.auth.filter.JwtValidationFilter;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,13 +14,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.crypto.SecretKey;
 
 @Configuration
 public class SpringSecurityConfig {
 
-    private static final String JWT_SECRET = "algunaClaveSecretaalgunaClaveSecreta"; // 256 bits
+    // obtener de las variables de sistema
+    private static final String JWT_SECRET = System.getenv("JWT_SECRET_RECORD_PLUS");
 
     @Bean
     SecretKey jwtSecretKey() {
@@ -41,13 +44,18 @@ public class SpringSecurityConfig {
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtSecretKey);
         jwtAuthenticationFilter.setFilterProcessesUrl("/login"); // URL para la autenticación
 
+        JwtValidationFilter jwtValidationFilter = new JwtValidationFilter(authenticationManager, jwtSecretKey); // Instancia del filtro de validación
+
+
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilter(jwtAuthenticationFilter) // Añadir filtro JWT
+                .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilter(jwtAuthenticationFilter)
                 .build();
     }
 }
