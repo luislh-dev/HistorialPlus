@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.controller;
 
-import com.historialplus.historialplus.model.User;
+import com.historialplus.historialplus.model.UserModel;
 import com.historialplus.historialplus.service.userservice.IUserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> list(){
+    public List<UserModel> list(){
         return service.findAll();
     }
 

@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.service.userservice;
 
-import com.historialplus.historialplus.model.User;
+import com.historialplus.historialplus.model.UserModel;
 import com.historialplus.historialplus.repository.UserRepository;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
@@ -21,18 +21,18 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> findAll() {
-        return (List<User>) this.repository.findAll();
+    public List<UserModel> findAll() {
+        return (List<UserModel>) this.repository.findAll();
     }
 
     @Override
-    public Optional<User> findById(@NonNull UUID id) {
+    public Optional<UserModel> findById(@NonNull UUID id) {
         return repository.findById(id);
     }
 
     @Override
-    public User save(User user) {
-        return repository.save(user);
+    public UserModel save(UserModel userModel) {
+        return repository.save(userModel);
     }
 
     @Override

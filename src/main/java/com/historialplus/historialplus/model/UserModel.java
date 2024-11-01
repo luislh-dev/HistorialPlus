@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name = "users")
 @Getter
 @Setter
-public class User {
+public class UserModel {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -45,7 +45,7 @@ public class User {
     )
     private List<Role> roles;
 
-    public User() {
+    public UserModel() {
         this.state = new State();
         this.roles = new ArrayList<>();
     }

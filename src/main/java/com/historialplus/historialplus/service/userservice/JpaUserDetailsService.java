@@ -1,9 +1,10 @@
 package com.historialplus.historialplus.service.userservice;
 
-import com.historialplus.historialplus.model.User;
+import com.historialplus.historialplus.model.UserModel;
 import com.historialplus.historialplus.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,19 +27,19 @@ public class JpaUserDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = userRepository.findByName(username);
+        Optional<UserModel> optionalUser = userRepository.findByName(username);
 
         if (optionalUser.isEmpty()) {
             throw new UsernameNotFoundException(String.format("Username %s no existe en el sistema", username));
         }
 
-        User user = optionalUser.orElseThrow();
+        UserModel userModel = optionalUser.orElseThrow();
 
-        List<GrantedAuthority> authorities = user.getRoles()
+        List<GrantedAuthority> authorities = userModel.getRoles()
                 .stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
 
-        return  new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+        return  new User(userModel.getEmail(), userModel.getPassword(), authorities);
     }
 }

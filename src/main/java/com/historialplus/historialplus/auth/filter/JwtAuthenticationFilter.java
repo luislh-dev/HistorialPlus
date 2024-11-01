@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.historialplus.historialplus.model.UserModel;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.crypto.SecretKey;
@@ -24,12 +23,11 @@ import java.util.Map;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final AuthenticationManager authenticationManager;
     private final SecretKey jwtSecretKey;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
-        this.jwtSecretKey = Keys.hmacShaKeyFor("algunaClaveSecretaalgunaClaveSecreta".getBytes()); // La clave debe ser de al menos 256 bits para HS512
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, SecretKey jwtSecretKey) {
+        super.setAuthenticationManager(authenticationManager);
+        this.jwtSecretKey = jwtSecretKey;
     }
 
     @SneakyThrows
@@ -37,14 +35,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
 
-        User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+        UserModel user = new ObjectMapper().readValue(request.getInputStream(), UserModel.class);
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-        return this.authenticationManager.authenticate(authenticationToken);
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword());
+        return this.getAuthenticationManager().authenticate(authenticationToken);
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                            FilterChain chain, Authentication authResult) throws IOException, ServletException {
         String username = authResult.getName();
         int jwtExpirationInMs = 3600000;
 
@@ -68,7 +68,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                              AuthenticationException failed) throws IOException, ServletException {
         Map<String, Object> body = new HashMap<>();
         body.put("message", "Usuario o Contraseña incorrectos");
         body.put("error", failed.getMessage());
