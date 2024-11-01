@@ -22,7 +22,10 @@ import javax.crypto.SecretKey;
 public class SpringSecurityConfig {
 
     // obtener de las variables de sistema
-    private static final String JWT_SECRET = System.getenv("JWT_SECRET_RECORD_PLUS");
+    private static final String JWT_SECRET = System.getenv("JWT_SECRET_RECORD_PLUS") != null
+            ? System.getenv("JWT_SECRET_RECORD_PLUS")
+            : "default_secret_key_for_testing_purposes";
+
 
     @Bean
     SecretKey jwtSecretKey() {
