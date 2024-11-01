@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.service;
+package com.historialplus.historialplus.service.userservice;
 
 import com.historialplus.historialplus.model.User;
 import com.historialplus.historialplus.repository.UserRepository;

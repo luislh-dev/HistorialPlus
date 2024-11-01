@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.controller;
 
 import com.historialplus.historialplus.model.User;
-import com.historialplus.historialplus.service.IUserService;
+import com.historialplus.historialplus.service.userservice.IUserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
