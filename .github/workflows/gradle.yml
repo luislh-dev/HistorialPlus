@@ -21,6 +21,8 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4.0.0
+      - name: Give execute permissions to gradlew
+        run: chmod +x ./gradlew
       - name: Build with Gradle Wrapper
         run: ./gradlew build
       - name: Test with Gradle Wrapper
@@ -38,5 +40,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+      - name: Give execute permissions to gradlew
+        run: chmod +x ./gradlew
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v4.0.0
