@@ -56,14 +56,10 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
                     .map(role -> (String) role)
                     .toList();
 
-            System.out.println("Roles: " + roles);
-
             // Convertir los roles en una colección de GrantedAuthority
             List<GrantedAuthority> authorities = roles.stream()
                     .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase())) // Asegura el prefijo
                     .collect(Collectors.toList());
-
-            System.out.println("Authorities: " + authorities);
 
             // Validar que el token contiene el username
             if (username != null) {
