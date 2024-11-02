@@ -19,6 +19,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.historialplus.historialplus.auth.constants.JwtConfig.HEADER_AUTHORIZATION;
+import static com.historialplus.historialplus.auth.constants.JwtConfig.PREFIX_TOKEN;
+
 public class JwtValidationFilter extends BasicAuthenticationFilter {
 
     private final SecretKey jwtSecretKey;
@@ -30,16 +33,16 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String header = request.getHeader("Authorization");
+        String header = request.getHeader(HEADER_AUTHORIZATION);
 
         // Si el header es null o no contiene "Bearer", pasamos la solicitud al siguiente filtro
-        if (header == null || !header.startsWith("Bearer ")) {
+        if (header == null || !header.startsWith(PREFIX_TOKEN)) {
             chain.doFilter(request, response);
             return;
         }
 
         // Eliminar "Bearer " del token
-        String token = header.replace("Bearer ", "");
+        String token = header.replace(PREFIX_TOKEN, "");
 
         try {
             // Crear el parser con la clave de firma
@@ -50,7 +53,7 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             String username = claims.getSubject();
 
             // Obtener los roles desde el claim "roles"
-            List<?> rolesList = claims.get("roles", List.class);
+            List<?> rolesList = claims.get("authorities", List.class);
             List<String> roles = rolesList.stream()
                     .filter(role -> role instanceof String)
                     .map(role -> (String) role)

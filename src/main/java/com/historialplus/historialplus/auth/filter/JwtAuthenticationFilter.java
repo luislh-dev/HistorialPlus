@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.historialplus.historialplus.auth.constants.JwtConfig.*;
+
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final SecretKey jwtSecretKey;
@@ -53,7 +55,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Instant now = Instant.now();
 
         // Obtener las autoridades y convertirlas en una lista de Strings
-        List<String> roles = authResult.getAuthorities()
+        List<String> authorities = authResult.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
@@ -61,18 +63,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Crear el token JWT e incluir las autoridades como un claim llamado "roles"
         String token = Jwts.builder()
                 .subject(username)
-                .claim("roles", roles)  // Agregar el claim de roles
+                .claim("authorities", authorities)  // Agregar el claim de roles
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(now.plusMillis(jwtExpirationInMs)))
                 .signWith(jwtSecretKey)
                 .compact();
 
-        response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader(HEADER_AUTHORIZATION, PREFIX_TOKEN + token);
 
         Map<String, Object> body = Map.of("username", username, "token", token);
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("application/json");
+        response.setContentType(CONTENT_TYPE);
         response.getWriter().flush();
         response.getWriter().close();
     }
@@ -85,7 +87,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         body.put("error", failed.getMessage());
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setContentType("application/json");
+        response.setContentType(CONTENT_TYPE);
         response.getWriter().flush();
         response.getWriter().close();
     }
