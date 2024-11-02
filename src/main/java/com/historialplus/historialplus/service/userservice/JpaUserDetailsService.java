@@ -35,7 +35,7 @@ public class JpaUserDetailsService implements UserDetailsService {
 
         UserModel userModel = optionalUser.orElseThrow();
 
-        List<GrantedAuthority> authorities = userModel.getRoles()
+        List<GrantedAuthority> authorities = userModel.getRoleModels()
                 .stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
