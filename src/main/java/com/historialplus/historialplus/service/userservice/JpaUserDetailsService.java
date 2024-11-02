@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.service.userservice;
 
-import com.historialplus.historialplus.model.UserModel;
+import com.historialplus.historialplus.entities.UserEntity;
 import com.historialplus.historialplus.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,19 +27,19 @@ public class JpaUserDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserModel> optionalUser = userRepository.findByName(username);
+        Optional<UserEntity> optionalUser = userRepository.findByName(username);
 
         if (optionalUser.isEmpty()) {
             throw new UsernameNotFoundException(String.format("Username %s no existe en el sistema", username));
         }
 
-        UserModel userModel = optionalUser.orElseThrow();
+        UserEntity userEntity = optionalUser.orElseThrow();
 
-        List<GrantedAuthority> authorities = userModel.getRoleModels()
+        List<GrantedAuthority> authorities = userEntity.getRoleEntities()
                 .stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
 
-        return  new User(userModel.getName(), userModel.getPassword(), authorities);
+        return  new User(userEntity.getName(), userEntity.getPassword(), authorities);
     }
 }

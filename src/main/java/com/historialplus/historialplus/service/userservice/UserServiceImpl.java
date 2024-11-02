@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.service.userservice;
 
-import com.historialplus.historialplus.model.RoleModel;
-import com.historialplus.historialplus.model.UserModel;
+import com.historialplus.historialplus.entities.RoleEntity;
+import com.historialplus.historialplus.entities.UserEntity;
 import com.historialplus.historialplus.repository.UserRepository;
 import com.historialplus.historialplus.service.roleservice.IRoleService;
 import lombok.NonNull;
@@ -28,28 +28,28 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserModel> findAll() {
+    public List<UserEntity> findAll() {
         return this.repository.findAll();
     }
 
     @Override
-    public Optional<UserModel> findById(@NonNull UUID id) {
+    public Optional<UserEntity> findById(@NonNull UUID id) {
         return repository.findById(id);
     }
 
     @Override
     @Transactional
-    public UserModel save(UserModel userModel) {
+    public UserEntity save(UserEntity userEntity) {
 
-        if (userModel.getPassword() != null) {
-            userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+        if (userEntity.getPassword() != null) {
+            userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         }
 
         // colocar por defecto el rol 2 (ROLE_USER)
-        RoleModel roleModel = roleService.findById(2).orElseThrow();
-        userModel.setRoleModels(List.of(roleModel));
+        RoleEntity roleEntity = roleService.findById(2).orElseThrow();
+        userEntity.setRoleEntities(List.of(roleEntity));
 
-        return repository.save(userModel);
+        return repository.save(userEntity);
     }
 
     @Override

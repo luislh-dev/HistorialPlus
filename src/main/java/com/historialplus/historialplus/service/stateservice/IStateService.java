@@ -1,9 +1,9 @@
 package com.historialplus.historialplus.service.stateservice;
 
-import com.historialplus.historialplus.model.StateModel;
+import com.historialplus.historialplus.entities.StateEntity;
 
 import java.util.Optional;
 
 public interface IStateService {
-    Optional<StateModel> findById(Integer id);
+    Optional<StateEntity> findById(Integer id);
 }

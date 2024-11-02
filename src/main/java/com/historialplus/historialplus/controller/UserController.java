@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.controller;
 
-import com.historialplus.historialplus.model.StateModel;
-import com.historialplus.historialplus.model.UserModel;
+import com.historialplus.historialplus.entities.StateEntity;
+import com.historialplus.historialplus.entities.UserEntity;
 import com.historialplus.historialplus.service.stateservice.IStateService;
 import com.historialplus.historialplus.service.userservice.IUserService;
 import jakarta.validation.Valid;
@@ -25,33 +25,33 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserModel> list() {
+    public List<UserEntity> list() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {
-        Optional<UserModel> user = service.findById(id);
+        Optional<UserEntity> user = service.findById(id);
         return user.isPresent() ? ResponseEntity.ok(user.get()) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody UserModel userModel, BindingResult result) {
+    public ResponseEntity<?> save(@Valid @RequestBody UserEntity userEntity, BindingResult result) {
         if (result.hasErrors()) {
             return validation(result);
         }
 
-        if (userModel.getStateModel() == null || userModel.getStateModel().getId() == null) {
+        if (userEntity.getStateEntity() == null || userEntity.getStateEntity().getId() == null) {
             return ResponseEntity.badRequest().body("El estado o su ID no puede ser nulo");
         }
 
-        Optional<StateModel> stateOptional = stateService.findById(userModel.getStateModel().getId());
+        Optional<StateEntity> stateOptional = stateService.findById(userEntity.getStateEntity().getId());
         if (stateOptional.isEmpty()) {
             return ResponseEntity.badRequest().body("ID inválido para el estado");
         }
-        userModel.setStateModel(stateOptional.get());
+        userEntity.setStateEntity(stateOptional.get());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(userModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(userEntity));
     }
 
     private ResponseEntity<?> validation(BindingResult result) {

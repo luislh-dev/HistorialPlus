@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.model;
+package com.historialplus.historialplus.entities;
 
 
 import jakarta.persistence.*;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name="roles")
-public class RoleModel {
+public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,5 +17,5 @@ public class RoleModel {
 
     private String name;
 
-    public RoleModel() {}
+    public RoleEntity() {}
 }

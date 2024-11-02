@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.model;
+package com.historialplus.historialplus.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name = "users")
 @Getter
 @Setter
-public class UserModel {
+public class UserEntity {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -32,7 +32,7 @@ public class UserModel {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "state_id", nullable = false)
-    private StateModel stateModel;
+    private StateEntity stateEntity;
 
 
     @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
@@ -43,11 +43,11 @@ public class UserModel {
             inverseJoinColumns = @JoinColumn(name = "role_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role_id"})}
     )
-    private List<RoleModel> roleModels;
+    private List<RoleEntity> roleEntities;
 
-    public UserModel() {
-        this.stateModel = new StateModel();
-        this.roleModels = new ArrayList<>();
+    public UserEntity() {
+        this.stateEntity = new StateEntity();
+        this.roleEntities = new ArrayList<>();
     }
 
 }

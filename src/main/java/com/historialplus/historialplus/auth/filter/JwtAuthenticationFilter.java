@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.historialplus.historialplus.model.UserModel;
+import com.historialplus.historialplus.entities.UserEntity;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,7 +39,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
 
-        UserModel user = new ObjectMapper().readValue(request.getInputStream(), UserModel.class);
+        UserEntity user = new ObjectMapper().readValue(request.getInputStream(), UserEntity.class);
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword());

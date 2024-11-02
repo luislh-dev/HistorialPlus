@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.service.userservice;
 
-import com.historialplus.historialplus.model.UserModel;
+import com.historialplus.historialplus.entities.UserEntity;
 import lombok.NonNull;
 
 import java.util.List;
@@ -8,11 +8,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface IUserService {
-    List<UserModel> findAll();
+    List<UserEntity> findAll();
 
-    Optional<UserModel> findById(@NonNull UUID id);
+    Optional<UserEntity> findById(@NonNull UUID id);
 
-    UserModel save(UserModel userModel);
+    UserEntity save(UserEntity userEntity);
 
     void deleteById(UUID id);
 }

@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.service.stateservice;
 
-import com.historialplus.historialplus.model.StateModel;
+import com.historialplus.historialplus.entities.StateEntity;
 import com.historialplus.historialplus.repository.StateRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class StateServiceImpl implements IStateService{
     }
 
     @Override
-    public Optional<StateModel> findById(Integer id) {
+    public Optional<StateEntity> findById(Integer id) {
         return repository.findById(id);
     }
 }

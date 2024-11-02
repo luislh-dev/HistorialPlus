@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.model;
+package com.historialplus.historialplus.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Getter;
 @Entity
 @Table(name = "states")
 @Getter
-public class StateModel {
+public class StateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

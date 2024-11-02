@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.service.roleservice;
 
-import com.historialplus.historialplus.model.RoleModel;
+import com.historialplus.historialplus.entities.RoleEntity;
 import com.historialplus.historialplus.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +17,12 @@ public class RoleServiceImpl  implements IRoleService {
     }
 
     @Override
-    public List<RoleModel> findAll() {
+    public List<RoleEntity> findAll() {
         return roleRepository.findAll();
     }
 
     @Override
-    public Optional<RoleModel> findById(Integer id) {
+    public Optional<RoleEntity> findById(Integer id) {
         return roleRepository.findById(id);
     }
 }
