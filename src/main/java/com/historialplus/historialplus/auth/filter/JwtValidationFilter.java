@@ -58,7 +58,7 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
 
             // Convertir los roles en una colección de GrantedAuthority
             List<GrantedAuthority> authorities = roles.stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase())) // Asegura el prefijo
+                    .map(SimpleGrantedAuthority::new) // Asegura el prefijo
                     .collect(Collectors.toList());
 
             // Validar que el token contiene el username
