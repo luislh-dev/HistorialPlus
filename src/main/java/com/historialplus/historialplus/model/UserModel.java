@@ -32,7 +32,7 @@ public class UserModel {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "state_id", nullable = false)
-    private State state;
+    private StateModel stateModel;
 
 
     @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
@@ -46,7 +46,7 @@ public class UserModel {
     private List<Role> roles;
 
     public UserModel() {
-        this.state = new State();
+        this.stateModel = new StateModel();
         this.roles = new ArrayList<>();
     }
 
