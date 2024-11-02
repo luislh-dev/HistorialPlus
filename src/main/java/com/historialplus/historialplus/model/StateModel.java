@@ -6,7 +6,7 @@ import lombok.Getter;
 @Entity
 @Table(name = "states")
 @Getter
-public class State {
+public class StateModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
