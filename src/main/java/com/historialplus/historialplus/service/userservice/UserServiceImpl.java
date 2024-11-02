@@ -1,6 +1,8 @@
 package com.historialplus.historialplus.service.userservice;
 
+import com.historialplus.historialplus.model.RoleModel;
 import com.historialplus.historialplus.model.UserModel;
+import com.historialplus.historialplus.repository.RoleRepository;
 import com.historialplus.historialplus.repository.UserRepository;
 import lombok.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,10 +18,12 @@ public class UserServiceImpl implements IUserService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.repository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -40,6 +44,10 @@ public class UserServiceImpl implements IUserService {
         if (userModel.getPassword() != null) {
             userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
         }
+
+        // colocar por defecto el rol 2 (ROLE_USER)
+        RoleModel roleModel = roleRepository.findById(2).orElseThrow();
+        userModel.setRoleModels(List.of(roleModel));
 
         return repository.save(userModel);
     }

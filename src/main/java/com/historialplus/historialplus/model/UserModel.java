@@ -43,11 +43,11 @@ public class UserModel {
             inverseJoinColumns = @JoinColumn(name = "role_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role_id"})}
     )
-    private List<Role> roles;
+    private List<RoleModel> roleModels;
 
     public UserModel() {
         this.stateModel = new StateModel();
-        this.roles = new ArrayList<>();
+        this.roleModels = new ArrayList<>();
     }
 
 }
