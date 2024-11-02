@@ -1,5 +1,7 @@
 package com.historialplus.historialplus.service.userservice;
 
+import com.historialplus.historialplus.dto.UserDto;
+import com.historialplus.historialplus.dto.mapper.UserDtoMapper;
 import com.historialplus.historialplus.entities.RoleEntity;
 import com.historialplus.historialplus.entities.UserEntity;
 import com.historialplus.historialplus.repository.UserRepository;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -28,18 +31,22 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserEntity> findAll() {
-        return this.repository.findAll();
+    public List<UserDto> findAll() {
+        return repository.findAll()
+                .stream()
+                .map(UserDtoMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<UserEntity> findById(@NonNull UUID id) {
-        return repository.findById(id);
+    public Optional<UserDto> findById(@NonNull UUID id) {
+        return repository.findById(id)
+                .map(UserDtoMapper::toDto);
     }
 
     @Override
     @Transactional
-    public UserEntity save(UserEntity userEntity) {
+    public UserDto save(UserEntity userEntity) {
 
         if (userEntity.getPassword() != null) {
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
@@ -49,7 +56,8 @@ public class UserServiceImpl implements IUserService {
         RoleEntity roleEntity = roleService.findById(2).orElseThrow();
         userEntity.setRoleEntities(List.of(roleEntity));
 
-        return repository.save(userEntity);
+        UserEntity savedEntity = repository.save(userEntity);
+        return UserDtoMapper.toDto(savedEntity);
     }
 
     @Override

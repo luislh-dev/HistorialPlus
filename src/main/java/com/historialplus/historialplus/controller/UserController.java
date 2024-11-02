@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.controller;
 
+import com.historialplus.historialplus.dto.UserDto;
 import com.historialplus.historialplus.entities.StateEntity;
 import com.historialplus.historialplus.entities.UserEntity;
 import com.historialplus.historialplus.service.stateservice.IStateService;
@@ -25,13 +26,13 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserEntity> list() {
+    public List<UserDto> list() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {
-        Optional<UserEntity> user = service.findById(id);
+        Optional<UserDto> user = service.findById(id);
         return user.isPresent() ? ResponseEntity.ok(user.get()) : ResponseEntity.notFound().build();
     }
 
