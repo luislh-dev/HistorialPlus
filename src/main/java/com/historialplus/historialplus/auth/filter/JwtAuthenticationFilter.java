@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.historialplus.historialplus.entities.UserEntity;
+import com.historialplus.historialplus.service.AuthService.DTO.LoginRequestDTO;
 import com.historialplus.historialplus.service.userservice.IUserService;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
@@ -42,10 +42,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
 
-        UserEntity user = new ObjectMapper().readValue(request.getInputStream(), UserEntity.class);
+        LoginRequestDTO loginRequestDTO = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDTO.class);
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword());
+                new UsernamePasswordAuthenticationToken(loginRequestDTO.getName(), loginRequestDTO.getPassword());
         return this.getAuthenticationManager().authenticate(authenticationToken);
     }
 
