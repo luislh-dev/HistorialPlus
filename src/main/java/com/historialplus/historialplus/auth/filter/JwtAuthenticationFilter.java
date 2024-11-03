@@ -30,6 +30,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final SecretKey jwtSecretKey;
     private final IAuthService authService;
+    private String name;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, SecretKey jwtSecretKey, IAuthService authService) {
         super.setAuthenticationManager(authenticationManager);
@@ -42,7 +43,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
 
+        System.out.println("Usuario autenticado1: " + this.name);
         LoginRequestDTO loginRequestDTO = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDTO.class);
+
+        // Guardar el nombre de usuario solo para el caso de que la autenticación sea errónea
+        name = loginRequestDTO.getName();
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.getName(), loginRequestDTO.getPassword());
@@ -81,11 +86,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setContentType(CONTENT_TYPE);
         response.getWriter().flush();
         response.getWriter().close();
+
+        this.name = null;
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException {
+
+        authService.loginFailed(name);
+        name = null;
+
         Map<String, Object> body = new HashMap<>();
         body.put("message", "Usuario o Contraseña incorrectos");
         body.put("error", failed.getMessage());
