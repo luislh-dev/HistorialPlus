@@ -21,7 +21,7 @@ public class AuthServiceImpl implements IAuthService {
 
     private final UserRepository userRepository;
     private static final int MAX_FAILED_ATTEMPTS = 3;
-    private static final long LOCK_DURATION_MINUTES = 1;
+    private static final long LOCK_DURATION_MINUTES = 3;
 
     @Autowired
     public AuthServiceImpl(UserRepository userRepository) {

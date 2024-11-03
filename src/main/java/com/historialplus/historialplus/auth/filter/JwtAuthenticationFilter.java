@@ -47,6 +47,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Guardar el nombre de usuario solo para el caso de que la autenticación sea errónea
         name = loginRequestDTO.getName();
 
+        // Verifica si el usuario está bloqueado antes de autenticar
+        if (authService.isBlocked(name)) {
+            writeResponse(response, HttpServletResponse.SC_UNAUTHORIZED,
+                    Map.of("message", "La cuenta está temporalmente bloqueada. Intente nuevamente más tarde."));
+            return null; // Detiene la autenticación
+        }
+
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.getName(), loginRequestDTO.getPassword());
         return this.getAuthenticationManager().authenticate(authenticationToken);
