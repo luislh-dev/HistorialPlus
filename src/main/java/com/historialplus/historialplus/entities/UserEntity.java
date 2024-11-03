@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +29,9 @@ public class UserEntity {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(name = "last_login_at")
+    private Timestamp lastLoginAt;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)

@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,6 +38,13 @@ public class UserServiceImpl implements IUserService {
                 .stream()
                 .map(UserDtoMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void updateLastLoginAt(String username) {
+        UserEntity user = repository.findByName(username).orElseThrow();
+        user.setLastLoginAt(Timestamp.from(Instant.now()));
+        repository.save(user);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.historialplus.historialplus.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.historialplus.historialplus.entities.UserEntity;
+import com.historialplus.historialplus.service.userservice.IUserService;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,10 +29,12 @@ import static com.historialplus.historialplus.auth.constants.JwtConfig.*;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final SecretKey jwtSecretKey;
+    private final IUserService userService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, SecretKey jwtSecretKey) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, SecretKey jwtSecretKey, IUserService userService) {
         super.setAuthenticationManager(authenticationManager);
         this.jwtSecretKey = jwtSecretKey;
+        this.userService = userService;
     }
 
     @SneakyThrows
@@ -50,6 +53,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain chain, Authentication authResult) throws IOException {
         String username = authResult.getName();
+
+        // Actualizar la fecha de último inicio de sesión
+        userService.updateLastLoginAt(username);
+
         int jwtExpirationInMs = 3600000;
 
         Instant now = Instant.now();
