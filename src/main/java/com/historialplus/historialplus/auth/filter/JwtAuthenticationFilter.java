@@ -19,7 +19,6 @@ import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,7 +42,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
 
-        System.out.println("Usuario autenticado1: " + this.name);
         LoginRequestDTO loginRequestDTO = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDTO.class);
 
         // Guardar el nombre de usuario solo para el caso de que la autenticación sea errónea
@@ -80,13 +78,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.addHeader(HEADER_AUTHORIZATION, PREFIX_TOKEN + token);
 
-        Map<String, Object> body = Map.of("username", username, "token", token);
-        response.getWriter().write(new ObjectMapper().writeValueAsString(body));
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType(CONTENT_TYPE);
-        response.getWriter().flush();
-        response.getWriter().close();
-
+        writeResponse(response, HttpServletResponse.SC_OK, Map.of("username", username, "token", token));
         this.name = null;
     }
 
@@ -95,14 +87,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                               AuthenticationException failed) throws IOException {
 
         authService.loginFailed(name);
-        name = null;
 
-        Map<String, Object> body = new HashMap<>();
-        body.put("message", "Usuario o Contraseña incorrectos");
-        body.put("error", failed.getMessage());
-        response.getWriter().write(new ObjectMapper().writeValueAsString(body));
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        writeResponse(response, HttpServletResponse.SC_UNAUTHORIZED,
+            Map.of("message", "Usuario o Contraseña incorrectos", "error", failed.getMessage()));
+        this.name = null;
+    }
+
+    private void writeResponse(HttpServletResponse response, int status, Map<String, Object> body) throws IOException {
+        response.setStatus(status);
         response.setContentType(CONTENT_TYPE);
+        response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.getWriter().flush();
         response.getWriter().close();
     }
