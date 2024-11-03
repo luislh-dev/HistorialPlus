@@ -4,6 +4,7 @@ import com.historialplus.historialplus.entities.UserEntity;
 import com.historialplus.historialplus.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -30,6 +31,7 @@ public class AuthServiceImpl implements IAuthService {
      *
      * @param username el nombre de usuario del que tuvo éxito en el inicio de sesión
      */
+    @Transactional
     public void loginSucceeded(String username) {
         Optional<UserEntity> user = userRepository.findByName(username);
         if (user.isPresent()) {
@@ -48,6 +50,7 @@ public class AuthServiceImpl implements IAuthService {
      *
      * @param username el nombre de usuario del que falló el intento de inicio de sesión
      */
+    @Transactional
     public void loginFailed(String username) {
         Optional<UserEntity> user = userRepository.findByName(username);
         if (user.isPresent()) {
