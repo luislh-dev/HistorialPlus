@@ -40,13 +40,6 @@ public class UserServiceImpl implements IUserService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
-    public void updateLastLoginAt(String username) {
-        UserEntity user = repository.findByName(username).orElseThrow();
-        user.setLastLoginAt(Timestamp.from(Instant.now()));
-        repository.save(user);
-    }
-
     @Override
     public Optional<UserDto> findById(@NonNull UUID id) {
         return repository.findById(id)

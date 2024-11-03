@@ -15,7 +15,5 @@ public interface IUserService {
 
     UserDto save(UserEntity userEntity);
 
-    void updateLastLoginAt(String username);
-
     void deleteById(UUID id);
 }
