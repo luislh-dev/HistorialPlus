@@ -57,8 +57,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Actualizar la fecha de último inicio de sesión
         userService.updateLastLoginAt(username);
 
-        int jwtExpirationInMs = 3600000;
-
         Instant now = Instant.now();
 
         // Obtener las autoridades y convertirlas en una lista de Strings
@@ -72,7 +70,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .subject(username)
                 .claim("authorities", authorities)  // Agregar el claim de roles
                 .issuedAt(Date.from(now))
-                .expiration(Date.from(now.plusMillis(jwtExpirationInMs)))
+                .expiration(Date.from(now.plusMillis(JWT_EXPIRATION_IN_MS)))
                 .signWith(jwtSecretKey)
                 .compact();
 
