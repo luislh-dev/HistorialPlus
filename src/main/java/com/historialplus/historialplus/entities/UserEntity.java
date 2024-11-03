@@ -33,11 +33,16 @@ public class UserEntity {
     @Column(name = "last_login_at")
     private Timestamp lastLoginAt;
 
+    @Column(name = "is_blocked", nullable = false)
+    private boolean isBlocked = false;
+
+    @Column(name = "failed_login_attempts", nullable = false)
+    private int failedLoginAttempts = 0;
+
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "state_id", nullable = false)
     private StateEntity stateEntity;
-
 
     @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
     @ManyToMany(fetch = FetchType.LAZY)
