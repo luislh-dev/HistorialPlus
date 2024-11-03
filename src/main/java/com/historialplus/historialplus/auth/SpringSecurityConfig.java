@@ -21,6 +21,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.SecretKey;
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class SpringSecurityConfig {
@@ -30,6 +31,9 @@ public class SpringSecurityConfig {
             ? System.getenv("JWT_SECRET_RECORD_PLUS")
             : "default_secret_key_for_testing_purposes";
 
+    private static final String FRONTEND_URL = System.getenv("FRONTEND_URL_RECORD_PLUS") != null
+            ? System.getenv("FRONTEND_URL_RECORD_PLUS")
+            : "http://localhost:3000";
 
     @Bean
     SecretKey jwtSecretKey() {
@@ -71,7 +75,7 @@ public class SpringSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.setAllowedOrigins(List.of(FRONTEND_URL));
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         corsConfiguration.setAllowCredentials(true);
