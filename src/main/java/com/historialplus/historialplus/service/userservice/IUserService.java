@@ -13,7 +13,7 @@ public interface IUserService {
 
     Optional<UserDto> findById(@NonNull UUID id);
 
-    UserDto save(UserEntity userEntity);
+    UserDto save(UserDto userDto);
 
     void deleteById(UUID id);
 }
