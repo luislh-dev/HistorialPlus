@@ -1,7 +1,6 @@
 package com.historialplus.historialplus.service.userservice;
 
 import com.historialplus.historialplus.dto.UserDto;
-import com.historialplus.historialplus.entities.UserEntity;
 import lombok.NonNull;
 
 import java.util.List;
