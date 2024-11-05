@@ -1,8 +1,9 @@
 package com.historialplus.historialplus.service.userservice;
 
-import com.historialplus.historialplus.dto.UserDto;
-import com.historialplus.historialplus.dto.mapper.UserDtoMapper;
-import com.historialplus.historialplus.entities.UserEntity;
+import com.historialplus.historialplus.dto.userDTOs.UserDto;
+import com.historialplus.historialplus.dto.userDTOs.mapper.UserDtoMapper;
+import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
+import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
 import com.historialplus.historialplus.repository.UserRepository;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
@@ -24,24 +25,23 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserDto> findAll() {
+    public List<UserResponseDto> findAll() {
         return repository.findAll()
                 .stream()
-                .map(UserDtoMapper::toDto)
+                .map(UserDtoMapper::toResponseDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<UserDto> findById(@NonNull UUID id) {
+    public Optional<UserResponseDto> findById(@NonNull UUID id) {
         return repository.findById(id)
-                .map(UserDtoMapper::toDto);
+                .map(UserDtoMapper::toResponseDto);
     }
 
     @Override
     @Transactional
-    public UserDto save(UserDto userDto) {
-        UserEntity userEntity = UserDtoMapper.toEntity(userDto);
-        return UserDtoMapper.toDto(repository.save(userEntity));
+    public UserDto save(UserCreateDto userDto) {
+        return UserDtoMapper.toDto(repository.save(UserDtoMapper.toEntity(userDto)));
     }
 
     @Override

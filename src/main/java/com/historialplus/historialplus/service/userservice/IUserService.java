@@ -1,6 +1,8 @@
 package com.historialplus.historialplus.service.userservice;
 
-import com.historialplus.historialplus.dto.UserDto;
+import com.historialplus.historialplus.dto.userDTOs.UserDto;
+import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
+import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
 import lombok.NonNull;
 
 import java.util.List;
@@ -8,11 +10,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface IUserService {
-    List<UserDto> findAll();
+    List<UserResponseDto> findAll();
 
-    Optional<UserDto> findById(@NonNull UUID id);
+    Optional<UserResponseDto> findById(@NonNull UUID id);
 
-    UserDto save(UserDto userDto);
+    UserDto save(UserCreateDto userDto);
 
     void deleteById(UUID id);
 }
