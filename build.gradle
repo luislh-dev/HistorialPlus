@@ -46,6 +46,9 @@ dependencies {
     implementation 'jakarta.validation:jakarta.validation-api:3.0.0'
     implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
 
+    // AWS SDK para S3
+    implementation 'software.amazon.awssdk:s3:2.21.33'
+
     // Test
     testImplementation 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
