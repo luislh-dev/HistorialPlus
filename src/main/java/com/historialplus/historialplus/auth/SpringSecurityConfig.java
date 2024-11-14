@@ -32,8 +32,8 @@ public class SpringSecurityConfig {
             ? System.getenv("JWT_SECRET_RECORD_PLUS")
             : "default_secret_key_for_testing_purposes";
 
-    private static final String FRONTEND_URL = System.getenv("FRONTEND_URL_RECORD_PLUS") != null
-            ? System.getenv("FRONTEND_URL_RECORD_PLUS")
+    private static final String FRONTEND_URL = System.getenv("FRONTEND_URL") != null
+            ? System.getenv("FRONTEND_URL")
             : "http://localhost:3000";
 
     @Bean
