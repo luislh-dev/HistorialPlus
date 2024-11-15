@@ -1,18 +1,14 @@
 package com.historialplus.historialplus.service.ImgCompressService;
 
 import com.historialplus.historialplus.service.cloudflareservice.ICloudflareService;
+import com.historialplus.historialplus.util.InMemoryMultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import com.historialplus.historialplus.util.InMemoryMultipartFile;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -49,7 +45,7 @@ public class IMGCompressService {
         // Paso 2: Subir la imagen comprimida a Cloudflare R2
         MultipartFile compressedMultipartFile = new InMemoryMultipartFile(
                 "file",
-                UUID.randomUUID().toString() + ".webp",
+                UUID.randomUUID() + ".webp",
                 "image/webp",
                 compressedImage
         );
