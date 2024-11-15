@@ -1,6 +1,5 @@
 package com.historialplus.historialplus.service.cloudflareservice;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -19,7 +18,6 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
-@Slf4j
 @Service
 public class CloudflareServiceImpl implements ICloudflareService{
 
