@@ -8,6 +8,7 @@ import com.historialplus.historialplus.dto.peopleDTOs.request.PeopleCreateDto;
 import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
 import com.historialplus.historialplus.entities.*;
 import com.historialplus.historialplus.repository.*;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class HospitalServiceImpl implements IHospitalService {
 
     private final HospitalRepository hospitalRepository;
@@ -27,16 +29,6 @@ public class HospitalServiceImpl implements IHospitalService {
     private final SexTypeRepository sexTypeRepository;
     private final TypeDocumentRepository typeDocumentRepository;
 
-    public HospitalServiceImpl(HospitalRepository hospitalRepository, StateRepository stateRepository, PeopleRepository peopleRepository, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, SexTypeRepository sexTypeRepository, TypeDocumentRepository typeDocumentRepository) {
-        this.hospitalRepository = hospitalRepository;
-        this.stateRepository = stateRepository;
-        this.peopleRepository = peopleRepository;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.sexTypeRepository = sexTypeRepository;
-        this.typeDocumentRepository = typeDocumentRepository;
-    }
     @Override
     public Page<HospitalResponseDto> findAll(String name, String ruc, Integer id, Pageable pageable) {
         if ((name == null || name.isEmpty()) && (ruc == null || ruc.isEmpty()) && id == null) {
