@@ -2,8 +2,6 @@ package com.historialplus.historialplus.controller;
 
 import com.historialplus.historialplus.service.ImgCompressService.IMGCompressService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class IMGCompressController {
@@ -23,14 +23,20 @@ public class IMGCompressController {
     }
 
     @PostMapping("/api/compress-image")
-    public ResponseEntity<byte[]> compressImage(@RequestParam("file") MultipartFile file, @RequestParam(value = "quality", defaultValue = "80") int quality) throws IOException {
-        byte[] compressedImage = imgCompressService.compressImage(file, quality);
+    public ResponseEntity<Map<String, Object>> compressAndUploadImage(@RequestParam("file") MultipartFile file, @RequestParam(value = "quality", defaultValue = "80") int quality) throws IOException {
+        Map<String, Object> response = new HashMap<>();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType("image/webp"));
+        try {
+            String imageUrl = imgCompressService.compressAndUploadImage(file, quality);
+            response.put("success", true);
+            response.put("url", imageUrl);
+            response.put("message", "Archivo comprimido y subido exitosamente");
 
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(compressedImage);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "Error: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
+        }
     }
 }
