@@ -21,10 +21,5 @@ jobs:
         uses: gradle/actions/setup-gradle@v4.0.0
       - name: Give execute permissions to gradlew
         run: chmod +x ./gradlew
-      - name: Set environment variables
-        run: |
-          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-          echo "SERVICE_CLOUDFLARE_R2_URL=${{ secrets.SERVICE_CLOUDFLARE_R2_URL }}" >> $GITHUB_ENV
       - name: Build and Test with Gradle Wrapper using Test Profile
         run: ./gradlew build -Dspring.profiles.active=test
