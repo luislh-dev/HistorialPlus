@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.dto.hospitalDTOs.mapper;
 
-import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalListDto;
+import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalResponseDto;
 import com.historialplus.historialplus.entities.HospitalEntity;
 
 public class HospitalDtoMapper {
@@ -8,7 +8,7 @@ public class HospitalDtoMapper {
     private HospitalDtoMapper() {
     }
 
-    public static HospitalResponseDto toHospitalListDto(HospitalEntity hospitalEntity) {
+    public static HospitalResponseDto toHospitalResponseDto(HospitalEntity hospitalEntity) {
         return new HospitalResponseDto(
                 hospitalEntity.getId(),
                 hospitalEntity.getName(),
