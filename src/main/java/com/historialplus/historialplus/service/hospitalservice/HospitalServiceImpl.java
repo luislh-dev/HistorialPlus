@@ -3,9 +3,9 @@ package com.historialplus.historialplus.service.hospitalservice;
 import com.historialplus.historialplus.dto.hospitalDTOs.mapper.HospitalDtoMapper;
 import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalResponseDto;
 import com.historialplus.historialplus.repository.HospitalRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class HospitalServiceImpl implements IHospitalService {
@@ -17,7 +17,11 @@ public class HospitalServiceImpl implements IHospitalService {
     }
 
     @Override
-    public List<HospitalResponseDto> findAll() {
-        return repository.findAll().stream().map(HospitalDtoMapper::toHospitalListDto).toList();
+    public Page<HospitalResponseDto> findAll(String name, String ruc, Integer id, Pageable pageable) {
+        if ((name == null || name.isEmpty()) && (ruc == null || ruc.isEmpty()) && id == null) {
+            return repository.findAll(pageable).map(HospitalDtoMapper::toHospitalListDto);
+        }
+        return repository.findByNameContainingOrRucContainingOrId(name, ruc, id, pageable)
+                .map(HospitalDtoMapper::toHospitalListDto);
     }
 }
