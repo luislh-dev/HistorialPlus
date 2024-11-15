@@ -8,7 +8,6 @@ import com.historialplus.historialplus.dto.peopleDTOs.request.PeopleCreateDto;
 import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
 import com.historialplus.historialplus.entities.*;
 import com.historialplus.historialplus.repository.*;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-@Slf4j
 public class HospitalServiceImpl implements IHospitalService {
 
     private final HospitalRepository hospitalRepository;
@@ -62,6 +60,7 @@ public class HospitalServiceImpl implements IHospitalService {
 
         // Crear y guardar el hospital
         HospitalEntity hospital = new HospitalEntity();
+        hospital.setAddress(hospitalDto.getAddress());
         hospital.setName(hospitalDto.getName());
         hospital.setPhone(hospitalDto.getPhone());
         hospital.setEmail(hospitalDto.getEmail());
@@ -71,13 +70,14 @@ public class HospitalServiceImpl implements IHospitalService {
 
         // Crear el usuario administrador y la persona vinculada
         if (hospitalDto.getAdminUser() != null && hospitalDto.getAdminPerson() != null) {
-            createAdminUserAndPerson(hospitalDto.getAdminUser(), hospitalDto.getAdminPerson(), savedHospital);
+            createAdminUserAndPerson(hospitalDto.getAdminUser(), hospitalDto.getAdminPerson(), savedHospital, state);
         }
 
         return HospitalDtoMapper.toHospitalResponseDto(savedHospital);
     }
 
-    private void createAdminUserAndPerson(UserCreateDto adminUserDto, PeopleCreateDto adminPersonDto, HospitalEntity hospital) {
+
+    private void createAdminUserAndPerson(UserCreateDto adminUserDto, PeopleCreateDto adminPersonDto, HospitalEntity hospital, StateEntity state) {
         // usar el mapper
         var person = PeopleDtoMapper.toPeopleEntity(adminPersonDto);
 
@@ -100,6 +100,7 @@ public class HospitalServiceImpl implements IHospitalService {
         user.setEmail(adminUserDto.getEmail());
         user.setPassword(passwordEncoder.encode(adminUserDto.getPassword()));
         user.setHospital(hospital);
+        user.setStateEntity(state); // Set the state entity
         user.getPeople().add(savedPerson);
 
         // Asignar rol de administrador
@@ -110,7 +111,6 @@ public class HospitalServiceImpl implements IHospitalService {
         // Guardar el usuario
         userRepository.save(user);
     }
-
 
     @Override
     public void deleteById(Integer id) {
