@@ -8,7 +8,7 @@ public class HospitalDtoMapper {
     private HospitalDtoMapper() {
     }
 
-    public static HospitalResponseDto toHospitalListDto(HospitalEntity hospitalEntity) {
+    public static HospitalResponseDto toHospitalResponseDto(HospitalEntity hospitalEntity) {
         return new HospitalResponseDto(
                 hospitalEntity.getId(),
                 hospitalEntity.getName(),
