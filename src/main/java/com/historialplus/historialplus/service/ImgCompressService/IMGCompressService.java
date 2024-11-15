@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.service.ImgCompressService;
 
+import com.historialplus.historialplus.service.cloudflareservice.ICloudflareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,22 +12,26 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.core.io.ByteArrayResource;
+import com.historialplus.historialplus.util.InMemoryMultipartFile;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.UUID;
 
 @Service
 public class IMGCompressService {
 
     private final RestTemplate restTemplate;
+    private final ICloudflareService cloudflareService;
 
     @Autowired
-    public IMGCompressService(RestTemplate restTemplate) {
+    public IMGCompressService(RestTemplate restTemplate, ICloudflareService cloudflareService) {
         this.restTemplate = restTemplate;
+        this.cloudflareService = cloudflareService;
     }
 
-    public byte[] compressImage(MultipartFile file, int quality) throws IOException {
+    public String compressAndUploadImage(MultipartFile file, int quality) throws IOException {
+        // Paso 1: Comprimir la imagen
         String url = "https://api-compress-image.fly.dev/compress?quality=" + quality;
 
         HttpHeaders headers = new HttpHeaders();
@@ -37,10 +42,22 @@ public class IMGCompressService {
         body.add("file", new MultipartInputStreamFileResource(file.getInputStream(), file.getOriginalFilename()));
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-
-        // Cambia el tipo de ResponseEntity a byte[]
         ResponseEntity<byte[]> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, byte[].class);
 
-        return response.getBody();
+        byte[] compressedImage = response.getBody();
+
+        // Paso 2: Subir la imagen comprimida a Cloudflare R2
+        MultipartFile compressedMultipartFile = new InMemoryMultipartFile(
+                "file",
+                UUID.randomUUID().toString() + ".webp",
+                "image/webp",
+                compressedImage
+        );
+
+        try {
+            return cloudflareService.uploadObject(compressedMultipartFile);
+        } catch (Exception e) {
+            throw new IOException("Error al subir la imagen a Cloudflare R2", e);
+        }
     }
 }
