@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,10 +46,10 @@ public class HospitalServiceImpl implements IHospitalService {
     @Override
     public Page<HospitalResponseDto> findAll(String name, String ruc, Integer id, Pageable pageable) {
         if ((name == null || name.isEmpty()) && (ruc == null || ruc.isEmpty()) && id == null) {
-            return repository.findAll(pageable).map(HospitalDtoMapper::toHospitalListDto);
+            return hospitalRepository.findAll(pageable).map(HospitalDtoMapper::toHospitalResponseDto);
         }
-        return repository.findByNameContainingOrRucContainingOrId(name, ruc, id, pageable)
-                .map(HospitalDtoMapper::toHospitalListDto);
+        return hospitalRepository.findByNameContainingOrRucContainingOrId(name, ruc, id, pageable)
+                .map(HospitalDtoMapper::toHospitalResponseDto);
     }
 
     @Override
