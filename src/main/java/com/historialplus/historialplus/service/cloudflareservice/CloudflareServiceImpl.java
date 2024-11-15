@@ -33,9 +33,9 @@ public class CloudflareServiceImpl implements ICloudflareService{
     }
 
     private S3Client createS3Client() {
-        String accessKey = System.getenv("AWS_ACCESS_KEY_ID");
-        String secretKey = System.getenv("AWS_SECRET_ACCESS_KEY");
-        String serviceUrl = System.getenv("SERVICE_CLOUDFLARE_R2_URL");
+        String accessKey = System.getenv("AWS_ACCESS_KEY_ID") != null ? System.getenv("AWS_ACCESS_KEY_ID") : "fake";
+        String secretKey = System.getenv("AWS_SECRET_ACCESS_KEY") != null ? System.getenv("AWS_SECRET_ACCESS_KEY") : "fake";
+        String serviceUrl = System.getenv("SERVICE_CLOUDFLARE_R2_URL") != null ? System.getenv("SERVICE_CLOUDFLARE_R2_URL") : "http://localhost:9000";
 
         AwsBasicCredentials credentials = AwsBasicCredentials.create(accessKey, secretKey);
 
