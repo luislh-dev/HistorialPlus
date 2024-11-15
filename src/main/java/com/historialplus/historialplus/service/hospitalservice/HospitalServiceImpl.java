@@ -7,6 +7,8 @@ import com.historialplus.historialplus.dto.peopleDTOs.request.PeopleCreateDto;
 import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
 import com.historialplus.historialplus.entities.*;
 import com.historialplus.historialplus.repository.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,11 +45,12 @@ public class HospitalServiceImpl implements IHospitalService {
     }
 
     @Override
-    public List<HospitalResponseDto> findAll() {
-        return hospitalRepository.findAll()
-                .stream()
-                .map(HospitalDtoMapper::toHospitalResponseDto)
-                .toList();
+    public Page<HospitalResponseDto> findAll(String name, String ruc, Integer id, Pageable pageable) {
+        if ((name == null || name.isEmpty()) && (ruc == null || ruc.isEmpty()) && id == null) {
+            return repository.findAll(pageable).map(HospitalDtoMapper::toHospitalListDto);
+        }
+        return repository.findByNameContainingOrRucContainingOrId(name, ruc, id, pageable)
+                .map(HospitalDtoMapper::toHospitalListDto);
     }
 
     @Override
