@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.core.io.ByteArrayResource;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -25,19 +26,20 @@ public class IMGCompressService {
         this.restTemplate = restTemplate;
     }
 
-    public String compressImage(MultipartFile file, int quality) throws IOException {
+    public byte[] compressImage(MultipartFile file, int quality) throws IOException {
         String url = "https://api-compress-image.fly.dev/compress?quality=" + quality;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.setAccept(Collections.singletonList(MediaType.IMAGE_PNG));
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("file", new MultipartInputStreamFileResource(file.getInputStream(), file.getOriginalFilename()));
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+        // Cambia el tipo de ResponseEntity a byte[]
+        ResponseEntity<byte[]> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, byte[].class);
 
         return response.getBody();
     }
