@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.controller;
 
-import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalListDto;
+import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalResponseDto;
 import com.historialplus.historialplus.service.hospitalservice.IHospitalService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ public class HospitalController {
     }
 
     @GetMapping
-    public List<HospitalListDto> list() {
+    public List<HospitalResponseDto> list() {
         return service.findAll();
     }
 
