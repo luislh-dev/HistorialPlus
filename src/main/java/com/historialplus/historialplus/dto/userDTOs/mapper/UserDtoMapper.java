@@ -6,13 +6,18 @@ import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
 import com.historialplus.historialplus.entities.RoleEntity;
 import com.historialplus.historialplus.entities.StateEntity;
 import com.historialplus.historialplus.entities.UserEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class UserDtoMapper {
 
-    // Constructor privado para evitar instanciación
-    private UserDtoMapper() {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserDtoMapper(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     // función estática para mapear UserEntity a UserDto
@@ -25,14 +30,14 @@ public class UserDtoMapper {
     }
 
     // función estática para mapear UserCreateDto a UserEntity
-    public static UserEntity toEntity(UserCreateDto userCreateDto) {
+    public UserEntity toEntity(UserCreateDto userCreateDto) {
         if (userCreateDto == null) {
             throw new IllegalArgumentException("El userCreateDto no puede ser nulo");
         }
         var userEntity = new UserEntity();
         userEntity.setName(userCreateDto.getName());
         userEntity.setEmail(userCreateDto.getEmail());
-        userEntity.setPassword(userCreateDto.getPassword());
+        userEntity.setPassword(passwordEncoder.encode(userCreateDto.getPassword())); // Encriptar la contraseña
 
         // Crear un objeto StateEntity con el id del estado
         StateEntity stateEntity = new StateEntity();
