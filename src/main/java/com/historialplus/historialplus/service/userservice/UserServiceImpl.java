@@ -5,9 +5,12 @@ import com.historialplus.historialplus.dto.userDTOs.mapper.UserDtoMapper;
 import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
 import com.historialplus.historialplus.entities.StateEntity;
+import com.historialplus.historialplus.entities.UserEntity;
 import com.historialplus.historialplus.repository.UserRepository;
 import com.historialplus.historialplus.service.stateservice.IStateService;
 import lombok.NonNull;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,15 +19,19 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.historialplus.historialplus.constants.RoleConstants.ROLE_MANAGEMENT;
+
 @Service
 public class UserServiceImpl implements IUserService {
 
     private final UserRepository repository;
     private final IStateService stateService;
+    private final UserDtoMapper userDtoMapper;
 
-    public UserServiceImpl(UserRepository userRepository, IStateService stateService) {
+    public UserServiceImpl(UserRepository userRepository, IStateService stateService, UserDtoMapper userDtoMapper) {
         this.repository = userRepository;
         this.stateService = stateService;
+        this.userDtoMapper = userDtoMapper;
     }
 
     @Override
@@ -45,7 +52,26 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public UserDto save(UserCreateDto userDto) {
-        return UserDtoMapper.toDto(repository.save( UserDtoMapper.toEntity(userDto)));
+        return UserDtoMapper.toDto(repository.save( userDtoMapper.toEntity(userDto)));
+    }
+
+    @Override
+    @Transactional
+    public UserResponseDto createHospitalUserByManagement(UserCreateDto userDto) {
+        // Obtener el usuario de gestión autenticado
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserEntity managementUser = repository.findByName(authentication.getName())
+                .orElseThrow(() -> new IllegalArgumentException("Usuario de gestión no encontrado"));
+
+        if (managementUser.getRoleEntities().stream().noneMatch(role -> role.getName().equals(ROLE_MANAGEMENT))) {
+            throw new IllegalArgumentException("El usuario no tiene permisos de gestión");
+        }
+
+        UserEntity newUser = userDtoMapper.toEntity(userDto);
+        newUser.setHospital(managementUser.getHospital()); // Asignar el hospital del managementUser al nuevo usuario
+
+        return UserDtoMapper.toResponseDto(repository.save(newUser));
     }
 
     /**
