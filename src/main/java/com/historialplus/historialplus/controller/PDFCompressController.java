@@ -1,40 +1,64 @@
 package com.historialplus.historialplus.controller;
 
 import com.historialplus.historialplus.service.iLovePDFService.PDFCompressService;
-import org.springframework.http.HttpHeaders;
+import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressionLevel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.InputStreamResource;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/api/pdf")
 public class PDFCompressController {
 
-    private final PDFCompressService pdfCompressService;
+    @Autowired
+    private PDFCompressService pdfCompressService;
 
-    public PDFCompressController(PDFCompressService pdfCompressService) {
-        this.pdfCompressService = pdfCompressService;
-    }
-
+    // Endpoint para comprimir PDF con nivel de compresión
     @PostMapping("/compress")
-    public ResponseEntity<byte[]> compressFiles(@RequestBody String[] filePaths) {
+    public ResponseEntity<InputStreamResource> compressPDF(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam(value = "compressionLevel", defaultValue = "LOW") String compressionLevel) {
         try {
-            // Llama al servicio para comprimir archivos
-            byte[] compressedFile = pdfCompressService.compressFiles(filePaths);
+            // Convertir el archivo recibido en MultipartFile a Path
+            Path tempInputFile = Files.createTempFile("input-", ".pdf");
+            file.transferTo(tempInputFile);
 
-            // Configura los encabezados de respuesta para retornar el PDF
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData("attachment", "compressed.pdf");
+            // Establecer el archivo de salida
+            Path outputFile = Paths.get("output", "compressed-" + file.getOriginalFilename());
 
-            return new ResponseEntity<>(compressedFile, headers, HttpStatus.OK);
-        } catch (Exception e) {
-            // Manejo de errores
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            // Convertir el nivel de compresión recibido (string) a un tipo enum CompressionLevel
+            CompressionLevel level;
+            try {
+                level = CompressionLevel.valueOf(compressionLevel.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(null); // Error si el nivel de compresión no es válido
+            }
+
+            // Llamar al servicio para comprimir el PDF con el nivel de compresión
+            pdfCompressService.compressPDF(tempInputFile, outputFile, level);
+
+            // Devolver el archivo comprimido como un flujo de entrada (InputStream)
+            FileInputStream fileInputStream = new FileInputStream(outputFile.toFile());
+            InputStreamResource resource = new InputStreamResource(fileInputStream);
+
+            // Retornar el archivo comprimido en la respuesta
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment;filename=" + outputFile.getFileName())
+                    .contentType(org.springframework.http.MediaType.APPLICATION_PDF)
+                    .contentLength(outputFile.toFile().length())
+                    .body(resource);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }
