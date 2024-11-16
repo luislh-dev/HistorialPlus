@@ -1,13 +1,15 @@
 package com.historialplus.historialplus.controller;
 
-import com.historialplus.historialplus.service.iLovePDFService.PDFCompressService;
 import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressionLevel;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.historialplus.historialplus.service.iLovePDFService.PDFCompressService;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.core.io.InputStreamResource;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -19,8 +21,12 @@ import java.nio.file.Paths;
 @RequestMapping("/api/pdf")
 public class PDFCompressController {
 
-    @Autowired
-    private PDFCompressService pdfCompressService;
+
+    private final PDFCompressService pdfCompressService;
+
+    public PDFCompressController(PDFCompressService pdfCompressService) {
+        this.pdfCompressService = pdfCompressService;
+    }
 
     // Endpoint para comprimir PDF con nivel de compresión
     @PostMapping("/compress")
