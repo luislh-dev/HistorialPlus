@@ -26,5 +26,9 @@ public class RecordDetailEntity {
     @OneToMany(mappedBy = "recordDetail")
     private List<FileEntity> files;
 
+    @ManyToOne
+    @JoinColumn(name = "state_id")
+    private StateEntity state;
+
     public RecordDetailEntity() {}
 }
