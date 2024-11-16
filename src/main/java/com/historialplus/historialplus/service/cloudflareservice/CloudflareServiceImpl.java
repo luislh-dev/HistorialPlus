@@ -22,8 +22,8 @@ import java.util.List;
 public class CloudflareServiceImpl implements ICloudflareService{
 
     private final S3Client s3Client;
-    private final long MAX_FILE_SIZE = 500 * 1024; // 500 KB
-    private final List<String> ALLOWED_FILE_TYPES = Arrays.asList("image/jpeg", "image/png", "image/webp");
+    private final long MAX_FILE_SIZE = 3 * 1024 * 1024;
+    private final List<String> ALLOWED_FILE_TYPES = Arrays.asList("image/jpeg", "image/png", "image/webp", "application/pdf");
     private final String BUCKET_NAME = "historialplus";
 
     public CloudflareServiceImpl() {
