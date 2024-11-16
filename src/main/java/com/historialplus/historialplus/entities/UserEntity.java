@@ -62,14 +62,10 @@ public class UserEntity {
     @JoinColumn(name = "hospital_id")
     private HospitalEntity hospital;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_people",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "people_id"),
-            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "people_id"})}
-    )
-    private List<PeopleEntity> people = new ArrayList<>();
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "people_id", nullable = false)
+    private PeopleEntity person;
 
     public UserEntity() {
         this.stateEntity = new StateEntity();

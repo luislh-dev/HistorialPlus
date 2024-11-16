@@ -64,4 +64,8 @@ public class PeopleEntity {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     private List<RecordEntity> records = new ArrayList<>();
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    private List<UserEntity> users = new ArrayList<>();
 }
