@@ -54,6 +54,7 @@ public class UserServiceImpl implements IUserService {
      * @param id ID del usuario a eliminar
      */
     @Override
+    @Transactional
     public void deleteById(UUID id) {
         // validar si el estado existe
         stateService.findById(3).flatMap(state -> repository.findById(id)).ifPresent(user -> {
