@@ -64,7 +64,7 @@ public class UserEntity {
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "people_id", nullable = false)
+    @JoinColumn(name = "people_id")
     private PeopleEntity person;
 
     public UserEntity() {
