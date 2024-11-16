@@ -4,6 +4,7 @@ import com.historialplus.historialplus.entities.StateEntity;
 import com.historialplus.historialplus.repository.StateRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,5 +19,10 @@ public class StateServiceImpl implements IStateService{
     @Override
     public Optional<StateEntity> findById(Integer id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public List<StateEntity> findAll() {
+        return repository.findAll();
     }
 }
