@@ -5,6 +5,7 @@ import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalRespons
 import com.historialplus.historialplus.service.hospitalservice.IHospitalService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,9 +35,8 @@ public class HospitalController {
     }
 
     @PostMapping
-    public ResponseEntity<HospitalResponseDto> createHospital(@RequestBody HospitalCreateDto hospitalDto) {
-        HospitalResponseDto savedHospital = service.save(hospitalDto);
-        return ResponseEntity.ok(savedHospital);
+    public ResponseEntity<?> createHospital(@RequestBody HospitalCreateDto hospitalDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(hospitalDto));
     }
 
     @DeleteMapping("/{id}")

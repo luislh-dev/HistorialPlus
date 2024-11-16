@@ -37,7 +37,7 @@ public class HospitalServiceImpl implements IHospitalService {
     }
 
     @Override
-    public HospitalResponseDto save(HospitalCreateDto hospitalDto) {
+    public HospitalCreateDto save(HospitalCreateDto hospitalDto) {
         // Validar y obtener el estado
         StateEntity state = stateRepository.findById(hospitalDto.getStateId())
                 .orElseThrow(() -> new RuntimeException("Estado no encontrado con ID: " + hospitalDto.getStateId()));
@@ -45,9 +45,9 @@ public class HospitalServiceImpl implements IHospitalService {
         // Crear y guardar el hospital
         HospitalEntity hospital = HospitalDtoMapper.toHospitalEntity(hospitalDto);
         hospital.setState(state);
-        HospitalEntity savedHospital = hospitalRepository.save(hospital);
+        hospitalRepository.save(hospital);
 
-        return HospitalDtoMapper.toHospitalResponseDto(savedHospital);
+        return hospitalDto;
     }
 
 
