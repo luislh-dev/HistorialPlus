@@ -1,39 +1,75 @@
 package com.historialplus.historialplus.service.iLovePDFService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import java.io.IOException;
+import com.adobe.pdfservices.operation.PDFServices;
+import com.adobe.pdfservices.operation.PDFServicesMediaType;
+import com.adobe.pdfservices.operation.PDFServicesResponse;
+import com.adobe.pdfservices.operation.pdfjobs.jobs.CompressPDFJob;
+import com.adobe.pdfservices.operation.pdfjobs.result.CompressPDFResult;
+import com.adobe.pdfservices.operation.exception.ServiceApiException;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import com.adobe.pdfservices.operation.auth.ServicePrincipalCredentials;
+import com.adobe.pdfservices.operation.io.Asset;
+import com.adobe.pdfservices.operation.io.StreamAsset;
+import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressPDFParams;
+import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressionLevel;
 
 @Service
 public class PDFCompressService {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private static final Logger LOGGER = LoggerFactory.getLogger(PDFCompressService.class);
 
-    public byte[] compressFiles(String[] filePaths) {
-        String url = "http://localhost:5000/api/IlovePDF/compress";
+    // Asignar directamente las credenciales de prueba
+    String CLIENT_ID = System.getenv("ADOBE_CLIENT_ID") != null ? System.getenv("ADOBE_CLIENT_ID") : "fake";
+    String CLIENT_SECRET = System.getenv("ADOBE_CLIENT_SECRET") != null ? System.getenv("ADOBE_CLIENT_SECRET") : "fake";
 
-        // Configura los encabezados
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+    public void compressPDF(Path inputFile, Path outputFile, CompressionLevel compressionLevel) throws IOException {
+        try (InputStream inputStream = Files.newInputStream(inputFile)) {
+            // Crear credenciales usando los valores directamente en el código
+            ServicePrincipalCredentials credentials = new ServicePrincipalCredentials(CLIENT_ID, CLIENT_SECRET);
 
-        // Crea la entidad HTTP con el cuerpo de la solicitud
-        HttpEntity<String[]> requestEntity = new HttpEntity<>(filePaths, headers);
+            // Crear instancia de PDF Services
+            PDFServices pdfServices = new PDFServices(credentials);
 
-        // Realiza la solicitud y recibe la respuesta
-        ResponseEntity<byte[]> response = restTemplate.exchange(
-                url,
-                HttpMethod.POST,
-                requestEntity,
-                byte[].class
-        );
+            // Subir archivo de entrada
+            Asset asset = pdfServices.upload(inputStream, PDFServicesMediaType.PDF.getMediaType());
 
-        // Retorna el archivo comprimido como un array de bytes
-        return response.getBody();
+            // Crear parámetros para la compresión con el nivel de compresión
+            CompressPDFParams compressPDFParams = CompressPDFParams.compressPDFParamsBuilder()
+                    .withCompressionLevel(compressionLevel.HIGH)
+                    .build();
+
+            // Crear trabajo de compresión
+            CompressPDFJob compressPDFJob = new CompressPDFJob(asset)
+                    .setParams(compressPDFParams);
+
+            // Enviar trabajo y obtener ubicación del resultado
+            String location = pdfServices.submit(compressPDFJob);
+            PDFServicesResponse<CompressPDFResult> pdfServicesResponse = pdfServices.getJobResult(location, CompressPDFResult.class);
+
+            // Obtener el archivo comprimido resultante
+            Asset resultAsset = pdfServicesResponse.getResult().getAsset();
+            StreamAsset streamAsset = pdfServices.getContent(resultAsset);
+
+            // Crear directorio de salida si no existe
+            Files.createDirectories(Paths.get("output"));
+
+            // Escribir el archivo PDF comprimido
+            try (OutputStream outputStream = Files.newOutputStream(outputFile)) {
+                IOUtils.copy(streamAsset.getInputStream(), outputStream);
+                LOGGER.info("Saved compressed PDF to " + outputFile);
+            }
+        } catch (ServiceApiException | IOException e) {
+            LOGGER.error("Error occurred while compressing the PDF", e);
+            throw new IOException("Error occurred while compressing the PDF", e);
+        }
     }
 }
