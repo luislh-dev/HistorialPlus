@@ -69,6 +69,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/compress-image").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/pdf/compress").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/createHospitalUserByManagement").hasRole("MANAGEMENT")
+                        .requestMatchers(HttpMethod.POST, "/api/hospitals").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class)
