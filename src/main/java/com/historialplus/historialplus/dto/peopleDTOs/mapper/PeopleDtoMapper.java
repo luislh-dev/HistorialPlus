@@ -3,6 +3,8 @@ package com.historialplus.historialplus.dto.peopleDTOs.mapper;
 import com.historialplus.historialplus.dto.peopleDTOs.request.PeopleCreateDto;
 import com.historialplus.historialplus.dto.peopleDTOs.response.PeopleResponseDto;
 import com.historialplus.historialplus.entities.PeopleEntity;
+import com.historialplus.historialplus.entities.SexTypeEntity;
+import com.historialplus.historialplus.entities.TypeDocumentEntity;
 
 public class PeopleDtoMapper {
 
@@ -22,8 +24,8 @@ public class PeopleDtoMapper {
                 entity.getAddress(),
                 entity.getPhone(),
                 entity.getNationality(),
-                entity.getSexType() != null ? entity.getSexType().getName() : null,
-                entity.getTypeDocument() != null ? entity.getTypeDocument().getName() : null
+                entity.getSexType().getName(),
+                entity.getTypeDocument().getName()
         );
     }
 
@@ -39,6 +41,17 @@ public class PeopleDtoMapper {
         entity.setAddress(dto.getAddress());
         entity.setPhone(dto.getPhone());
         entity.setNationality(dto.getNationality());
+
+        // agregar el tipo de sexo
+        var sexType = new SexTypeEntity();
+        sexType.setId(dto.getSexTypeId());
+        entity.setSexType(sexType);
+
+        // Agregar el tipo de documento
+        var typeDocument = new TypeDocumentEntity();
+        typeDocument.setId(dto.getTypeDocumentId());
+        entity.setTypeDocument(typeDocument);
+
         return entity;
     }
 }
