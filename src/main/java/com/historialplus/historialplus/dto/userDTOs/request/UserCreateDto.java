@@ -1,5 +1,7 @@
 package com.historialplus.historialplus.dto.userDTOs.request;
 
+import com.historialplus.historialplus.validators.role.ValidRoleId;
+import com.historialplus.historialplus.validators.state.ValidStateId;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 
@@ -21,13 +23,19 @@ public class UserCreateDto {
     )
     private String password;
 
-    @Min(value = 1, message = "Estado debe ser mayor a 0")
-    private int stateId;
+    @NotNull(message = "Estado es requerido")
+    @ValidStateId
+    private Integer stateId;
 
-    public UserCreateDto(String name, String email, String password, int stateId) {
+    @NotNull(message = "Roles son requeridos")
+    @ValidRoleId
+    private Integer roleId;
+
+    public UserCreateDto(String name, String email, String password, int state, int roleId) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.stateId = stateId;
+        this.stateId = state;
+        this.roleId = roleId;
     }
 }

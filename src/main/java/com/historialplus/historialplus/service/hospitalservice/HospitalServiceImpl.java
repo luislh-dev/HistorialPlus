@@ -51,12 +51,7 @@ public class HospitalServiceImpl implements IHospitalService {
                 .orElseThrow(() -> new RuntimeException("Estado no encontrado con ID: " + hospitalDto.getStateId()));
 
         // Crear y guardar el hospital
-        HospitalEntity hospital = new HospitalEntity();
-        hospital.setAddress(hospitalDto.getAddress());
-        hospital.setName(hospitalDto.getName());
-        hospital.setPhone(hospitalDto.getPhone());
-        hospital.setEmail(hospitalDto.getEmail());
-        hospital.setRuc(hospitalDto.getRuc());
+        HospitalEntity hospital = HospitalDtoMapper.toHospitalEntity(hospitalDto);
         hospital.setState(state);
         HospitalEntity savedHospital = hospitalRepository.save(hospital);
 
