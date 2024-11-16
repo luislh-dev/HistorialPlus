@@ -3,7 +3,9 @@ package com.historialplus.historialplus.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -11,7 +13,9 @@ import java.util.List;
 @Table(name = "record_detail")
 public class RecordDetailEntity {
     @Id
-    private byte[] id;
+    @GeneratedValue(generator = "UUID")
+    @Column(name = "id", columnDefinition = "BINARY(16)")
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "record_id")
