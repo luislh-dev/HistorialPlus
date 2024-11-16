@@ -17,4 +17,6 @@ public interface IUserService {
     UserDto save(UserCreateDto userDto);
 
     void deleteById(UUID id);
+
+    UserResponseDto createHospitalUserByManagement(UserCreateDto userDto);
 }

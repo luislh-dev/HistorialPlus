@@ -41,6 +41,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(userDto));
     }
 
+    @PostMapping("/createHospitalUserByManagement")
+    public ResponseEntity<?> createHospitalUserByManagement(@Valid @RequestBody UserCreateDto userDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createHospitalUserByManagement(userDto));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
         service.deleteById(id);
