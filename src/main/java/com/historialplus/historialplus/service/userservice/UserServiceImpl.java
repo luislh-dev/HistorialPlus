@@ -45,7 +45,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public UserDto save(UserCreateDto userDto) {
-        return UserDtoMapper.toDto(repository.save(UserDtoMapper.toEntity(userDto)));
+        return UserDtoMapper.toDto(repository.save( UserDtoMapper.toEntity(userDto)));
     }
 
     /**

@@ -3,8 +3,11 @@ package com.historialplus.historialplus.dto.userDTOs.mapper;
 import com.historialplus.historialplus.dto.userDTOs.UserDto;
 import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
+import com.historialplus.historialplus.entities.RoleEntity;
 import com.historialplus.historialplus.entities.StateEntity;
 import com.historialplus.historialplus.entities.UserEntity;
+
+import java.util.List;
 
 public class UserDtoMapper {
 
@@ -26,17 +29,21 @@ public class UserDtoMapper {
         if (userCreateDto == null) {
             throw new IllegalArgumentException("El userCreateDto no puede ser nulo");
         }
-
-        UserEntity userEntity = new UserEntity();
+        var userEntity = new UserEntity();
         userEntity.setName(userCreateDto.getName());
         userEntity.setEmail(userCreateDto.getEmail());
         userEntity.setPassword(userCreateDto.getPassword());
 
-        // colocar el stateId en el estado del usuario
+        // Crear un objeto StateEntity con el id del estado
         StateEntity stateEntity = new StateEntity();
         stateEntity.setId(userCreateDto.getStateId());
-
         userEntity.setStateEntity(stateEntity);
+
+        // Crear un objeto RoleEntity con el id del rol
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setId(userCreateDto.getRoleId());
+        userEntity.setRoleEntities(List.of(roleEntity));
+
         return userEntity;
     }
 
