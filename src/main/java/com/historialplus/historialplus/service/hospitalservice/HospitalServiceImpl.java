@@ -24,9 +24,9 @@ public class HospitalServiceImpl implements IHospitalService {
     @Override
     public Page<HospitalResponseDto> findAll(String name, String ruc, Integer id, Pageable pageable) {
         if ((name == null || name.isEmpty()) && (ruc == null || ruc.isEmpty()) && id == null) {
-            return hospitalRepository.findAll(pageable).map(HospitalDtoMapper::toHospitalResponseDto);
+            return hospitalRepository.findAllByOrderByUpdatedAtDesc(pageable).map(HospitalDtoMapper::toHospitalResponseDto);
         }
-        return hospitalRepository.findByNameContainingOrRucContainingOrId(name, ruc, id, pageable)
+        return hospitalRepository.findByNameContainingOrRucContainingOrIdOrderByUpdatedAtDesc(name, ruc, id, pageable)
                 .map(HospitalDtoMapper::toHospitalResponseDto);
     }
 
