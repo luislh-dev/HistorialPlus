@@ -3,6 +3,7 @@ package com.historialplus.historialplus.service.userservice;
 import com.historialplus.historialplus.dto.userDTOs.UserDto;
 import com.historialplus.historialplus.dto.userDTOs.mapper.UserDtoMapper;
 import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
+import com.historialplus.historialplus.dto.userDTOs.request.UserUpdateDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
 import com.historialplus.historialplus.entities.StateEntity;
 import com.historialplus.historialplus.entities.UserEntity;
@@ -72,6 +73,27 @@ public class UserServiceImpl implements IUserService {
         newUser.setHospital(managementUser.getHospital()); // Asignar el hospital del managementUser al nuevo usuario
 
         return UserDtoMapper.toResponseDto(repository.save(newUser));
+    }
+
+    @Override
+    @Transactional
+    public UserResponseDto update(UUID id, UserUpdateDto userDto) {
+        // actualizacion parcial
+        return repository.findById(id).map(user -> {
+            if (userDto.getName() != null) {
+                user.setName(userDto.getName());
+            }
+            if (userDto.getEmail() != null) {
+                user.setEmail(userDto.getEmail());
+            }
+            if (userDto.getStateId() != null) {
+
+                StateEntity stateEntity = new StateEntity();
+                stateEntity.setId(userDto.getStateId());
+                user.setStateEntity(stateEntity);
+            }
+            return UserDtoMapper.toResponseDto(repository.save(user));
+        }).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
     }
 
     /**

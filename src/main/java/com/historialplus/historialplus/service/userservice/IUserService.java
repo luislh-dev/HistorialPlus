@@ -2,6 +2,7 @@ package com.historialplus.historialplus.service.userservice;
 
 import com.historialplus.historialplus.dto.userDTOs.UserDto;
 import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
+import com.historialplus.historialplus.dto.userDTOs.request.UserUpdateDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
 import lombok.NonNull;
 
@@ -19,4 +20,6 @@ public interface IUserService {
     void deleteById(UUID id);
 
     UserResponseDto createHospitalUserByManagement(UserCreateDto userDto);
+
+    UserResponseDto update(UUID id, UserUpdateDto userDto);
 }

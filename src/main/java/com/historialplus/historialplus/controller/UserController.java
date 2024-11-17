@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.controller;
 
 import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
+import com.historialplus.historialplus.dto.userDTOs.request.UserUpdateDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
 import com.historialplus.historialplus.service.userservice.IUserService;
 import jakarta.validation.Valid;
@@ -44,6 +45,11 @@ public class UserController {
     @PostMapping("/createHospitalUserByManagement")
     public ResponseEntity<?> createHospitalUserByManagement(@Valid @RequestBody UserCreateDto userDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createHospitalUserByManagement(userDto));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateDto userDto) {
+        return ResponseEntity.ok(service.update(id, userDto));
     }
 
     @DeleteMapping("/{id}")
