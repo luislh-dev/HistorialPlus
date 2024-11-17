@@ -2,9 +2,9 @@ package com.historialplus.historialplus.dto.hospitalDTOs.request;
 
 import com.historialplus.historialplus.validators.state.ValidStateId;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +13,7 @@ import lombok.Setter;
 public class HospitalCreateDto {
 
     @NotNull(message = "Nombre es requerido")
-    @Min(value = 3, message = "Nombre debe tener al menos 3 caracteres")
+    @Size(min = 3, max = 50, message = "Nombre debe tener entre 3 y 50 caracteres")
     private String name;
 
     @NotNull(message = "Dirección es requerida")
