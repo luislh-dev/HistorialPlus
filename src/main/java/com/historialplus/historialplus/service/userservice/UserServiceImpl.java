@@ -5,6 +5,7 @@ import com.historialplus.historialplus.dto.userDTOs.mapper.UserDtoMapper;
 import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
 import com.historialplus.historialplus.dto.userDTOs.request.UserUpdateDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
+import com.historialplus.historialplus.entities.RoleEntity;
 import com.historialplus.historialplus.entities.StateEntity;
 import com.historialplus.historialplus.entities.UserEntity;
 import com.historialplus.historialplus.repository.UserRepository;
@@ -91,6 +92,14 @@ public class UserServiceImpl implements IUserService {
                 StateEntity stateEntity = new StateEntity();
                 stateEntity.setId(userDto.getStateId());
                 user.setStateEntity(stateEntity);
+            }
+            if (userDto.getRoleIds() != null) {
+                List<RoleEntity> roleEntities = userDto.getRoleIds().stream().map(roleId -> {
+                    RoleEntity roleEntity = new RoleEntity();
+                    roleEntity.setId(roleId);
+                    return roleEntity;
+                }).collect(Collectors.toList());
+                user.setRoleEntities(roleEntities);
             }
             return UserDtoMapper.toResponseDto(repository.save(user));
         }).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));

@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class UserUpdateDto {
@@ -18,5 +20,7 @@ public class UserUpdateDto {
 
     @ValidStateId
     private Integer stateId;
+
+    private List<Integer> roleIds;
 
 }
