@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ValidationErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ApiError> handleValidationExceptions(MethodArgumentNotValidException ex) {
         List<String> errors = ex.getBindingResult()
                 .getAllErrors()
                 .stream()
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
                 })
                 .collect(Collectors.toList());
 
-        ValidationErrorResponse response = new ValidationErrorResponse(errors);
+        ApiError response = new ApiError("VALIDATION_ERROR", "Validation failed", errors);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
