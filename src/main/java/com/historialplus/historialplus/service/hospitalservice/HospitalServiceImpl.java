@@ -3,6 +3,7 @@ package com.historialplus.historialplus.service.hospitalservice;
 import com.historialplus.historialplus.dto.hospitalDTOs.mapper.HospitalDtoMapper;
 import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalCreateDto;
 import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalUpdateDto;
+import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalFindByResponseDto;
 import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalResponseDto;
 import com.historialplus.historialplus.entities.HospitalEntity;
 import com.historialplus.historialplus.entities.StateEntity;
@@ -32,9 +33,9 @@ public class HospitalServiceImpl implements IHospitalService {
     }
 
     @Override
-    public Optional<HospitalResponseDto> findById(Integer id) {
+    public Optional<HospitalFindByResponseDto> findById(Integer id) {
         return hospitalRepository.findById(id)
-                .map(HospitalDtoMapper::toHospitalResponseDto);
+                .map(HospitalDtoMapper::toUserFindByResponseDto);
     }
 
     @Override
