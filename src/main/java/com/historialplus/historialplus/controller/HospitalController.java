@@ -2,7 +2,6 @@ package com.historialplus.historialplus.controller;
 
 import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalCreateDto;
 import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalUpdateDto;
-import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalResponseDto;
 import com.historialplus.historialplus.service.hospitalservice.IHospitalService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -23,7 +22,7 @@ public class HospitalController {
     }
 
     @GetMapping
-    public Page<HospitalResponseDto> list(
+    public Page<?> list(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String ruc,
             @RequestParam(required = false) Integer id,
@@ -32,7 +31,7 @@ public class HospitalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HospitalResponseDto> getHospitalById(@PathVariable Integer id) {
+    public ResponseEntity<?> getHospitalById(@PathVariable Integer id) {
         return service.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -50,7 +49,7 @@ public class HospitalController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HospitalResponseDto> updateHospital(@PathVariable Integer id, @Valid @RequestBody HospitalUpdateDto hospitalDto) {
+    public ResponseEntity<?> updateHospital(@PathVariable Integer id, @Valid @RequestBody HospitalUpdateDto hospitalDto) {
         return ResponseEntity.ok(service.update(id, hospitalDto));
     }
 
