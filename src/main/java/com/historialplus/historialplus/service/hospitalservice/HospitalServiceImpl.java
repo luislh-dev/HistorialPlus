@@ -53,9 +53,10 @@ public class HospitalServiceImpl implements IHospitalService {
 
     @Override
     public void deleteById(Integer id) {
-        if (!hospitalRepository.existsById(id)) {
-            throw new RuntimeException("Hospital no encontrado con ID: " + id);
-        }
-        hospitalRepository.deleteById(id);
+        HospitalEntity hospital = hospitalRepository.findById(id).orElseThrow(() -> new RuntimeException("Hospital no encontrado con ID: " + id));
+        // eliminar logicamente
+        hospital.setState(stateRepository.findById(2).orElseThrow(() -> new RuntimeException("Estado no encontrado con ID: 3")));
+
+        hospitalRepository.save(hospital);
     }
 }
