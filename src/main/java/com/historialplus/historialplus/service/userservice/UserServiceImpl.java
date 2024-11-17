@@ -4,6 +4,7 @@ import com.historialplus.historialplus.dto.userDTOs.UserDto;
 import com.historialplus.historialplus.dto.userDTOs.mapper.UserDtoMapper;
 import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
 import com.historialplus.historialplus.dto.userDTOs.request.UserUpdateDto;
+import com.historialplus.historialplus.dto.userDTOs.response.UserListResponseDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
 import com.historialplus.historialplus.entities.RoleEntity;
 import com.historialplus.historialplus.entities.StateEntity;
@@ -11,6 +12,8 @@ import com.historialplus.historialplus.entities.UserEntity;
 import com.historialplus.historialplus.repository.UserRepository;
 import com.historialplus.historialplus.service.stateservice.IStateService;
 import lombok.NonNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -103,6 +106,15 @@ public class UserServiceImpl implements IUserService {
             }
             return UserDtoMapper.toResponseDto(repository.save(user));
         }).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    }
+
+    @Override
+    public Page<UserListResponseDto> searchUsers(String username, String dni, String hospital, UUID id, RoleEntity role, Pageable pageable) {
+        if (username == null && dni == null && hospital == null && id == null && role == null) {
+            return repository.findAllWithCustomOrder(pageable).map(UserDtoMapper::toListResponseDto);
+        }
+        return repository.searchUsers(username, dni, hospital, id, role, pageable)
+                .map(UserDtoMapper::toListResponseDto);
     }
 
     /**

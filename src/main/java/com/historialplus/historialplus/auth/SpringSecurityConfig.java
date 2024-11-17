@@ -64,6 +64,7 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/api/users").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/users/search").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/compress-image").permitAll()

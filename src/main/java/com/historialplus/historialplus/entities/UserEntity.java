@@ -42,6 +42,9 @@ public class UserEntity {
     @Column(name = "blocked_until")
     private Timestamp blockedUntil;
 
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
+
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "state_id", nullable = false)

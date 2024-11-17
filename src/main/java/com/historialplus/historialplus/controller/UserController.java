@@ -3,8 +3,11 @@ package com.historialplus.historialplus.controller;
 import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
 import com.historialplus.historialplus.dto.userDTOs.request.UserUpdateDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
+import com.historialplus.historialplus.entities.RoleEntity;
 import com.historialplus.historialplus.service.userservice.IUserService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -29,6 +32,18 @@ public class UserController {
     @GetMapping
     public List<UserResponseDto> list() {
         return service.findAll();
+    }
+
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<?>> searchUsers(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String dni,
+            @RequestParam(required = false) String hospital,
+            @RequestParam(required = false) UUID id,
+            @RequestParam(required = false) RoleEntity role,
+            Pageable pageable) {
+        return ResponseEntity.ok(service.searchUsers(username, dni, hospital, id, role, pageable));
     }
 
     @GetMapping("/{id}")
