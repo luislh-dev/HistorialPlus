@@ -24,10 +24,12 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
     @Override
     void deleteById(@NonNull UUID id);
 
-    @Query("SELECT u FROM UserEntity u WHERE " +
-            "(:username IS NULL OR u.name LIKE %:username%) AND " +
-            "(:dni IS NULL OR u.person.documentNumber LIKE %:dni%) AND " +
-            "(:hospital IS NULL OR u.hospital.name LIKE %:hospital%) AND " +
+    @Query("SELECT DISTINCT u FROM UserEntity u " +
+            "LEFT JOIN u.person p " +
+            "LEFT JOIN u.hospital h " +
+            "WHERE (:username IS NULL OR LOWER(u.name) LIKE LOWER(CONCAT('%', :username, '%'))) AND " +
+            "(:dni IS NULL OR LOWER(p.documentNumber) LIKE LOWER(CONCAT('%', :dni, '%'))) AND " +
+            "(:hospital IS NULL OR LOWER(h.name) LIKE LOWER(CONCAT('%', :hospital, '%'))) AND " +
             "(:id IS NULL OR u.id = :id) AND " +
             "(:role IS NULL OR :role MEMBER OF u.roleEntities) " +
             "ORDER BY CASE WHEN u.stateEntity.id = 1 THEN 0 ELSE 1 END, u.updatedAt DESC")
