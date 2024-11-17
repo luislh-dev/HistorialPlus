@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.service.hospitalservice;
 
 import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalCreateDto;
+import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalUpdateDto;
 import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,4 +13,5 @@ public interface IHospitalService {
     Optional<HospitalResponseDto> findById(Integer id);
     HospitalCreateDto save(HospitalCreateDto hospitalDto);
     void deleteById(Integer id);
+    HospitalResponseDto update(Integer id, HospitalUpdateDto hospitalDto);
 }

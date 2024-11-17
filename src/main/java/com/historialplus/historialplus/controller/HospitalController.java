@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.controller;
 
 import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalCreateDto;
+import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalUpdateDto;
 import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalResponseDto;
 import com.historialplus.historialplus.service.hospitalservice.IHospitalService;
 import jakarta.validation.Valid;
@@ -47,4 +48,10 @@ public class HospitalController {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<HospitalResponseDto> updateHospital(@PathVariable Integer id, @Valid @RequestBody HospitalUpdateDto hospitalDto) {
+        return ResponseEntity.ok(service.update(id, hospitalDto));
+    }
+
 }
