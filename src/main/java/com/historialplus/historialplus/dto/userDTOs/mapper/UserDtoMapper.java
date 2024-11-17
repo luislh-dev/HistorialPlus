@@ -58,6 +58,6 @@ public class UserDtoMapper {
             throw new IllegalArgumentException("El userEntity no puede ser nulo");
         }
 
-        return new UserResponseDto(userEntity.getId(), userEntity.getName(), userEntity.getEmail(), userEntity.getStateEntity().getId());
+        return new UserResponseDto(userEntity.getId(), userEntity.getName(), userEntity.getEmail(), userEntity.getStateEntity().getId(), userEntity.getRoleEntities().stream().map(RoleEntity::getId).toList());
     }
 }
