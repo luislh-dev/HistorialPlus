@@ -36,6 +36,7 @@ public class UserDtoMapper {
         }
 
         return new UserListResponseDto(
+                userEntity.getId(),
                 userEntity.getName(),
                 userEntity.getEmail(),
                 userEntity.getPerson() != null && userEntity.getPerson().getDocumentNumber() != null ? userEntity.getPerson().getDocumentNumber() : "",
