@@ -42,6 +42,9 @@ public class UserEntity {
     @Column(name = "blocked_until")
     private Timestamp blockedUntil;
 
+    @Column(name = "hospital_id", nullable = false, insertable = false, updatable = false)
+    private Integer hospitalId;
+
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
