@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
+import java.nio.channels.FileChannel;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,4 +19,5 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
     @Override
     void deleteById(@NonNull UUID id);
+
 }

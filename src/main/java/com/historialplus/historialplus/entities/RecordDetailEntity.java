@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,17 +19,44 @@ public class RecordDetailEntity {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "record_id")
+    @JoinColumn(name = "record_id", nullable = false)
     private RecordEntity record;
 
+    @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "recordDetail")
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+
+    @Column(name = "state_id", nullable = false)
+    private Integer stateId = 1; // Default to active
+
+    @OneToMany(mappedBy = "recordDetail", cascade = CascadeType.ALL)
     private List<FileEntity> files;
 
-    @ManyToOne
-    @JoinColumn(name = "state_id")
-    private StateEntity state;
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+        updatedAt = new Date();
+    }
 
-    public RecordDetailEntity() {}
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = new Date();
+    }
+
+    public void setState(StateEntity state) {
+        this.stateId = state.getId();
+    }
+
+    public StateEntity getState() {
+        StateEntity state = new StateEntity();
+        state.setId(this.stateId);
+        return state;
+    }
 }

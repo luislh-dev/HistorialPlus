@@ -1,7 +1,6 @@
 package com.historialplus.historialplus.dto.recordDTOs.request;
 
-import com.historialplus.historialplus.dto.filesDTOs.request.FilesCreateDto;
-import jakarta.validation.constraints.NotBlank;
+import com.historialplus.historialplus.dto.recordDetailDTOs.request.RecordDetailCreateDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,12 +10,16 @@ import java.util.List;
 @Getter
 @Setter
 public class RecordCreateDto {
-    @NotNull(message = "El ID del paciente es obligatorio.")
-    private String patientId;
+    @NotNull(message = "El número de documento es requerido")
+    private String documentNumber;
 
-    @NotBlank(message = "La descripción de la consulta es obligatoria.")
-    private String description;
+    private List<RecordDetailCreateDto> details;
 
-    @NotNull(message = "Se requiere al menos un archivo.")
-    private List<FilesCreateDto> files;
+    public String getDocumentNumber() {
+        return documentNumber;
+    }
+
+    public List<RecordDetailCreateDto> getDetails() {
+        return details;
+    }
 }

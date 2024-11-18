@@ -27,7 +27,6 @@ import java.util.List;
 @Configuration
 public class SpringSecurityConfig {
 
-    // obtener de las variables de sistema
     private static final String JWT_SECRET = System.getenv("JWT_SECRET_RECORD_PLUS") != null
             ? System.getenv("JWT_SECRET_RECORD_PLUS")
             : "default_secret_key_for_testing_purposes";
@@ -54,10 +53,9 @@ public class SpringSecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager, SecretKey jwtSecretKey, IAuthService authService) throws Exception {
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtSecretKey, authService);
-        jwtAuthenticationFilter.setFilterProcessesUrl("/api/login"); // URL para la autenticación
+        jwtAuthenticationFilter.setFilterProcessesUrl("/api/login");
 
-        JwtValidationFilter jwtValidationFilter = new JwtValidationFilter(authenticationManager, jwtSecretKey); // Instancia del filtro de validación
-
+        JwtValidationFilter jwtValidationFilter = new JwtValidationFilter(authenticationManager, jwtSecretKey);
 
         return http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -70,7 +68,19 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/pdf/compress").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/createHospitalUserByManagement").hasRole("MANAGEMENT")
                         .requestMatchers(HttpMethod.POST, "/api/hospitals").hasRole("ADMIN")
-                        .anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.GET, "/api/records").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/records/{documentNumber}").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/records").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/files").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/files/{id}").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/files").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/record-details").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/record-details/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/record-details/record/{recordId}").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/record-details").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/api/record-details/{id}/state").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilter(jwtAuthenticationFilter)
@@ -91,5 +101,4 @@ public class SpringSecurityConfig {
 
         return source;
     }
-
 }
