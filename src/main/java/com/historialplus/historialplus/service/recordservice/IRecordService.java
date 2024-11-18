@@ -3,7 +3,6 @@ package com.historialplus.historialplus.service.recordservice;
 import com.historialplus.historialplus.dto.recordDTOs.request.RecordCreateDto;
 import com.historialplus.historialplus.dto.recordDTOs.response.RecordResponseDto;
 
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,7 +12,7 @@ public interface IRecordService {
 
     Optional<RecordResponseDto> findById(UUID id);
 
-    RecordResponseDto save(RecordCreateDto recordCreateDto);
+    RecordCreateDto save(RecordCreateDto recordCreateDto);
 
     UUID findPersonIdByDocumentNumber(String documentNumber);
 }

@@ -3,9 +3,9 @@ package com.historialplus.historialplus.dto.recordDTOs.mapper;
 import com.historialplus.historialplus.dto.recordDTOs.request.RecordCreateDto;
 import com.historialplus.historialplus.dto.recordDTOs.response.RecordResponseDto;
 import com.historialplus.historialplus.dto.recordDetailDTOs.mapper.RecordDetailDtoMapper;
-import com.historialplus.historialplus.entities.RecordEntity;
-import com.historialplus.historialplus.entities.PeopleEntity;
 import com.historialplus.historialplus.entities.HospitalEntity;
+import com.historialplus.historialplus.entities.PeopleEntity;
+import com.historialplus.historialplus.entities.RecordEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
@@ -28,11 +28,6 @@ public class RecordDtoMapper {
         recordEntity.setPerson(person);
         recordEntity.setHospital(hospital);
 
-        recordEntity.setRecordDetails(
-                recordCreateDto.getDetails().stream()
-                        .map(detailDto -> RecordDetailDtoMapper.toEntity(detailDto, recordEntity))
-                        .collect(Collectors.toList())
-        );
 
         return recordEntity;
     }

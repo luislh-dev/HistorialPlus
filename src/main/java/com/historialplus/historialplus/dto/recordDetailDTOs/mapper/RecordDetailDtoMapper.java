@@ -25,7 +25,6 @@ public class RecordDetailDtoMapper {
         return new RecordDetailCreateDto(
                 detailEntity.getDescription(),
                 detailEntity.getState().getId(),
-                detailEntity.getRecord().getId(),
                 detailEntity.getFiles().stream()
                         .map(FilesDtoMapper::toCreateDto)
                         .collect(Collectors.toList())

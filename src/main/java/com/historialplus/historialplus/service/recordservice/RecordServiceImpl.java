@@ -11,12 +11,12 @@ import com.historialplus.historialplus.repository.RecordRepository;
 import com.historialplus.historialplus.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,33 +46,29 @@ public class RecordServiceImpl implements IRecordService {
 
     @Transactional
     @Override
-    public RecordResponseDto save(RecordCreateDto recordCreateDto) {
+    public RecordCreateDto save(RecordCreateDto recordCreateDto) {
         // Get the hospital ID from the current user's session
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        // Fetch the user by username and retrieve the hospital ID
+        // a partir del nombre del usuario logeado recuperame su hospital id
         UserEntity user = userRepository.findByName(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with username: " + username));
-        Integer hospitalId = user.getHospitalId();
-        if (hospitalId == null) {
-            throw new IllegalArgumentException("Hospital ID must not be null");
-        }
 
-        // Fetch the person by document number
-        PeopleEntity person = peopleRepository.findByDocumentNumber(recordCreateDto.getDocumentNumber())
-                .orElseThrow(() -> new IllegalArgumentException("Person not found with document number: " + recordCreateDto.getDocumentNumber()));
+        // creame un entidad de record
+        RecordEntity recordEntity = new RecordEntity();
 
-        // Create the record entity
-        RecordEntity recordEntity = RecordDtoMapper.toEntity(recordCreateDto, person, user.getHospital());
+        // setea el hospital de la entidad record con el hospital del usuario
+        recordEntity.setHospital(user.getHospital());
 
-        RecordEntity savedRecord = recordRepository.save(recordEntity);
-        return RecordDtoMapper.toResponseDto(savedRecord);
+        // encontrar el id de la persona por el numero de documento
+        UUID personId = findPersonIdByDocumentNumber(recordCreateDto.getDocumentNumber());
+
+        recordEntity.setPerson(peopleRepository.findById(personId)
+                .orElseThrow(() -> new IllegalArgumentException("Person not found with ID: " + personId)));
+
+        recordRepository.save(recordEntity);
+        Logger.getLogger("RecordServiceImpl").info("Record saved successfully");
+        return recordCreateDto;
     }
 
     @Override

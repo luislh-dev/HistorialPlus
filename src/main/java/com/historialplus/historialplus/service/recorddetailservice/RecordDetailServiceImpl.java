@@ -4,7 +4,6 @@ import com.historialplus.historialplus.dto.recordDetailDTOs.mapper.RecordDetailD
 import com.historialplus.historialplus.dto.recordDetailDTOs.request.RecordDetailCreateDto;
 import com.historialplus.historialplus.dto.recordDetailDTOs.response.RecordDetailResponseDto;
 import com.historialplus.historialplus.entities.RecordDetailEntity;
-import com.historialplus.historialplus.entities.RecordEntity;
 import com.historialplus.historialplus.repository.RecordDetailRepository;
 import com.historialplus.historialplus.repository.RecordRepository;
 import com.historialplus.historialplus.service.fileservice.IFileService;
@@ -52,19 +51,7 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
 
     @Override
     public RecordDetailResponseDto save(RecordDetailCreateDto recordDetailCreateDto) {
-        RecordEntity parentRecord = recordRepository.findById(recordDetailCreateDto.getRecordId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid record ID"));
-        RecordDetailEntity recordDetailEntity = RecordDetailDtoMapper.toEntity(recordDetailCreateDto, parentRecord);
-
-        RecordDetailEntity savedRecordDetail = recordDetailRepository.save(recordDetailEntity);
-
-        // Save files associated with the record detail
-        recordDetailEntity.getFiles().forEach(file -> {
-            file.setRecordDetail(savedRecordDetail);
-            fileService.save(file);
-        });
-
-        return RecordDetailDtoMapper.toResponseDto(savedRecordDetail);
+        return null;
     }
 
     @Override

@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -16,15 +15,11 @@ public class RecordDetailCreateDto {
 
     private Integer stateId;
 
-    @NotNull(message = "El ID del record es requerido")
-    private UUID recordId;
-
     private List<FilesCreateDto> files;
 
-    public RecordDetailCreateDto(String description, Integer stateId, UUID recordId, List<FilesCreateDto> files) {
+    public RecordDetailCreateDto(String description, Integer stateId, List<FilesCreateDto> files) {
         this.description = description;
         this.stateId = stateId;
-        this.recordId = recordId;
         this.files = files;
     }
 }
