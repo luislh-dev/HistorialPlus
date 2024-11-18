@@ -27,11 +27,11 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
     @Query("SELECT DISTINCT u FROM UserEntity u " +
             "LEFT JOIN u.person p " +
             "LEFT JOIN u.hospital h " +
-            "WHERE (:username IS NULL OR LOWER(u.name) LIKE LOWER(CONCAT('%', :username, '%'))) AND " +
-            "(:dni IS NULL OR LOWER(p.documentNumber) LIKE LOWER(CONCAT('%', :dni, '%'))) AND " +
-            "(:hospital IS NULL OR LOWER(h.name) LIKE LOWER(CONCAT('%', :hospital, '%'))) AND " +
-            "(:id IS NULL OR u.id = :id) AND " +
-            "(:role IS NULL OR :role MEMBER OF u.roleEntities) " +
+            "WHERE (:username IS NOT NULL AND LOWER(u.name) LIKE LOWER(CONCAT('%', :username, '%'))) OR " +
+            "(:dni IS NOT NULL AND LOWER(p.documentNumber) LIKE LOWER(CONCAT('%', :dni, '%'))) OR " +
+            "(:hospital IS NOT NULL AND LOWER(h.name) LIKE LOWER(CONCAT('%', :hospital, '%'))) OR " +
+            "(:id IS NOT NULL AND u.id = :id) OR " +
+            "(:role IS NOT NULL AND :role MEMBER OF u.roleEntities) " +
             "ORDER BY CASE WHEN u.stateEntity.id = 1 THEN 0 ELSE 1 END, u.updatedAt DESC")
     Page<UserEntity> searchUsers(@Param("username") String username,
                                  @Param("dni") String dni,
