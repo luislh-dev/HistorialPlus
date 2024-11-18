@@ -56,17 +56,19 @@ public class RecordServiceImpl implements IRecordService {
 
         // creame un entidad de record
         RecordEntity recordEntity = new RecordEntity();
-
         // setea el hospital de la entidad record con el hospital del usuario
         recordEntity.setHospital(user.getHospital());
-
         // encontrar el id de la persona por el numero de documento
         UUID personId = findPersonIdByDocumentNumber(recordCreateDto.getDocumentNumber());
 
         recordEntity.setPerson(peopleRepository.findById(personId)
                 .orElseThrow(() -> new IllegalArgumentException("Person not found with ID: " + personId)));
 
-        recordRepository.save(recordEntity);
+        RecordEntity record = recordRepository.save(recordEntity);
+
+        // Agrega los detalles del record
+        record.getId();
+
         Logger.getLogger("RecordServiceImpl").info("Record saved successfully");
         return recordCreateDto;
     }

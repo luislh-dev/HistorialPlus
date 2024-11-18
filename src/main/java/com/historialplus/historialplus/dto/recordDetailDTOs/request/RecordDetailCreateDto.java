@@ -6,12 +6,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 public class RecordDetailCreateDto {
     @NotNull(message = "La descripción es requerida")
     private String description;
+
+    private UUID recordId;
 
     private Integer stateId;
 
