@@ -41,8 +41,34 @@ public class GlobalExceptionHandler {
 
         // Procesar el mensaje para hacerlo más amigable
         String userFriendlyMessage;
-        if (message.contains("unique_user_name")) {
-            userFriendlyMessage = "El nombre de usuario ya está en uso";
+        if (message.contains("UK_file_type_name")) {
+            userFriendlyMessage = "El nombre del tipo de archivo ya está en uso";
+        } else if (message.contains("UK_hospital_email")) {
+            userFriendlyMessage = "El correo electrónico del hospital ya está en uso";
+        } else if (message.contains("UK_hospital_name")) {
+            userFriendlyMessage = "El nombre del hospital ya está en uso";
+        } else if (message.contains("UK_hospital_phone")) {
+            userFriendlyMessage = "El teléfono del hospital ya está en uso";
+        } else if (message.contains("UK_hospital_ruc")) {
+            userFriendlyMessage = "El RUC del hospital ya está en uso";
+        } else if (message.contains("UK_people_address")) {
+            userFriendlyMessage = "La dirección ya está en uso";
+        } else if (message.contains("UK_people_document_number")) {
+            userFriendlyMessage = "El número de documento ya está en uso";
+        } else if (message.contains("UK_roles_name")) {
+            userFriendlyMessage = "El nombre del rol ya está en uso";
+        } else if (message.contains("UK_sex_type_name")) {
+            userFriendlyMessage = "El nombre del tipo de sexo ya está en uso";
+        } else if (message.contains("UK_states_name")) {
+            userFriendlyMessage = "El nombre del estado ya está en uso";
+        } else if (message.contains("UK_type_document_name")) {
+            userFriendlyMessage = "El nombre del tipo de documento ya está en uso";
+        } else if (message.contains("UKa9dydk3dj4qb8cvmjijqnrg5t")) {
+            userFriendlyMessage = "La combinación de usuario y rol ya está en uso";
+        } else if (message.contains("UK_users_email")) {
+            userFriendlyMessage = "El correo electrónico del usuario ya está en uso";
+        } else if (message.contains("UK_users_name")) {
+            userFriendlyMessage = "El nombre del usuario ya está en uso";
         } else {
             userFriendlyMessage = "Error de integridad de datos";
         }
