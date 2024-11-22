@@ -20,7 +20,7 @@ public class HospitalCreateDto {
     private String address;
 
     @NotNull(message = "Teléfono es requerido")
-    @Pattern(regexp = "^[0-9]{9}$", message = "Teléfono debe tener 9 dígitos")
+    @Pattern(regexp = "^9[0-9]{8}$", message = "Teléfono debe empezar con 9 y tener 9 dígitos")
     private String phone;
 
     @NotNull(message = "Email es requerido")
