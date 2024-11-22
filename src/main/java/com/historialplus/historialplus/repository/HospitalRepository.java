@@ -10,4 +10,9 @@ import org.springframework.stereotype.Repository;
 public interface HospitalRepository extends JpaRepository<HospitalEntity, Integer> {
     Page<HospitalEntity> findByNameContainingOrRucContainingOrIdOrderByUpdatedAtDesc(String name, String ruc, Integer id, Pageable pageable);
     Page<HospitalEntity> findAllByOrderByUpdatedAtDesc(Pageable pageable);
+
+    boolean existsByEmail(String email);
+    boolean existsByName(String name);
+    boolean existsByPhone(String phone);
+    boolean existsByRuc(String ruc);
 }
