@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 public interface IHospitalService {
-    Page<HospitalResponseDto> findAll(String name, String ruc, Integer id, Pageable pageable);
+    Page<HospitalResponseDto> findAll(String name, String ruc, Integer id, Integer stateId, Pageable pageable);
     Optional<HospitalFindByResponseDto> findById(Integer id);
     HospitalCreateDto save(HospitalCreateDto hospitalDto);
     void deleteById(Integer id);

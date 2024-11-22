@@ -9,9 +9,7 @@ import com.historialplus.historialplus.entities.HospitalEntity;
 import com.historialplus.historialplus.entities.StateEntity;
 import com.historialplus.historialplus.repository.HospitalRepository;
 import com.historialplus.historialplus.repository.StateRepository;
-import com.historialplus.historialplus.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,11 +24,11 @@ public class HospitalServiceImpl implements IHospitalService {
     private final StateRepository stateRepository;
 
     @Override
-    public Page<HospitalResponseDto> findAll(String name, String ruc, Integer id, Pageable pageable) {
-        if ((name == null || name.isEmpty()) && (ruc == null || ruc.isEmpty()) && id == null) {
-            return hospitalRepository.findAllByOrderByUpdatedAtDesc(pageable).map(HospitalDtoMapper::toHospitalResponseDto);
+    public Page<HospitalResponseDto> findAll(String name, String ruc, Integer id, Integer stateId, Pageable pageable) {
+        if ((name == null || name.isEmpty()) && (ruc == null || ruc.isEmpty()) && id == null && stateId == null) {
+            return hospitalRepository.findAll(pageable).map(HospitalDtoMapper::toHospitalResponseDto);
         }
-        return hospitalRepository.findByNameContainingOrRucContainingOrIdOrderByUpdatedAtDesc(name, ruc, id, pageable)
+        return hospitalRepository.findByNameContainingAndRucContainingAndIdOrStateId(name, ruc, id, stateId , pageable)
                 .map(HospitalDtoMapper::toHospitalResponseDto);
     }
 

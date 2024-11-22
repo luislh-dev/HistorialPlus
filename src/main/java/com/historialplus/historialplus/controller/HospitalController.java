@@ -26,8 +26,9 @@ public class HospitalController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String ruc,
             @RequestParam(required = false) Integer id,
+            @RequestParam(required = false) Integer stateId,
             Pageable pageable) {
-        return service.findAll(name, ruc, id, pageable);
+        return service.findAll(name, ruc, id, stateId, pageable);
     }
 
     @GetMapping("/{id}")
