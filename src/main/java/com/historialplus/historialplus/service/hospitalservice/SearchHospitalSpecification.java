@@ -44,14 +44,20 @@ public class SearchHospitalSpecification implements Specification<HospitalEntity
             predicates.add(idEqualPredicate);
         }
 
-        Join<HospitalEntity, StateEntity> stateJoin = root.join("state", JoinType.INNER);
         if (stateId != null) {
+            Join<HospitalEntity, StateEntity> stateJoin = root.join("state", JoinType.INNER);
             Predicate stateIdEqualPredicate = criteriaBuilder.equal(stateJoin.get("id"), stateId);
             predicates.add(stateIdEqualPredicate);
         }
 
         query.orderBy(criteriaBuilder.asc(root.get("updatedAt")));
 
+        // Si no hay predicados, retorna todos los registros
+        if (predicates.isEmpty()) {
+            return criteriaBuilder.conjunction();
+        }
+
+        // Si hay predicados, combínalos todos con AND
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }
 }
