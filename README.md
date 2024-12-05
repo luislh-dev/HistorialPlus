@@ -16,7 +16,7 @@ Asegúrate de tener los siguientes requisitos:
    Realiza un fork del repositorio original y luego clona tu fork a tu máquina local:
    
    ```
-   git clone https://github.com/tu-usuario/HistorialPlus.git
+   git clone https://github.com/LuisLopez-developer/HistorialPlus.git
    ```
 2. Ingresa al directorio
 
@@ -31,4 +31,4 @@ Asegúrate de tener los siguientes requisitos:
    ```
    
   > [!IMPORTANT]  
-  > Asegúrate de que el contenido del archivo `.env` este completo
+  > Asegúrate de que el contenido del archivo `.env` este completo, y con las credenciales correctas.
