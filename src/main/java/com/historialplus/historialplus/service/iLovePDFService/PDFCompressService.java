@@ -1,17 +1,16 @@
 package com.historialplus.historialplus.service.iLovePDFService;
 
-import com.historialplus.historialplus.service.cloudflareservice.ICloudflareService;
 import com.adobe.pdfservices.operation.PDFServices;
 import com.adobe.pdfservices.operation.PDFServicesMediaType;
 import com.adobe.pdfservices.operation.PDFServicesResponse;
-import com.adobe.pdfservices.operation.pdfjobs.jobs.CompressPDFJob;
-import com.adobe.pdfservices.operation.pdfjobs.result.CompressPDFResult;
-import com.adobe.pdfservices.operation.exception.ServiceApiException;
 import com.adobe.pdfservices.operation.auth.ServicePrincipalCredentials;
 import com.adobe.pdfservices.operation.io.Asset;
 import com.adobe.pdfservices.operation.io.StreamAsset;
+import com.adobe.pdfservices.operation.pdfjobs.jobs.CompressPDFJob;
 import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressPDFParams;
 import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressionLevel;
+import com.adobe.pdfservices.operation.pdfjobs.result.CompressPDFResult;
+import com.historialplus.historialplus.service.cloudflareservice.ICloudflareService;
 import com.historialplus.historialplus.util.InMemoryMultipartFile;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -20,12 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
@@ -56,7 +52,7 @@ public class PDFCompressService {
             byte[] compressedPDF = IOUtils.toByteArray(streamAsset.getInputStream());
             MultipartFile compressedMultipartFile = new InMemoryMultipartFile(
                     "file",
-                    UUID.randomUUID().toString() + ".pdf",
+                    UUID.randomUUID() + ".pdf",
                     "application/pdf",
                     compressedPDF
             );
