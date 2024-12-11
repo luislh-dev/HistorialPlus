@@ -26,7 +26,7 @@ public class PeopleServiceImpl implements IPeopleService {
 
     public PeopleEntity findByDocumentNumber(String documentNumber) {
         //revisar si es necesario el cast
-        return (PeopleEntity) repository.findByDocumentNumber(documentNumber)
+        return repository.findByDocumentNumber(documentNumber)
                 .orElseThrow(() -> new RuntimeException("Person not found"));
     }
 }
