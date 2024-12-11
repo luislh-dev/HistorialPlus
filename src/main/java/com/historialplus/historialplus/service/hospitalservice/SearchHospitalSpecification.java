@@ -50,8 +50,6 @@ public class SearchHospitalSpecification implements Specification<HospitalEntity
             predicates.add(stateIdEqualPredicate);
         }
 
-        query.orderBy(criteriaBuilder.asc(root.get("updatedAt")));
-
         // Si no hay predicados, retorna todos los registros
         if (predicates.isEmpty()) {
             return criteriaBuilder.conjunction();
