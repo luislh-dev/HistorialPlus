@@ -27,7 +27,7 @@ public class UserDtoMapper {
             throw new IllegalArgumentException("El userEntity no puede ser nulo");
         }
 
-        return new UserDto(userEntity.getId(), userEntity.getName(), userEntity.getEmail(), userEntity.getStateEntity().getId());
+        return new UserDto(userEntity.getId(), userEntity.getName(), userEntity.getEmail(), userEntity.getState().getId());
     }
 
     public static UserListResponseDto toListResponseDto(UserEntity userEntity) {
@@ -41,7 +41,7 @@ public class UserDtoMapper {
                 userEntity.getEmail(),
                 userEntity.getPerson() != null && userEntity.getPerson().getDocumentNumber() != null ? userEntity.getPerson().getDocumentNumber() : "",
                 userEntity.getHospital() != null && userEntity.getHospital().getName() != null ? userEntity.getHospital().getName() : "",
-                userEntity.getStateEntity() != null && userEntity.getStateEntity().getName() != null ? userEntity.getStateEntity().getName() : "",
+                userEntity.getState() != null && userEntity.getState().getName() != null ? userEntity.getState().getName() : "",
                 !userEntity.getRoleEntities().isEmpty() && userEntity.getRoleEntities().getFirst().getName() != null ? userEntity.getRoleEntities().getFirst().getName() : ""
         );
     }
@@ -59,7 +59,7 @@ public class UserDtoMapper {
         // Crear un objeto StateEntity con el id del estado
         StateEntity stateEntity = new StateEntity();
         stateEntity.setId(userCreateDto.getStateId());
-        userEntity.setStateEntity(stateEntity);
+        userEntity.setState(stateEntity);
 
         // Crear un objeto RoleEntity con el id del rol
         RoleEntity roleEntity = new RoleEntity();
@@ -75,6 +75,6 @@ public class UserDtoMapper {
             throw new IllegalArgumentException("El userEntity no puede ser nulo");
         }
 
-        return new UserResponseDto(userEntity.getId(), userEntity.getName(), userEntity.getEmail(), userEntity.getStateEntity().getId(), userEntity.getRoleEntities().stream().map(RoleEntity::getId).toList());
+        return new UserResponseDto(userEntity.getId(), userEntity.getName(), userEntity.getEmail(), userEntity.getState().getId(), userEntity.getRoleEntities().stream().map(RoleEntity::getId).toList());
     }
 }

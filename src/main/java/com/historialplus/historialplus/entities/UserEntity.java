@@ -51,7 +51,7 @@ public class UserEntity {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "state_id", nullable = false)
-    private StateEntity stateEntity;
+    private StateEntity state;
 
     @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
     @ManyToMany(fetch = FetchType.LAZY)
@@ -74,7 +74,7 @@ public class UserEntity {
     private PeopleEntity person;
 
     public UserEntity() {
-        this.stateEntity = new StateEntity();
+        this.state = new StateEntity();
         this.roleEntities = new ArrayList<>();
     }
 

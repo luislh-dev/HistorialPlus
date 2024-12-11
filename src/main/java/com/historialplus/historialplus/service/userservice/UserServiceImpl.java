@@ -94,7 +94,7 @@ public class UserServiceImpl implements IUserService {
 
                 StateEntity stateEntity = new StateEntity();
                 stateEntity.setId(userDto.getStateId());
-                user.setStateEntity(stateEntity);
+                user.setState(stateEntity);
             }
             if (userDto.getRoleIds() != null) {
                 List<RoleEntity> roleEntities = userDto.getRoleIds().stream().map(roleId -> {
@@ -128,7 +128,7 @@ public class UserServiceImpl implements IUserService {
         // validar si el estado existe
         stateService.findById(3).flatMap(state -> repository.findById(id)).ifPresent(user -> {
             StateEntity stateEntity = stateService.findById(2).orElseThrow(() -> new IllegalArgumentException("Estado no encontrado"));
-            user.setStateEntity(stateEntity);
+            user.setState(stateEntity);
             repository.save(user);
         });
     }
