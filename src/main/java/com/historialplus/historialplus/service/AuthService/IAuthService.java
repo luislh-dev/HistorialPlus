@@ -6,4 +6,8 @@ public interface IAuthService {
     void loginFailed(String username);
 
     boolean isBlocked(String username);
+
+    String getAuthenticatedUserRole();
+
+    boolean isAdmin(String role);
 }
