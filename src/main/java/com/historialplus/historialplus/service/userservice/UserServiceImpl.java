@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 
 import static com.historialplus.historialplus.constants.RoleConstants.ROLE_ADMIN;
 import static com.historialplus.historialplus.constants.RoleConstants.ROLE_MANAGEMENT;
+import static com.historialplus.historialplus.constants.State.DELETED_ID;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -60,7 +61,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public UserDto save(UserCreateDto userDto) {
-        return UserDtoMapper.toDto(repository.save( userDtoMapper.toEntity(userDto)));
+        return UserDtoMapper.toDto(repository.save(userDtoMapper.toEntity(userDto)));
     }
 
     @Override
@@ -150,16 +151,18 @@ public class UserServiceImpl implements IUserService {
     /**
      * Elimina un usuario por su ID
      * El estado del usuario se cambia a eliminado (ID: 3)
+     *
      * @param id ID del usuario a eliminar
      */
     @Override
     @Transactional
     public void deleteById(UUID id) {
-        // validar si el estado existe
-        stateService.findById(3).flatMap(state -> repository.findById(id)).ifPresent(user -> {
-            StateEntity stateEntity = stateService.findById(2).orElseThrow(() -> new IllegalArgumentException("Estado no encontrado"));
-            user.setState(stateEntity);
-            repository.save(user);
-        });
+        // validar si el estado existe DELETED_ID
+        StateEntity state = stateService.findById(DELETED_ID).orElseThrow(() -> new IllegalArgumentException("Estado no encontrado"));
+        // recuperar el usuario
+        UserEntity user = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        // cambiar el estado del usuario a eliminado
+        user.setState(state);
+        repository.save(user);
     }
 }
