@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.historialplus.historialplus.util.roles.RoleTransformer.transformRoles;
+
 @Component
 public class UserDtoMapper {
 
@@ -42,9 +44,7 @@ public class UserDtoMapper {
                 userEntity.getPerson() != null && userEntity.getPerson().getDocumentNumber() != null ? userEntity.getPerson().getDocumentNumber() : "",
                 userEntity.getHospital() != null && userEntity.getHospital().getName() != null ? userEntity.getHospital().getName() : "",
                 userEntity.getState() != null && userEntity.getState().getName() != null ? userEntity.getState().getName() : "",
-                userEntity.getRoleEntities().stream()
-                        .map(role -> role.getName().replace("ROLE_", ""))
-                        .toList()
+                transformRoles(userEntity.getRoleEntities()).stream().map(RoleEntity::getName).toList()
         );
     }
 
