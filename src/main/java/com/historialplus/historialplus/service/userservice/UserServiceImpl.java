@@ -147,6 +147,11 @@ public class UserServiceImpl implements IUserService {
         return repository.findAll(spec, pageable).map(UserDtoMapper::toListResponseDto);
     }
 
+    @Override
+    public UserEntity findByUsername(String username) {
+        return repository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    }
+
 
     /**
      * Elimina un usuario por su ID
