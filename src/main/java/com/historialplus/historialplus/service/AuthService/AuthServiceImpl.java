@@ -3,6 +3,7 @@ package com.historialplus.historialplus.service.AuthService;
 import com.historialplus.historialplus.entities.UserEntity;
 import com.historialplus.historialplus.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +11,8 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
+
+import static com.historialplus.historialplus.constants.RoleConstants.ROLE_ADMIN;
 
 /**
  * Servicio para gestionar los intentos de inicio de sesión de los usuarios.
@@ -96,5 +99,28 @@ public class AuthServiceImpl implements IAuthService {
             }
         }
         return false;
+    }
+
+    // Métodos auxiliares
+    /**
+     * Recupera el rol del usuario autenticado desde el contexto de seguridad.
+     *
+     * @return el nombre del rol del usuario autenticado
+     * @throws IllegalStateException si no se encuentra ninguna autoridad
+     */
+    @Override
+    public String getAuthenticatedUserRole() {
+        return SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getAuthorities()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No authority found"))
+                .getAuthority();
+    }
+
+    @Override
+    public boolean isAdmin(String role) {
+        return ROLE_ADMIN.equals(role);
     }
 }
