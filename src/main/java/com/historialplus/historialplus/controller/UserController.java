@@ -28,13 +28,13 @@ public class UserController {
 
     @GetMapping()
     public Page<?> search(
-            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String username,
             @RequestParam(required = false) String dni,
             @RequestParam(required = false) String hospitalName,
             @RequestParam(required = false) Integer roleId,
             @RequestParam(required = false) Integer stateId,
             Pageable pageable) {
-        return service.searchUsers(name, dni, hospitalName, roleId, stateId, pageable);
+        return service.searchUsers(username, dni, hospitalName, roleId, stateId, pageable);
     }
 
     @GetMapping("/{id}")
