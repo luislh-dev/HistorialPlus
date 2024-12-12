@@ -60,15 +60,15 @@ public class SpringSecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/api/users").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/users").hasAnyRole("MANAGEMENT", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/users/search").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/compress-image").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/pdf/compress").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/createHospitalUserByManagement").hasRole("MANAGEMENT")
                         .requestMatchers(HttpMethod.POST, "/api/hospitals").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/hospitals").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/records").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/records/{documentNumber}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/records").hasRole("ADMIN")

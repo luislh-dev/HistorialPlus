@@ -27,7 +27,7 @@ public class JpaUserDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserEntity> optionalUser = userRepository.findByName(username);
+        Optional<UserEntity> optionalUser = userRepository.findByUsername(username);
 
         if (optionalUser.isEmpty()) {
             throw new UsernameNotFoundException(String.format("Username %s no existe en el sistema", username));
@@ -40,6 +40,6 @@ public class JpaUserDetailsService implements UserDetailsService {
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
 
-        return  new User(userEntity.getName(), userEntity.getPassword(), authorities);
+        return  new User(userEntity.getUsername(), userEntity.getPassword(), authorities);
     }
 }

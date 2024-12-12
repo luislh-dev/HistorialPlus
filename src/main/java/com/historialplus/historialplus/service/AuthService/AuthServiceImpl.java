@@ -36,7 +36,7 @@ public class AuthServiceImpl implements IAuthService {
      */
     @Transactional
     public void loginSucceeded(String username) {
-        Optional<UserEntity> user = userRepository.findByName(username);
+        Optional<UserEntity> user = userRepository.findByUsername(username);
         if (user.isPresent()) {
             UserEntity userEntity = user.get();
             userEntity.setFailedLoginAttempts(0);
@@ -56,7 +56,7 @@ public class AuthServiceImpl implements IAuthService {
      */
     @Transactional
     public void loginFailed(String username) {
-        Optional<UserEntity> user = userRepository.findByName(username);
+        Optional<UserEntity> user = userRepository.findByUsername(username);
         if (user.isPresent()) {
             UserEntity userEntity = user.get();
             int attempts = userEntity.getFailedLoginAttempts() + 1;
@@ -79,7 +79,7 @@ public class AuthServiceImpl implements IAuthService {
      * @return verdadero si la cuenta del usuario está bloqueada, falso en caso contrario
      */
     public boolean isBlocked(String username) {
-        Optional<UserEntity> user = userRepository.findByName(username);
+        Optional<UserEntity> user = userRepository.findByUsername(username);
         if (user.isPresent()) {
             UserEntity userEntity = user.get();
             if (userEntity.isBlocked()) {

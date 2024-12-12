@@ -3,6 +3,7 @@ package com.historialplus.historialplus.dto.userDTOs.response;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -14,9 +15,9 @@ public class UserListResponseDto {
     private final String dni;
     private final String hospital;
     private final String state;
-    private final String roles;
+    private final List<String> roles;
 
-    public UserListResponseDto(UUID id, String username, String email, String dni, String hospital, String state, String roles) {
+    public UserListResponseDto(UUID id, String username, String email, String dni, String hospital, String state, List<String>  roles) {
         this.id = id;
         this.username = username;
         this.email = email;

@@ -5,7 +5,6 @@ import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
 import com.historialplus.historialplus.dto.userDTOs.request.UserUpdateDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserListResponseDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
-import com.historialplus.historialplus.entities.RoleEntity;
 import lombok.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,5 +26,6 @@ public interface IUserService {
 
     UserResponseDto update(UUID id, UserUpdateDto userDto);
 
-    Page<UserListResponseDto> searchUsers(String username, String dni, String hospital, UUID id, RoleEntity role, Pageable pageable);
+    Page<UserListResponseDto> searchUsers(String name, String dni, String hospitalName, Integer roleId, Integer stateId, Pageable pageable);
+
 }
