@@ -28,13 +28,13 @@ public class SearchUserSpecification implements Specification<UserEntity> {
         List<Predicate> predicates = new ArrayList<>();
 
         if(name != null && !name.isEmpty()) {
-            Expression<String> userNameToLowerCase = criteriaBuilder.lower(root.get("name"));
+            Expression<String> userNameToLowerCase = criteriaBuilder.lower(root.get("username"));
             Predicate nameLikePredicate = criteriaBuilder.like(userNameToLowerCase, "%" + name + "%");
             predicates.add(nameLikePredicate);
         }
 
         if (documentNumber != null && !documentNumber.isEmpty()) {
-            Join<UserEntity, PeopleEntity> peopleJoin = root.join("people", JoinType.INNER);
+            Join<UserEntity, PeopleEntity> peopleJoin = root.join("person", JoinType.INNER);
             Expression<String> userDocumentNumberToLowerCase = criteriaBuilder.lower(peopleJoin.get("documentNumber"));
             Predicate dniLikePredicate = criteriaBuilder.like(userDocumentNumberToLowerCase, "%" + documentNumber + "%");
             predicates.add(dniLikePredicate);
@@ -48,7 +48,7 @@ public class SearchUserSpecification implements Specification<UserEntity> {
         }
 
         if (roleId != null) {
-            Join<UserEntity, RoleEntity> roleJoin = root.join("roles", JoinType.INNER);
+            Join<UserEntity, RoleEntity> roleJoin = root.join("roleEntities", JoinType.INNER);
             Predicate roleIdEqualPredicate = criteriaBuilder.equal(roleJoin.get("id"), roleId);
             predicates.add(roleIdEqualPredicate);
         }
