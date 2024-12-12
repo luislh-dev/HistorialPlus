@@ -27,7 +27,7 @@ public class UserDtoMapper {
             throw new IllegalArgumentException("El userEntity no puede ser nulo");
         }
 
-        return new UserDto(userEntity.getId(), userEntity.getName(), userEntity.getEmail(), userEntity.getState().getId());
+        return new UserDto(userEntity.getId(), userEntity.getUsername(), userEntity.getEmail(), userEntity.getState().getId());
     }
 
     public static UserListResponseDto toListResponseDto(UserEntity userEntity) {
@@ -37,12 +37,14 @@ public class UserDtoMapper {
 
         return new UserListResponseDto(
                 userEntity.getId(),
-                userEntity.getName(),
+                userEntity.getUsername(),
                 userEntity.getEmail(),
                 userEntity.getPerson() != null && userEntity.getPerson().getDocumentNumber() != null ? userEntity.getPerson().getDocumentNumber() : "",
                 userEntity.getHospital() != null && userEntity.getHospital().getName() != null ? userEntity.getHospital().getName() : "",
                 userEntity.getState() != null && userEntity.getState().getName() != null ? userEntity.getState().getName() : "",
-                !userEntity.getRoleEntities().isEmpty() && userEntity.getRoleEntities().getFirst().getName() != null ? userEntity.getRoleEntities().getFirst().getName() : ""
+                userEntity.getRoleEntities().stream()
+                        .map(role -> role.getName().replace("ROLE_", ""))
+                        .toList()
         );
     }
 
@@ -52,7 +54,7 @@ public class UserDtoMapper {
             throw new IllegalArgumentException("El userCreateDto no puede ser nulo");
         }
         var userEntity = new UserEntity();
-        userEntity.setName(userCreateDto.getName());
+        userEntity.setUsername(userCreateDto.getName());
         userEntity.setEmail(userCreateDto.getEmail());
         userEntity.setPassword(passwordEncoder.encode(userCreateDto.getPassword())); // Encriptar la contraseña
 
@@ -75,6 +77,6 @@ public class UserDtoMapper {
             throw new IllegalArgumentException("El userEntity no puede ser nulo");
         }
 
-        return new UserResponseDto(userEntity.getId(), userEntity.getName(), userEntity.getEmail(), userEntity.getState().getId(), userEntity.getRoleEntities().stream().map(RoleEntity::getId).toList());
+        return new UserResponseDto(userEntity.getId(), userEntity.getUsername(), userEntity.getEmail(), userEntity.getState().getId(), userEntity.getRoleEntities().stream().map(RoleEntity::getId).toList());
     }
 }

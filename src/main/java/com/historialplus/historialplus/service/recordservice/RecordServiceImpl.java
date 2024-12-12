@@ -51,7 +51,7 @@ public class RecordServiceImpl implements IRecordService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         // a partir del nombre del usuario logeado recuperame su hospital id
-        UserEntity user = userRepository.findByName(username)
+        UserEntity user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with username: " + username));
 
         // creame un entidad de record

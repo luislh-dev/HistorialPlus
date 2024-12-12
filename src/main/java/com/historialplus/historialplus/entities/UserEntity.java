@@ -21,8 +21,8 @@ public class UserEntity {
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(nullable = false, name = "name")
+    private String username;
 
     @Column(nullable = false, unique = true)
     private String email;

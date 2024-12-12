@@ -13,7 +13,9 @@ import com.historialplus.historialplus.repository.UserRepository;
 import com.historialplus.historialplus.service.stateservice.IStateService;
 import lombok.NonNull;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.historialplus.historialplus.constants.RoleConstants.ROLE_ADMIN;
 import static com.historialplus.historialplus.constants.RoleConstants.ROLE_MANAGEMENT;
 
 @Service
@@ -66,7 +69,7 @@ public class UserServiceImpl implements IUserService {
         // Obtener el usuario de gestión autenticado
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        UserEntity managementUser = repository.findByName(authentication.getName())
+        UserEntity managementUser = repository.findByUsername(authentication.getName())
                 .orElseThrow(() -> new IllegalArgumentException("Usuario de gestión no encontrado"));
 
         if (managementUser.getRoleEntities().stream().noneMatch(role -> role.getName().equals(ROLE_MANAGEMENT))) {
@@ -85,7 +88,7 @@ public class UserServiceImpl implements IUserService {
         // actualizacion parcial
         return repository.findById(id).map(user -> {
             if (userDto.getName() != null) {
-                user.setName(userDto.getName());
+                user.setUsername(userDto.getName());
             }
             if (userDto.getEmail() != null) {
                 user.setEmail(userDto.getEmail());
@@ -109,13 +112,40 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Page<UserListResponseDto> searchUsers(String username, String dni, String hospital, UUID id, RoleEntity role, Pageable pageable) {
-        if (username == null && dni == null && hospital == null && id == null && role == null) {
-            return repository.findAllWithCustomOrder(pageable).map(UserDtoMapper::toListResponseDto);
+    public Page<UserListResponseDto> searchUsers(String name, String dni, String hospitalName, Integer roleId, Integer stateId, Pageable pageable) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserEntity user = repository.findByUsername(authentication.getName()).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        String role = user.getRoleEntities().stream().findFirst().orElseThrow(() -> new IllegalArgumentException("Rol no encontrado")).getName();
+
+        //  Si el ordenamiento es por DNI, se ordena por el número de documento
+        if (pageable.getSort().getOrderFor("dni") != null) {
+            Sort.Order order = pageable.getSort().getOrderFor("dni");
+            assert order != null;
+            Sort newSort = Sort.by(new Sort.Order(order.getDirection(), "person.documentNumber"));
+            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), newSort);
         }
-        return repository.searchUsers(username, dni, hospital, id, role, pageable)
-                .map(UserDtoMapper::toListResponseDto);
+
+        // Si el hordenamiento es hospitalName, se ordena por el nombre del hospital
+        if (pageable.getSort().getOrderFor("hospital") != null) {
+            Sort.Order order = pageable.getSort().getOrderFor("hospital");
+            assert order != null;
+            Sort newSort = Sort.by(new Sort.Order(order.getDirection(), "hospital.name"));
+            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), newSort);
+        }
+
+        SearchUserSpecification spec = new SearchUserSpecification(null, dni, null, roleId, stateId);
+
+        if (role.equals(ROLE_ADMIN)) {
+            // Un administrador puede buscar sin restricciones
+            spec = new SearchUserSpecification(name, dni, hospitalName, roleId, stateId);
+        } else if (role.equals(ROLE_MANAGEMENT)) {
+            // Un usuario de gestión solo puede buscar usuarios de su hospital
+            spec = new SearchUserSpecification(name, dni, user.getHospital().getName(), roleId, stateId);
+        }
+
+        return repository.findAll(spec, pageable).map(UserDtoMapper::toListResponseDto);
     }
+
 
     /**
      * Elimina un usuario por su ID
