@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "reniec.api.url",
+      "type": "java.lang.String",
+      "description": "Description for reniec.api.url."
+    },
+    {
+      "name": "reniec.api.token",
+      "type": "java.lang.String",
+      "description": "Description for reniec.api.token."
+    }
+  ] }
