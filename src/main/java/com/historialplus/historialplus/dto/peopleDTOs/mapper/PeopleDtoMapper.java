@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.dto.peopleDTOs.mapper;
 
 import com.historialplus.historialplus.dto.peopleDTOs.request.PeopleCreateDto;
+import com.historialplus.historialplus.dto.peopleDTOs.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.dto.peopleDTOs.response.PeopleResponseDto;
 import com.historialplus.historialplus.entities.PeopleEntity;
 import com.historialplus.historialplus.entities.SexTypeEntity;
@@ -53,5 +54,16 @@ public class PeopleDtoMapper {
         entity.setTypeDocument(typeDocument);
 
         return entity;
+    }
+
+    // convertir de tipo PeopleEntity a MinimalPeopleResponseDto
+    public static MinimalPeopleResponseDto toMinimalPeopleDto(PeopleEntity peopleEntity) {
+        MinimalPeopleResponseDto reniecNameDto = new MinimalPeopleResponseDto();
+        reniecNameDto.setName(peopleEntity.getName());
+        reniecNameDto.setFatherLastName(peopleEntity.getPaternalSurname());
+        reniecNameDto.setMotherLastName(peopleEntity.getMaternalSurname());
+        reniecNameDto.setPhone(peopleEntity.getPhone());
+        reniecNameDto.setFromReniec(false);
+        return reniecNameDto;
     }
 }
