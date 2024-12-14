@@ -37,6 +37,11 @@ public class RoleServiceImpl implements IRoleService {
         return roleRepository.findById(id);
     }
 
+    @Override
+    public Optional<RoleEntity> finByName(String name) {
+        return roleRepository.findByName(name);
+    }
+
     private List<RoleEntity> getNonAdminRoles() {
         return roleRepository.findAll().stream()
                 .filter(roleEntity -> !ROLE_ADMIN.equals(roleEntity.getName()))
