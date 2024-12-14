@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -42,9 +43,7 @@ public class UserEntity {
     @Column(name = "blocked_until")
     private Timestamp blockedUntil;
 
-    @Column(name = "hospital_id", nullable = false, insertable = false, updatable = false)
-    private Integer hospitalId;
-
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
