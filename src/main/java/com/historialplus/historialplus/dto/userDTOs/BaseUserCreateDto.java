@@ -1,19 +1,25 @@
-package com.historialplus.historialplus.dto.userDTOs.request;
+package com.historialplus.historialplus.dto.userDTOs;
 
-import com.historialplus.historialplus.validators.role.ValidRoleId;
+import com.historialplus.historialplus.common.validators.user.UniqueUserField;
 import com.historialplus.historialplus.validators.state.ValidStateId;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.Setter;
+
+import static com.historialplus.historialplus.common.validators.user.UserFieldName.EMAIL;
+import static com.historialplus.historialplus.common.validators.user.UserFieldName.USERNAME;
 
 @Getter
-public class UserCreateDto {
-
+@Setter
+public class BaseUserCreateDto {
     @NotBlank(message = "Nombre es requerido")
     @Size(min = 3, max = 50, message = "Nombre debe tener entre 3 y 50 caracteres")
+    @UniqueUserField(fieldName = USERNAME, message = "Nombre de usuario ya existe")
     private String name;
 
     @NotBlank(message = "Email es requerido")
     @Email(message = "Email no es válido")
+    @UniqueUserField(fieldName = EMAIL, message = "Email ya existe")
     private String email;
 
     @NotBlank(message = "Contraseña es requerida")
@@ -23,19 +29,10 @@ public class UserCreateDto {
     )
     private String password;
 
+    @NotBlank(message = "DNI es requerido")
+    private String personDNI;
+
     @NotNull(message = "Estado es requerido")
     @ValidStateId
     private Integer stateId;
-
-    @NotNull(message = "Roles son requeridos")
-    @ValidRoleId
-    private Integer roleId;
-
-    public UserCreateDto(String name, String email, String password, int state, int roleId) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.stateId = state;
-        this.roleId = roleId;
-    }
 }
