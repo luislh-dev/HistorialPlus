@@ -6,10 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/people")
@@ -25,6 +22,11 @@ public class PeopleController {
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody PeopleCreateDto peopleCreateDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(peopleCreateDto));
+    }
+
+    @GetMapping("/getPersonName/{dni}")
+    public ResponseEntity<?> getPersonName(@PathVariable String dni) {
+        return ResponseEntity.ok(service.getPersonName(dni));
     }
 
 }
