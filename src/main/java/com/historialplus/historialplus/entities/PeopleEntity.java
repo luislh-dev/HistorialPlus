@@ -33,7 +33,6 @@ public class PeopleEntity {
     @Column(name = "paternal_surname", nullable = false)
     private String paternalSurname;
 
-    @Column(nullable = false)
     private Date birthdate;
 
     @Column(name = "blood_type")
