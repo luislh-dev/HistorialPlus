@@ -24,7 +24,8 @@ public class AuthServiceImpl implements IAuthService {
 
     private final UserRepository userRepository;
     private static final int MAX_FAILED_ATTEMPTS = 3;
-    private static final long LOCK_DURATION_MINUTES = 3;
+    private static final long LOCK_DURATION_MINUTES = 3; // 3 minutos
+    private static final long PERMANENT_LOCK_DURATION = Long.MAX_VALUE;
 
     @Autowired
     public AuthServiceImpl(UserRepository userRepository) {
@@ -102,6 +103,7 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     // Métodos auxiliares
+
     /**
      * Recupera el rol del usuario autenticado desde el contexto de seguridad.
      *
@@ -119,8 +121,32 @@ public class AuthServiceImpl implements IAuthService {
                 .getAuthority();
     }
 
+    /**
+     * Verifica si el rol del usuario autenticado es ROLE_ADMIN.
+     *
+     * @param role el nombre del rol a verificar
+     * @return verdadero si el rol es ROLE_ADMIN, falso en caso contrario
+     */
     @Override
     public boolean isAdmin(String role) {
         return ROLE_ADMIN.equals(role);
+    }
+
+    @Override
+    public String getUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    @Override
+    public void blockUserPermanently(String username) {
+        Optional<UserEntity> user = userRepository.findByUsername(username);
+        if (user.isPresent()) {
+            UserEntity userEntity = user.get();
+            userEntity.setBlocked(true);
+            userEntity.setBlockedUntil(Timestamp.from(Instant.now().plus(PERMANENT_LOCK_DURATION, ChronoUnit.MILLIS)));
+            userRepository.save(userEntity);
+        } else {
+            throw new IllegalArgumentException("Usuario no encontrado");
+        }
     }
 }

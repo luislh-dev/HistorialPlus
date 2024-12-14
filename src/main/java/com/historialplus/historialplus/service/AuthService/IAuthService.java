@@ -10,4 +10,8 @@ public interface IAuthService {
     String getAuthenticatedUserRole();
 
     boolean isAdmin(String role);
+
+    String getUsername();
+
+    void blockUserPermanently(String username);
 }
