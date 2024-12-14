@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.controller;
 
-import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
+import com.historialplus.historialplus.dto.userDTOs.request.DoctorCreationDto;
+import com.historialplus.historialplus.dto.userDTOs.request.ManagementCreationDto;
 import com.historialplus.historialplus.dto.userDTOs.request.UserUpdateDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
 import com.historialplus.historialplus.service.userservice.IUserService;
@@ -43,14 +44,14 @@ public class UserController {
         return user.isPresent() ? ResponseEntity.ok(user.get()) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody UserCreateDto userDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(userDto));
+    @PostMapping("/createManagementUser")
+    public ResponseEntity<?> createManagementUser(@Valid @RequestBody ManagementCreationDto userDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createManagementUser(userDto));
     }
 
-    @PostMapping("/createHospitalUserByManagement")
-    public ResponseEntity<?> createHospitalUserByManagement(@Valid @RequestBody UserCreateDto userDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createHospitalUserByManagement(userDto));
+    @PostMapping("/createDoctorUser")
+    public ResponseEntity<?> createDoctorUser(@Valid @RequestBody DoctorCreationDto userDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createDoctorUser(userDto));
     }
 
     @PatchMapping("/{id}")

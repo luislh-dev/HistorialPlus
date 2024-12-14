@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.service.userservice;
 
-import com.historialplus.historialplus.dto.userDTOs.UserDto;
-import com.historialplus.historialplus.dto.userDTOs.request.UserCreateDto;
+import com.historialplus.historialplus.dto.userDTOs.request.DoctorCreationDto;
+import com.historialplus.historialplus.dto.userDTOs.request.ManagementCreationDto;
 import com.historialplus.historialplus.dto.userDTOs.request.UserUpdateDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserListResponseDto;
 import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
@@ -19,15 +19,15 @@ public interface IUserService {
 
     Optional<UserResponseDto> findById(@NonNull UUID id);
 
-    UserDto save(UserCreateDto userDto);
-
     void deleteById(UUID id);
-
-    UserResponseDto createHospitalUserByManagement(UserCreateDto userDto);
 
     UserResponseDto update(UUID id, UserUpdateDto userDto);
 
     Page<UserListResponseDto> searchUsers(String name, String dni, String hospitalName, Integer roleId, Integer stateId, Pageable pageable);
 
     UserEntity findByUsername(String username);
+
+    UserResponseDto createManagementUser(ManagementCreationDto userDto);
+
+    UserResponseDto createDoctorUser(DoctorCreationDto userDto);
 }
