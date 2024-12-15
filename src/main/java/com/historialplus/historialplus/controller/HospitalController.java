@@ -31,6 +31,13 @@ public class HospitalController {
         return service.findAll(name, ruc, id, stateId, pageable);
     }
 
+    @GetMapping("/findByName")
+    public Page<?> findByName(
+            @RequestParam(required = false) String name,
+            Pageable pageable) {
+        return service.findByName(name, pageable);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getHospitalById(@PathVariable Integer id) {
         return service.findById(id)

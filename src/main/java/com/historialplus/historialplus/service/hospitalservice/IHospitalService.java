@@ -4,6 +4,7 @@ import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalCreateDt
 import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalUpdateDto;
 import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalFindByResponseDto;
 import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalResponseDto;
+import com.historialplus.historialplus.hospital.projection.HospitalNameProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,4 +16,5 @@ public interface IHospitalService {
     HospitalCreateDto save(HospitalCreateDto hospitalDto);
     void deleteById(Integer id);
     HospitalResponseDto update(Integer id, HospitalUpdateDto hospitalDto);
+    Page<HospitalNameProjection> findByName(String name, Pageable pageable);
 }

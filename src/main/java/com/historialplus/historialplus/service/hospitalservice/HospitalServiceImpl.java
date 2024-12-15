@@ -7,6 +7,7 @@ import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalFindByR
 import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalResponseDto;
 import com.historialplus.historialplus.entities.HospitalEntity;
 import com.historialplus.historialplus.entities.StateEntity;
+import com.historialplus.historialplus.hospital.projection.HospitalNameProjection;
 import com.historialplus.historialplus.repository.HospitalRepository;
 import com.historialplus.historialplus.repository.StateRepository;
 import lombok.AllArgsConstructor;
@@ -84,5 +85,10 @@ public class HospitalServiceImpl implements IHospitalService {
             }
             return HospitalDtoMapper.toHospitalResponseDto(hospitalRepository.save(hospital));
         }).orElseThrow(() -> new RuntimeException("Hospital no encontrado con ID: " + id));
+    }
+
+    @Override
+    public Page<HospitalNameProjection> findByName(String name, Pageable pageable) {
+        return hospitalRepository.findByNameContainingIgnoreCase(name, pageable);
     }
 }
