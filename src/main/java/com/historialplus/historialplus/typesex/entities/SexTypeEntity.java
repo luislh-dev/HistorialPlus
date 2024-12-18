@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.entities;
+package com.historialplus.historialplus.typesex.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;

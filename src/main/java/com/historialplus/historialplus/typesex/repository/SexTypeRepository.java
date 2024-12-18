@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.repository;
+package com.historialplus.historialplus.typesex.repository;
 
-import com.historialplus.historialplus.entities.SexTypeEntity;
+import com.historialplus.historialplus.typesex.entities.SexTypeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -4,8 +4,8 @@ import com.historialplus.historialplus.dto.peopleDTOs.request.PeopleCreateDto;
 import com.historialplus.historialplus.dto.peopleDTOs.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.dto.peopleDTOs.response.PeopleResponseDto;
 import com.historialplus.historialplus.entities.PeopleEntity;
-import com.historialplus.historialplus.entities.SexTypeEntity;
 import com.historialplus.historialplus.entities.TypeDocumentEntity;
+import com.historialplus.historialplus.typesex.entities.SexTypeEntity;
 
 public class PeopleDtoMapper {
 
