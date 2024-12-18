@@ -5,6 +5,8 @@ import com.historialplus.historialplus.entities.PeopleEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -23,10 +25,12 @@ public class TypeDocumentEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(name = "created_at", updatable = false, insertable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private Timestamp createdAt;
 
-    @Column(name = "updated_at", insertable = false)
+    @UpdateTimestamp
+    @Column(name = "updated_at")
     private Timestamp updatedAt;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
