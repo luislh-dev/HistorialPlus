@@ -63,7 +63,7 @@ public class PeopleDtoMapper {
         reniecNameDto.setFatherLastName(peopleEntity.getPaternalSurname());
         reniecNameDto.setMotherLastName(peopleEntity.getMaternalSurname());
         reniecNameDto.setPhone(peopleEntity.getPhone());
-        reniecNameDto.setFromReniec(false);
+        reniecNameDto.setHasExternalSource(false);
         return reniecNameDto;
     }
 }

@@ -48,4 +48,11 @@ public class PeopleServiceImpl implements IPeopleService {
         return reniecResponse.map(reniecMapper::toMinimalPeopleDto);
 
     }
+
+    @Override
+    public Optional<MinimalPeopleResponseDto> getPersonNameByDocument(Integer id, String documentNumber) {
+        // validar
+
+        return Optional.empty();
+    }
 }
