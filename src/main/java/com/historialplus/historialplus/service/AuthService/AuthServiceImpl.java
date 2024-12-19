@@ -12,7 +12,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
-import static com.historialplus.historialplus.constants.RoleConstants.ROLE_ADMIN;
+import static com.historialplus.historialplus.common.constants.RoleConstants.ROLE_ADMIN;
 
 /**
  * Servicio para gestionar los intentos de inicio de sesión de los usuarios.

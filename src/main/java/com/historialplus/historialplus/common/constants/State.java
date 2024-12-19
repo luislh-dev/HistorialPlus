@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.constants;
+package com.historialplus.historialplus.common.constants;
 
 public class State {
     public static final Integer ACTIVE_ID = 1;

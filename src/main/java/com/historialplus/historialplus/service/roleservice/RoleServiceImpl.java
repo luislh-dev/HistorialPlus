@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.historialplus.historialplus.constants.RoleConstants.ROLE_ADMIN;
+import static com.historialplus.historialplus.common.constants.RoleConstants.ROLE_ADMIN;
 import static com.historialplus.historialplus.util.roles.RoleTransformer.transformRoles;
 
 @Service

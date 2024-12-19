@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.constants;
+package com.historialplus.historialplus.common.constants;
 
 public class RoleConstants {
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
