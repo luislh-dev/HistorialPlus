@@ -31,6 +31,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.historialplus.historialplus.common.constants.RoleConstants.*;
 import static com.historialplus.historialplus.common.constants.State.ACTIVE_ID;
 import static com.historialplus.historialplus.common.constants.State.DELETED_ID;
 
