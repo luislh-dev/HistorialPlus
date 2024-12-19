@@ -9,5 +9,15 @@
       "name": "reniec.api.token",
       "type": "java.lang.String",
       "description": "Description for reniec.api.token."
+    },
+    {
+      "name": "cee.api.token",
+      "type": "java.lang.String",
+      "description": "Description for cee.api.token."
+    },
+    {
+      "name": "cee.api.url",
+      "type": "java.lang.String",
+      "description": "Description for cee.api.url."
     }
   ] }
