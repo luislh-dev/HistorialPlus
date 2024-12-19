@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/typeDocument")
+@RequestMapping("/api/documentType")
 public class TypeDocumentController {
 
     private  final ITypeDocumentService service;

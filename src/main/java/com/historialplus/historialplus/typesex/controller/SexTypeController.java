@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sexType")
+@RequestMapping("/api/sexType")
 public class SexTypeController {
     private final ISexTypeService service;
 
