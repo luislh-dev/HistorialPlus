@@ -1,9 +1,9 @@
-package com.historialplus.historialplus.external.cee.service;
+package com.historialplus.historialplus.external.ce.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.historialplus.historialplus.external.cee.dto.CeeResponseDto;
+import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +17,7 @@ import java.util.Optional;
 import static org.springframework.http.HttpMethod.GET;
 
 @Service
-public class CeeServiceImpl implements ICeeService {
+public class CeServiceImpl implements ICeService {
 
     @Value("${cee.api.url}")
     private String apiUrl;
@@ -26,7 +26,7 @@ public class CeeServiceImpl implements ICeeService {
     private String apiToken;
 
     @Override
-    public Optional<CeeResponseDto> getCeeData(String ceeNumber) {
+    public Optional<CeResponseDto> getCeeData(String ceeNumber) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -37,7 +37,7 @@ public class CeeServiceImpl implements ICeeService {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode root = objectMapper.readTree(response.getBody());
             JsonNode body = root.path("body");
-            CeeResponseDto ceeResponseDto = objectMapper.treeToValue(body, CeeResponseDto.class);
+            CeResponseDto ceeResponseDto = objectMapper.treeToValue(body, CeResponseDto.class);
             return Optional.ofNullable(ceeResponseDto);
         } catch (HttpClientErrorException e) {
             if ((e.getStatusCode().is4xxClientError() && e.getResponseBodyAsString().contains("not found")) || e.getStatusCode().value() == 422 || e.getStatusCode().value() == 400) {

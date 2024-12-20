@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.external.cee.dto;
+package com.historialplus.historialplus.external.ce.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CeeResponseDto {
+public class CeResponseDto {
     @JsonProperty("nombres")
     private String names;
 
