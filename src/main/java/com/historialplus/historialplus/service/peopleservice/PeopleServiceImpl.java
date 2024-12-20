@@ -77,6 +77,11 @@ public class PeopleServiceImpl implements IPeopleService {
 
         // Validamos si el tipo es Carnet de Extranjería
         if (id.equals(CE_ID)){
+
+            if (documentNumber.length() < 9) {
+                return Optional.empty();
+            }
+
             try {
                 Optional<CeResponseDto> ceResponse = ceService.getCeData(documentNumber);
                 return ceResponse.map(CeMapper::toMinimalPeopleDto);
