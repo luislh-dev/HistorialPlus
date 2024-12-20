@@ -11,7 +11,8 @@ public class CeMapper {
         minimalPeopleResponseDto.setFatherLastName(dto.getApellidoPaterno());
         minimalPeopleResponseDto.setMotherLastName(dto.getApellidoMaterno());
         minimalPeopleResponseDto.setPhone(null); // Es un campo opcional y no se encuentra en la respuesta de la cee
-        minimalPeopleResponseDto.setHasExternalSource(false);
+        minimalPeopleResponseDto.setHasExternalSource(true);
+        minimalPeopleResponseDto.setDataSource("Migraciones");
         return minimalPeopleResponseDto;
     }
 
