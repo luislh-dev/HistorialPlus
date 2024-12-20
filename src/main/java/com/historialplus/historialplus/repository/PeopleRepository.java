@@ -10,4 +10,6 @@ import java.util.UUID;
 @Repository
 public interface PeopleRepository extends JpaRepository<PeopleEntity, UUID> {
     Optional<PeopleEntity> findByDocumentNumber(String documentNumber);
+    Optional<PeopleEntity> findByDocumentNumberAndTypeDocument_Id(String documentNumber, Integer typeDocumentId);
+
 }

@@ -60,7 +60,7 @@ public class PeopleServiceImpl implements IPeopleService {
     @Override
     public Optional<MinimalPeopleResponseDto> getPersonNameByDocument(Integer id, String documentNumber) {
         // verificamos si la persona ya existe en la base de datos
-        Optional<PeopleEntity> people = findByDocumentNumber(documentNumber);
+        Optional<PeopleEntity> people = repository.findByDocumentNumberAndTypeDocument_Id(documentNumber, id);
         if (people.isPresent()) {
             return Optional.of(PeopleDtoMapper.toMinimalPeopleDto(people.get()));
         }
