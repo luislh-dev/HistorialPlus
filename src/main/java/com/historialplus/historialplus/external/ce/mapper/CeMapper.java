@@ -5,7 +5,7 @@ import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
 
 public class CeMapper {
     // Convertir de CeeResponseDto a MinimalPeopleResponseDto
-    public static MinimalPeopleResponseDto toMinimalPeopleResponseDto(CeResponseDto dto){
+    public static MinimalPeopleResponseDto toMinimalPeopleDto(CeResponseDto dto){
         MinimalPeopleResponseDto minimalPeopleResponseDto = new MinimalPeopleResponseDto();
         minimalPeopleResponseDto.setName(dto.getNames());
         minimalPeopleResponseDto.setFatherLastName(dto.getApellidoPaterno());

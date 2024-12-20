@@ -26,7 +26,7 @@ public class CeServiceImpl implements ICeService {
     private String apiToken;
 
     @Override
-    public Optional<CeResponseDto> getCeeData(String ceeNumber) {
+    public Optional<CeResponseDto> getCeData(String ceeNumber) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(headers);
