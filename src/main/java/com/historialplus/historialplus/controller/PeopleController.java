@@ -29,4 +29,14 @@ public class PeopleController {
         return ResponseEntity.ok(service.getPersonName(dni));
     }
 
+    @GetMapping("/getPersonNameByDocument/{id}/{documentNumber}")
+    public ResponseEntity<?> getPersonNameByDocument(@PathVariable Integer id, @PathVariable String documentNumber) {
+        var response = service.getPersonNameByDocument(id, documentNumber);
+
+        if (response.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(response);
+    }
+
 }

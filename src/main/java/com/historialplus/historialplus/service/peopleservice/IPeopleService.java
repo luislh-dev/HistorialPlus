@@ -11,4 +11,5 @@ public interface IPeopleService {
     PeopleResponseDto save(PeopleCreateDto peopleCreateDto);
     Optional<PeopleEntity> findByDocumentNumber(String documentNumber);
     Optional<MinimalPeopleResponseDto> getPersonName(String dni);
+    Optional<MinimalPeopleResponseDto> getPersonNameByDocument(Integer id, String documentNumber);
 }
