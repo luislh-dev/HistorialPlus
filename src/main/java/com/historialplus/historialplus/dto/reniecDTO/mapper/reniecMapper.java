@@ -13,6 +13,7 @@ public class reniecMapper {
         reniecNameDto.setMotherLastName(reniecResponseDto.getApellidoMaterno());
         reniecNameDto.setPhone(null); // Es un campo opcional y no se encuentra en la respuesta de la reniec
         reniecNameDto.setHasExternalSource(true);
+        reniecNameDto.setDataSource("Reniec");
         return reniecNameDto;
     }
 
