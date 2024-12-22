@@ -58,12 +58,15 @@ public class PeopleDtoMapper {
 
     // convertir de tipo PeopleEntity a MinimalPeopleResponseDto
     public static MinimalPeopleResponseDto toMinimalPeopleDto(PeopleEntity peopleEntity) {
-        MinimalPeopleResponseDto reniecNameDto = new MinimalPeopleResponseDto();
-        reniecNameDto.setName(peopleEntity.getName());
-        reniecNameDto.setFatherLastName(peopleEntity.getPaternalSurname());
-        reniecNameDto.setMotherLastName(peopleEntity.getMaternalSurname());
-        reniecNameDto.setPhone(peopleEntity.getPhone());
-        reniecNameDto.setHasExternalSource(false);
-        return reniecNameDto;
+        return new MinimalPeopleResponseDto(
+                peopleEntity.getName(),
+                peopleEntity.getPaternalSurname(),
+                peopleEntity.getMaternalSurname(),
+                peopleEntity.getDocumentNumber(),
+                peopleEntity.getTypeDocument().getName(),
+                peopleEntity.getPhone(),
+                false,
+                "RENIEC"
+        );
     }
 }

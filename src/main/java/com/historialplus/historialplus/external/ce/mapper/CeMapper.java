@@ -3,17 +3,20 @@ package com.historialplus.historialplus.external.ce.mapper;
 import com.historialplus.historialplus.dto.peopleDTOs.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
 
-public class CeMapper {
-    // Convertir de CeeResponseDto a MinimalPeopleResponseDto
-    public static MinimalPeopleResponseDto toMinimalPeopleDto(CeResponseDto dto){
-        MinimalPeopleResponseDto minimalPeopleResponseDto = new MinimalPeopleResponseDto();
-        minimalPeopleResponseDto.setName(dto.getNames());
-        minimalPeopleResponseDto.setFatherLastName(dto.getApellidoPaterno());
-        minimalPeopleResponseDto.setMotherLastName(dto.getApellidoMaterno());
-        minimalPeopleResponseDto.setPhone(null); // Es un campo opcional y no se encuentra en la respuesta de la cee
-        minimalPeopleResponseDto.setHasExternalSource(true);
-        minimalPeopleResponseDto.setDataSource("Migraciones");
-        return minimalPeopleResponseDto;
-    }
+import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.CE_NAME;
 
+public class CeMapper {
+    // Convertir de CeResponseDto a MinimalPeopleResponseDto
+    public static MinimalPeopleResponseDto toMinimalPeopleDto(CeResponseDto dto){
+        return new MinimalPeopleResponseDto(
+                dto.getNames(),
+                dto.getApellidoPaterno(),
+                dto.getApellidoMaterno(),
+                dto.getDocumentNumber(),
+                CE_NAME,
+                null,
+                true,
+                "Reniec"
+        );
+    }
 }
