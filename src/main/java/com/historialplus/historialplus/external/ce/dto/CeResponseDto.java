@@ -17,4 +17,7 @@ public class CeResponseDto {
 
     @JsonProperty("apellido_materno")
     private String apellidoMaterno;
+
+    @JsonProperty("numero")
+    private String documentNumber;
 }
