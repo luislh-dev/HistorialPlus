@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.auth;
 
+import com.historialplus.historialplus.auth.AuthService.IAuthService;
 import com.historialplus.historialplus.auth.filter.JwtAuthenticationFilter;
 import com.historialplus.historialplus.auth.filter.JwtValidationFilter;
-import com.historialplus.historialplus.service.AuthService.IAuthService;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

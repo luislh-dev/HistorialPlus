@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.historialplus.historialplus.service.AuthService.DTO.LoginRequestDTO;
-import com.historialplus.historialplus.service.AuthService.IAuthService;
+import com.historialplus.historialplus.auth.AuthService.DTO.LoginRequestDTO;
+import com.historialplus.historialplus.auth.AuthService.IAuthService;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;

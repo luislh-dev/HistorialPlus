@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.service.AuthService;
+package com.historialplus.historialplus.auth.AuthService;
 
 public interface IAuthService {
     void loginSucceeded(String username);

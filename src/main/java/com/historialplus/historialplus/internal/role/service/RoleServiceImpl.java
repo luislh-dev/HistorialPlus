@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.internal.role.service;
 
+import com.historialplus.historialplus.auth.AuthService.IAuthService;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;
 import com.historialplus.historialplus.internal.role.repository.RoleRepository;
-import com.historialplus.historialplus.service.AuthService.IAuthService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

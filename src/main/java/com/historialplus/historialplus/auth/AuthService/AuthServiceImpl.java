@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.service.AuthService;
+package com.historialplus.historialplus.auth.AuthService;
 
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import com.historialplus.historialplus.internal.user.repository.UserRepository;
