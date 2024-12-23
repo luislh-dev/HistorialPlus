@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.external.ce.mapper;
 
-import com.historialplus.historialplus.dto.peopleDTOs.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
+import com.historialplus.historialplus.people.dto.response.MinimalPeopleResponseDto;
 
 import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.CE_NAME;
 

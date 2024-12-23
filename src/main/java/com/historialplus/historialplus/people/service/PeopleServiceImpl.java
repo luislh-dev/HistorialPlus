@@ -1,16 +1,16 @@
-package com.historialplus.historialplus.service.peopleservice;
+package com.historialplus.historialplus.people.service;
 
-import com.historialplus.historialplus.dto.peopleDTOs.mapper.PeopleDtoMapper;
-import com.historialplus.historialplus.dto.peopleDTOs.request.PeopleCreateDto;
-import com.historialplus.historialplus.dto.peopleDTOs.response.MinimalPeopleResponseDto;
-import com.historialplus.historialplus.dto.peopleDTOs.response.PeopleResponseDto;
 import com.historialplus.historialplus.dto.reniecDTO.ReniecResponseDto;
 import com.historialplus.historialplus.dto.reniecDTO.mapper.reniecMapper;
-import com.historialplus.historialplus.entities.PeopleEntity;
 import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
 import com.historialplus.historialplus.external.ce.mapper.CeMapper;
 import com.historialplus.historialplus.external.ce.service.ICeService;
-import com.historialplus.historialplus.repository.PeopleRepository;
+import com.historialplus.historialplus.people.dto.request.PeopleCreateDto;
+import com.historialplus.historialplus.people.dto.response.MinimalPeopleResponseDto;
+import com.historialplus.historialplus.people.dto.response.PeopleResponseDto;
+import com.historialplus.historialplus.people.entities.PeopleEntity;
+import com.historialplus.historialplus.people.mapper.PeopleDtoMapper;
+import com.historialplus.historialplus.people.repository.PeopleRepository;
 import com.historialplus.historialplus.service.reniecservice.IReniecService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

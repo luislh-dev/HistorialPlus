@@ -1,7 +1,7 @@
-package com.historialplus.historialplus.controller;
+package com.historialplus.historialplus.people.controller;
 
-import com.historialplus.historialplus.dto.peopleDTOs.request.PeopleCreateDto;
-import com.historialplus.historialplus.service.peopleservice.IPeopleService;
+import com.historialplus.historialplus.people.dto.request.PeopleCreateDto;
+import com.historialplus.historialplus.people.service.IPeopleService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

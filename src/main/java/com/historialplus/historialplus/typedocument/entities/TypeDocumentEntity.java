@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.typedocument.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.historialplus.historialplus.entities.PeopleEntity;
+import com.historialplus.historialplus.people.entities.PeopleEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

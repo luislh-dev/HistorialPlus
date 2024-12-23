@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.dto.peopleDTOs.request;
+package com.historialplus.historialplus.people.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

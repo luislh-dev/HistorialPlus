@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.dto.peopleDTOs.response;
+package com.historialplus.historialplus.people.dto.response;
 
 import lombok.Getter;
 
