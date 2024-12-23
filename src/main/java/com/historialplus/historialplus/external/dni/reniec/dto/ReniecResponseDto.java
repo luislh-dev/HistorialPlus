@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.dto.reniecDTO;
+package com.historialplus.historialplus.external.dni.reniec.dto;
 
 import lombok.Getter;
 import lombok.Setter;

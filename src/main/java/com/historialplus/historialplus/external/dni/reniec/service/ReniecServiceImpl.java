@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.service.reniecservice;
+package com.historialplus.historialplus.external.dni.reniec.service;
 
-import com.historialplus.historialplus.dto.reniecDTO.ReniecResponseDto;
+import com.historialplus.historialplus.external.dni.reniec.dto.ReniecResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

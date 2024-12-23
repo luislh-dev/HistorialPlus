@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.dto.reniecDTO.mapper;
+package com.historialplus.historialplus.external.dni.reniec.mapper;
 
-import com.historialplus.historialplus.dto.reniecDTO.ReniecResponseDto;
+import com.historialplus.historialplus.external.dni.reniec.dto.ReniecResponseDto;
 import com.historialplus.historialplus.people.dto.response.MinimalPeopleResponseDto;
 
 import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.DNI_NAME;
