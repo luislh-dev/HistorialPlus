@@ -1,10 +1,10 @@
-package com.historialplus.historialplus.service.fileservice;
+package com.historialplus.historialplus.file.service;
 
 import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressionLevel;
-import com.historialplus.historialplus.dto.filesDTOs.mapper.FilesDtoMapper;
-import com.historialplus.historialplus.dto.filesDTOs.response.FilesResponseDto;
-import com.historialplus.historialplus.entities.FileEntity;
-import com.historialplus.historialplus.repository.FileRepository;
+import com.historialplus.historialplus.file.dto.response.FilesResponseDto;
+import com.historialplus.historialplus.file.entites.FileEntity;
+import com.historialplus.historialplus.file.mapper.FilesDtoMapper;
+import com.historialplus.historialplus.file.repository.FileRepository;
 import com.historialplus.historialplus.service.ImgCompressService.IMGCompressService;
 import com.historialplus.historialplus.service.iLovePDFService.PDFCompressService;
 import com.historialplus.historialplus.util.InMemoryMultipartFile;

@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.recorddetail.entites;
 
-import com.historialplus.historialplus.entities.FileEntity;
+import com.historialplus.historialplus.file.entites.FileEntity;
 import com.historialplus.historialplus.hospital.entities.HospitalEntity;
 import com.historialplus.historialplus.record.entites.RecordEntity;
 import com.historialplus.historialplus.state.entities.StateEntity;

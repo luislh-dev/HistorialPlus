@@ -1,12 +1,12 @@
-package com.historialplus.historialplus.controller;
+package com.historialplus.historialplus.file.controller;
 
-import com.historialplus.historialplus.dto.filesDTOs.mapper.FilesDtoMapper;
-import com.historialplus.historialplus.dto.filesDTOs.request.FilesCreateDto;
-import com.historialplus.historialplus.dto.filesDTOs.response.FilesResponseDto;
-import com.historialplus.historialplus.entities.FileEntity;
+import com.historialplus.historialplus.file.dto.request.FilesCreateDto;
+import com.historialplus.historialplus.file.dto.response.FilesResponseDto;
+import com.historialplus.historialplus.file.entites.FileEntity;
+import com.historialplus.historialplus.file.mapper.FilesDtoMapper;
+import com.historialplus.historialplus.file.service.IFileService;
 import com.historialplus.historialplus.recorddetail.entites.RecordDetailEntity;
 import com.historialplus.historialplus.recorddetail.service.IRecordDetailService;
-import com.historialplus.historialplus.service.fileservice.IFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.dto.filesDTOs.request;
+package com.historialplus.historialplus.file.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

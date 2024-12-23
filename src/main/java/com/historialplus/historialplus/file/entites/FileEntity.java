@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.entities;
+package com.historialplus.historialplus.file.entites;
 
 import com.historialplus.historialplus.recorddetail.entites.RecordDetailEntity;
 import jakarta.persistence.*;

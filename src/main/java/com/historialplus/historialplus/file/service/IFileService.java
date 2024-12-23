@@ -1,7 +1,7 @@
-package com.historialplus.historialplus.service.fileservice;
+package com.historialplus.historialplus.file.service;
 
-import com.historialplus.historialplus.dto.filesDTOs.response.FilesResponseDto;
-import com.historialplus.historialplus.entities.FileEntity;
+import com.historialplus.historialplus.file.dto.response.FilesResponseDto;
+import com.historialplus.historialplus.file.entites.FileEntity;
 
 import java.util.List;
 import java.util.Optional;

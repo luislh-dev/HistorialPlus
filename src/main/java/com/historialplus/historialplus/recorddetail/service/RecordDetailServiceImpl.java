@@ -3,11 +3,11 @@ package com.historialplus.historialplus.recorddetail.service;
 import com.historialplus.historialplus.dto.recordDetailDTOs.mapper.RecordDetailDtoMapper;
 import com.historialplus.historialplus.dto.recordDetailDTOs.request.RecordDetailCreateDto;
 import com.historialplus.historialplus.dto.recordDetailDTOs.response.RecordDetailResponseDto;
+import com.historialplus.historialplus.file.service.IFileService;
 import com.historialplus.historialplus.record.entites.RecordEntity;
 import com.historialplus.historialplus.record.repository.RecordRepository;
 import com.historialplus.historialplus.recorddetail.entites.RecordDetailEntity;
 import com.historialplus.historialplus.recorddetail.repository.RecordDetailRepository;
-import com.historialplus.historialplus.service.fileservice.IFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

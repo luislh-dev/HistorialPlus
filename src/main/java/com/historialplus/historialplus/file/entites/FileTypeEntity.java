@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.entities;
+package com.historialplus.historialplus.file.entites;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -35,7 +35,6 @@ public class FileTypeEntity {
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-
     @PrePersist
     protected void onCreate() {
         createdAt = new Date();

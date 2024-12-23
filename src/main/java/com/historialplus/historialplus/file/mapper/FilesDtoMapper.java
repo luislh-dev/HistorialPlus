@@ -1,9 +1,9 @@
-package com.historialplus.historialplus.dto.filesDTOs.mapper;
+package com.historialplus.historialplus.file.mapper;
 
-import com.historialplus.historialplus.dto.filesDTOs.request.FilesCreateDto;
-import com.historialplus.historialplus.dto.filesDTOs.response.FilesResponseDto;
-import com.historialplus.historialplus.entities.FileEntity;
-import com.historialplus.historialplus.entities.FileTypeEntity;
+import com.historialplus.historialplus.file.dto.request.FilesCreateDto;
+import com.historialplus.historialplus.file.dto.response.FilesResponseDto;
+import com.historialplus.historialplus.file.entites.FileEntity;
+import com.historialplus.historialplus.file.entites.FileTypeEntity;
 import com.historialplus.historialplus.recorddetail.entites.RecordDetailEntity;
 import org.springframework.stereotype.Component;
 

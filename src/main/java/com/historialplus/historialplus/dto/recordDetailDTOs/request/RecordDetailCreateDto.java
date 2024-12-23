@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.dto.recordDetailDTOs.request;
 
-import com.historialplus.historialplus.dto.filesDTOs.request.FilesCreateDto;
+import com.historialplus.historialplus.file.dto.request.FilesCreateDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
