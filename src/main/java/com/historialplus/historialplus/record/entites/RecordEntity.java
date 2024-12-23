@@ -1,5 +1,6 @@
-package com.historialplus.historialplus.entities;
+package com.historialplus.historialplus.record.entites;
 
+import com.historialplus.historialplus.entities.RecordDetailEntity;
 import com.historialplus.historialplus.people.entities.PeopleEntity;
 import jakarta.persistence.*;
 import lombok.Getter;

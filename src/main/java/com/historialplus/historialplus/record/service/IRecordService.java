@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.service.recordservice;
+package com.historialplus.historialplus.record.service;
 
 import com.historialplus.historialplus.dto.recordDTOs.request.RecordCreateDto;
 import com.historialplus.historialplus.dto.recordDTOs.response.RecordResponseDto;
