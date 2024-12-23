@@ -1,7 +1,7 @@
-package com.historialplus.historialplus.service.roleservice;
+package com.historialplus.historialplus.role.service;
 
-import com.historialplus.historialplus.entities.RoleEntity;
-import com.historialplus.historialplus.repository.RoleRepository;
+import com.historialplus.historialplus.role.entites.RoleEntity;
+import com.historialplus.historialplus.role.repository.RoleRepository;
 import com.historialplus.historialplus.service.AuthService.IAuthService;
 import org.springframework.stereotype.Service;
 

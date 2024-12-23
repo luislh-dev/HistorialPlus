@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.common.validators.role;
 
-import com.historialplus.historialplus.service.roleservice.IRoleService;
+import com.historialplus.historialplus.role.service.IRoleService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;

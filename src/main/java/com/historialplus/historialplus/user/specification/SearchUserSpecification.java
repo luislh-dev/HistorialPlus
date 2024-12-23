@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.user.specification;
 
-import com.historialplus.historialplus.entities.RoleEntity;
 import com.historialplus.historialplus.hospital.entities.HospitalEntity;
 import com.historialplus.historialplus.people.entities.PeopleEntity;
+import com.historialplus.historialplus.role.entites.RoleEntity;
 import com.historialplus.historialplus.state.entities.StateEntity;
 import com.historialplus.historialplus.user.entites.UserEntity;
 import jakarta.persistence.criteria.*;

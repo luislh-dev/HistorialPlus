@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.service.roleservice;
+package com.historialplus.historialplus.role.service;
 
-import com.historialplus.historialplus.entities.RoleEntity;
+import com.historialplus.historialplus.role.entites.RoleEntity;
 
 import java.util.List;
 import java.util.Optional;

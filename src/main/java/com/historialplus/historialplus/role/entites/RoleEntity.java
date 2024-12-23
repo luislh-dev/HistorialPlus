@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.entities;
+package com.historialplus.historialplus.role.entites;
 
 
 import jakarta.persistence.*;

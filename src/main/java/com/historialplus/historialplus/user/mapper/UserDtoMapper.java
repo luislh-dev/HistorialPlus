@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.user.mapper;
 
+import com.historialplus.historialplus.role.entites.RoleEntity;
 import com.historialplus.historialplus.user.dto.response.UserListResponseDto;
 import com.historialplus.historialplus.user.dto.response.UserResponseDto;
-import com.historialplus.historialplus.entities.RoleEntity;
 import com.historialplus.historialplus.user.entites.UserEntity;
 import org.springframework.stereotype.Component;
 

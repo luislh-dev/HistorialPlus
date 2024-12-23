@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.controller;
+package com.historialplus.historialplus.role.controller;
 
-import com.historialplus.historialplus.service.roleservice.IRoleService;
+import com.historialplus.historialplus.role.service.IRoleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

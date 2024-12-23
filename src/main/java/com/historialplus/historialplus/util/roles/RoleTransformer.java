@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.util.roles;
 
-import com.historialplus.historialplus.entities.RoleEntity;
+import com.historialplus.historialplus.role.entites.RoleEntity;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.dto.roleDTOs;
 
-import com.historialplus.historialplus.entities.RoleEntity;
+import com.historialplus.historialplus.role.entites.RoleEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;

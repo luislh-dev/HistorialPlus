@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.user.service;
 
 import com.historialplus.historialplus.common.security.AdminOnly;
-import com.historialplus.historialplus.entities.RoleEntity;
 import com.historialplus.historialplus.people.service.IPeopleService;
+import com.historialplus.historialplus.role.entites.RoleEntity;
 import com.historialplus.historialplus.service.AuthService.IAuthService;
 import com.historialplus.historialplus.state.entities.StateEntity;
 import com.historialplus.historialplus.state.service.IStateService;
