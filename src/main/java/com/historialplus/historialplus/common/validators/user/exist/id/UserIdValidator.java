@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.validators.user;
+package com.historialplus.historialplus.common.validators.user.exist.id;
 
 import com.historialplus.historialplus.internal.user.repository.UserRepository;
 import jakarta.validation.ConstraintValidator;
