@@ -3,8 +3,10 @@ package com.historialplus.historialplus.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,41 +24,38 @@ public class RecordDetailEntity {
     @JoinColumn(name = "record_id", nullable = false)
     private RecordEntity record;
 
-    @Column(name = "description")
-    private String description;
+    @ManyToOne
+    @JoinColumn(name = "hospital_id", nullable = false)
+    private HospitalEntity hospital;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private UserEntity doctor;
 
-    @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
+    @Column(name = "visit_date", nullable = false)
+    private LocalDateTime visitDate;
 
-    @Column(name = "state_id", nullable = false)
-    private Integer stateId = 1; // Default to active
+    @Column(name = "reason", nullable = false)
+    private String reason;
+
+    @Column(name = "diagnosis")
+    private String diagnosis;
+
+    @Column(name = "treatment")
+    private String treatment;
 
     @OneToMany(mappedBy = "recordDetail", cascade = CascadeType.ALL)
     private List<FileEntity> files;
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = new Date();
-        updatedAt = new Date();
-    }
+    @ManyToOne
+    @JoinColumn(name = "state_id", nullable = false)
+    private StateEntity state;
 
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = new Date();
-    }
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
-    public void setState(StateEntity state) {
-        this.stateId = state.getId();
-    }
-
-    public StateEntity getState() {
-        StateEntity state = new StateEntity();
-        state.setId(this.stateId);
-        return state;
-    }
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

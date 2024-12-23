@@ -15,27 +15,17 @@ public class RecordDetailDtoMapper {
     public static RecordDetailResponseDto toResponseDto(RecordDetailEntity detailEntity) {
         return new RecordDetailResponseDto(
                 detailEntity.getId(),
-                detailEntity.getDescription(),
+                detailEntity.getReason(),
                 detailEntity.getRecord().getId(),
                 detailEntity.getState().getId()
         );
     }
 
-    public static RecordDetailCreateDto toCreateDto(RecordDetailEntity detailEntity) {
-        return new RecordDetailCreateDto(
-                detailEntity.getDescription(),
-                detailEntity.getState().getId(),
-                detailEntity.getFiles().stream()
-                        .map(FilesDtoMapper::toCreateDto)
-                        .collect(Collectors.toList())
-        );
-    }
 
     public static RecordDetailEntity toEntity(RecordDetailCreateDto detailDto, RecordEntity parentRecord) {
         RecordDetailEntity detailEntity = new RecordDetailEntity();
         detailEntity.setRecord(parentRecord);
-        detailEntity.setDescription(detailDto.getDescription());
-
+        detailEntity.setReason(detailDto.getDescription());
         StateEntity state = new StateEntity();
         state.setId(detailDto.getStateId() != null ? detailDto.getStateId() : 1);
         detailEntity.setState(state);

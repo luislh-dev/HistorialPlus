@@ -3,7 +3,9 @@ package com.historialplus.historialplus.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "files")
@@ -11,15 +13,14 @@ import java.util.Date;
 @Setter
 public class FileEntity {
     @Id
-    private byte[] id;
+    @GeneratedValue(generator = "UUID")
+    @Column(name = "id", columnDefinition = "BINARY(16)")
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "record_detail_id", nullable = false)
     private RecordDetailEntity recordDetail;
 
-//    @Column(name = "file_type_id", nullable = false)
-//    private int fileTypeId;
-    @Setter
     @ManyToOne
     @JoinColumn(name = "file_type_id", nullable = false)
     private FileTypeEntity fileType;
@@ -29,6 +30,12 @@ public class FileEntity {
 
     @Column(name = "url", nullable = false)
     private String url;
+
+    @Column(name = "size_in_bytes")
+    private Long sizeInBytes;
+
+    @Column(name = "mime_type", nullable = false)
+    private String mimeType;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

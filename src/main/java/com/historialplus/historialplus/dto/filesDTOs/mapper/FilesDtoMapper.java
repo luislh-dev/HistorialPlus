@@ -7,13 +7,10 @@ import com.historialplus.historialplus.entities.FileTypeEntity;
 import com.historialplus.historialplus.entities.RecordDetailEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
 public class FilesDtoMapper {
     public static FileEntity toEntity(FilesCreateDto fileDto, RecordDetailEntity parentDetail) {
         FileEntity fileEntity = new FileEntity();
-        fileEntity.setId(UUID.randomUUID().toString().getBytes());
         fileEntity.setName(fileDto.getName());
         fileEntity.setUrl(fileDto.getUrl());
         fileEntity.setRecordDetail(parentDetail);
@@ -27,7 +24,7 @@ public class FilesDtoMapper {
 
     public static FilesResponseDto toResponseDto(FileEntity fileEntity) {
         return new FilesResponseDto(
-                fileEntity.getId(),
+                fileEntity.getId().toString().getBytes(),
                 fileEntity.getName(),
                 fileEntity.getUrl(),
                 fileEntity.getFileType().getId()

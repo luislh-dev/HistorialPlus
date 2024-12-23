@@ -8,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -49,7 +48,10 @@ public class HospitalEntity {
     @JoinColumn(name = "state_id")
     private StateEntity state;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany(mappedBy = "hospital", fetch = FetchType.LAZY)
-    private List<RecordEntity> records = new ArrayList<>();
+    @OneToMany(mappedBy = "hospital")
+    private List<RecordDetailEntity> visits;
+
+    @OneToMany(mappedBy = "hospital")
+    private List<UserEntity> users;
+
 }

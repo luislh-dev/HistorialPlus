@@ -3,6 +3,7 @@ package com.historialplus.historialplus.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.util.Date;
 
 @Entity
@@ -12,10 +13,20 @@ import java.util.Date;
 public class FileTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "name", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private FileType name;
+
+    public enum FileType {
+        PRESCRIPTION,       // Recetas
+        MEDICAL_REPORT,    // Informes médicos
+        LAB_RESULT,        // Resultados de laboratorio
+        XRAY,              // Radiografías
+        SCAN,              // Otros tipos de imágenes médicas
+        OTHER             // Otros documentos
+    }
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

@@ -71,7 +71,7 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
     public void updateState(UUID id, Integer stateId) {
         RecordDetailEntity recordDetailEntity = recordDetailRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Record detail not found with the provided ID."));
-        recordDetailEntity.setStateId(stateId);
+        recordDetailEntity.getState().setId(stateId);
         recordDetailRepository.save(recordDetailEntity);
     }
 

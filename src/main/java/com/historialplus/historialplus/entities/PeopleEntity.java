@@ -66,9 +66,8 @@ public class PeopleEntity {
     @JoinColumn(name = "type_document_id")
     private TypeDocumentEntity typeDocument;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
-    private List<RecordEntity> records = new ArrayList<>();
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    private RecordEntity record;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
