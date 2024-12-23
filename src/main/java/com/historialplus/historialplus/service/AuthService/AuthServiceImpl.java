@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.service.AuthService;
 
-import com.historialplus.historialplus.user.entites.UserEntity;
-import com.historialplus.historialplus.user.repository.UserRepository;
+import com.historialplus.historialplus.internal.user.entites.UserEntity;
+import com.historialplus.historialplus.internal.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

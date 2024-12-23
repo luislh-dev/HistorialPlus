@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.common.validators.record;
 
-import com.historialplus.historialplus.record.service.IRecordService;
+import com.historialplus.historialplus.internal.record.service.IRecordService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;

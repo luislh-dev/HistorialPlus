@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.common.validators.hospital;
 
-import com.historialplus.historialplus.hospital.repository.HospitalRepository;
+import com.historialplus.historialplus.internal.hospital.repository.HospitalRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;

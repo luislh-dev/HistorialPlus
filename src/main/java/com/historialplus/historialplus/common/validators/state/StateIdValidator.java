@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.common.validators.state;
 
-import com.historialplus.historialplus.state.service.IStateService;
+import com.historialplus.historialplus.internal.state.service.IStateService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
