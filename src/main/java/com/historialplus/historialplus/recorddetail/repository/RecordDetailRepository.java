@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.repository;
+package com.historialplus.historialplus.recorddetail.repository;
 
-import com.historialplus.historialplus.entities.RecordDetailEntity;
+import com.historialplus.historialplus.recorddetail.entites.RecordDetailEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

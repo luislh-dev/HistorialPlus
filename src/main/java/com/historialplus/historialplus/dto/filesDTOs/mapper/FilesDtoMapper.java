@@ -4,7 +4,7 @@ import com.historialplus.historialplus.dto.filesDTOs.request.FilesCreateDto;
 import com.historialplus.historialplus.dto.filesDTOs.response.FilesResponseDto;
 import com.historialplus.historialplus.entities.FileEntity;
 import com.historialplus.historialplus.entities.FileTypeEntity;
-import com.historialplus.historialplus.entities.RecordDetailEntity;
+import com.historialplus.historialplus.recorddetail.entites.RecordDetailEntity;
 import org.springframework.stereotype.Component;
 
 @Component

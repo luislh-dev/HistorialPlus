@@ -2,13 +2,11 @@ package com.historialplus.historialplus.service.fileservice;
 
 import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressionLevel;
 import com.historialplus.historialplus.dto.filesDTOs.mapper.FilesDtoMapper;
-import com.historialplus.historialplus.dto.filesDTOs.request.FilesCreateDto;
 import com.historialplus.historialplus.dto.filesDTOs.response.FilesResponseDto;
 import com.historialplus.historialplus.entities.FileEntity;
-import com.historialplus.historialplus.entities.RecordDetailEntity;
 import com.historialplus.historialplus.repository.FileRepository;
-import com.historialplus.historialplus.service.iLovePDFService.PDFCompressService;
 import com.historialplus.historialplus.service.ImgCompressService.IMGCompressService;
+import com.historialplus.historialplus.service.iLovePDFService.PDFCompressService;
 import com.historialplus.historialplus.util.InMemoryMultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

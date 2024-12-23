@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.record.entites;
 
-import com.historialplus.historialplus.entities.RecordDetailEntity;
 import com.historialplus.historialplus.people.entities.PeopleEntity;
+import com.historialplus.historialplus.recorddetail.entites.RecordDetailEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

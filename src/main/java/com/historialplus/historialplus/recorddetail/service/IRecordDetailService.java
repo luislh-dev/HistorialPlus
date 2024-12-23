@@ -1,8 +1,8 @@
-package com.historialplus.historialplus.service.recorddetailservice;
+package com.historialplus.historialplus.recorddetail.service;
 
 import com.historialplus.historialplus.dto.recordDetailDTOs.request.RecordDetailCreateDto;
 import com.historialplus.historialplus.dto.recordDetailDTOs.response.RecordDetailResponseDto;
-import com.historialplus.historialplus.entities.RecordDetailEntity;
+import com.historialplus.historialplus.recorddetail.entites.RecordDetailEntity;
 
 import java.util.List;
 import java.util.Optional;
