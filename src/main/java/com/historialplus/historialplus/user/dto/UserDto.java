@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.dto.userDTOs;
+package com.historialplus.historialplus.user.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

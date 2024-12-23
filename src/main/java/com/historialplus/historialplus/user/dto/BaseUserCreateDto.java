@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.dto.userDTOs;
+package com.historialplus.historialplus.user.dto;
 
 import com.historialplus.historialplus.common.validators.state.ValidStateId;
 import com.historialplus.historialplus.common.validators.user.UniqueUserField;

@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.dto.userDTOs.request;
+package com.historialplus.historialplus.user.dto.request;
 
-import com.historialplus.historialplus.dto.userDTOs.BaseUserCreateDto;
+import com.historialplus.historialplus.user.dto.BaseUserCreateDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

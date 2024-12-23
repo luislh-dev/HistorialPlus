@@ -1,6 +1,8 @@
-package com.historialplus.historialplus.entities;
+package com.historialplus.historialplus.user.entites;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.historialplus.historialplus.entities.RoleEntity;
+import com.historialplus.historialplus.entities.StateEntity;
 import com.historialplus.historialplus.hospital.entities.HospitalEntity;
 import com.historialplus.historialplus.people.entities.PeopleEntity;
 import jakarta.persistence.*;

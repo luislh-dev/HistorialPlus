@@ -1,7 +1,7 @@
-package com.historialplus.historialplus.service.userservice;
+package com.historialplus.historialplus.user.service;
 
-import com.historialplus.historialplus.entities.UserEntity;
-import com.historialplus.historialplus.repository.UserRepository;
+import com.historialplus.historialplus.user.entites.UserEntity;
+import com.historialplus.historialplus.user.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

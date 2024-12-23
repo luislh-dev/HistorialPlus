@@ -1,10 +1,10 @@
-package com.historialplus.historialplus.controller;
+package com.historialplus.historialplus.user.controller;
 
-import com.historialplus.historialplus.dto.userDTOs.request.DoctorCreationDto;
-import com.historialplus.historialplus.dto.userDTOs.request.ManagementCreationDto;
-import com.historialplus.historialplus.dto.userDTOs.request.UserUpdateDto;
-import com.historialplus.historialplus.dto.userDTOs.response.UserResponseDto;
-import com.historialplus.historialplus.service.userservice.IUserService;
+import com.historialplus.historialplus.user.dto.request.DoctorCreationDto;
+import com.historialplus.historialplus.user.dto.request.ManagementCreationDto;
+import com.historialplus.historialplus.user.dto.request.UserUpdateDto;
+import com.historialplus.historialplus.user.dto.response.UserResponseDto;
+import com.historialplus.historialplus.user.service.IUserService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

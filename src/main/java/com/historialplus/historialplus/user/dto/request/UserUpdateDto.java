@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.dto.userDTOs.request;
+package com.historialplus.historialplus.user.dto.request;
 
 import com.historialplus.historialplus.common.validators.state.ValidStateId;
 import jakarta.validation.constraints.Email;

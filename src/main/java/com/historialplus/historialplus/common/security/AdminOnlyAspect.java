@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.common.security;
 
-import com.historialplus.historialplus.repository.UserRepository;
+import com.historialplus.historialplus.user.repository.UserRepository;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.security.access.AccessDeniedException;
