@@ -1,5 +1,6 @@
-package com.historialplus.historialplus.dto.roleDTOs;
+package com.historialplus.historialplus.role.mapper;
 
+import com.historialplus.historialplus.role.dto.RoleDto;
 import com.historialplus.historialplus.role.entites.RoleEntity;
 
 import java.util.List;

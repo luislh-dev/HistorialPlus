@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.dto.roleDTOs;
+package com.historialplus.historialplus.role.dto;
 
 import lombok.Getter;
 
