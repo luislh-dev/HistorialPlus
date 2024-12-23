@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.controller;
+package com.historialplus.historialplus.hospital.controller;
 
 import com.historialplus.historialplus.hospital.dto.request.HospitalCreateDto;
 import com.historialplus.historialplus.hospital.dto.request.HospitalUpdateDto;
