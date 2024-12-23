@@ -27,7 +27,7 @@ public class HospitalServiceImpl implements IHospitalService {
     @Override
     public Page<HospitalResponseDto> findAll(String name, String ruc, Integer id, Integer stateId, Pageable pageable) {
         SearchHospitalSpecification spec = new SearchHospitalSpecification(name, ruc, id, stateId);
-        return hospitalRepository.findAll(spec, pageable).map(HospitalDtoMapper::toHospitalResponseDto);
+        return hospitalRepository.findAllWithProjection(spec, pageable);
     }
 
     @Override
