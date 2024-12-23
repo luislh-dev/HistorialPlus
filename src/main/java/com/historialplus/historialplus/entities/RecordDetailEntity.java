@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.entities;
 
 import com.historialplus.historialplus.hospital.entities.HospitalEntity;
+import com.historialplus.historialplus.state.entities.StateEntity;
 import com.historialplus.historialplus.user.entites.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;

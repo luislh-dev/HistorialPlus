@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.hospital.service;
 
-import com.historialplus.historialplus.entities.StateEntity;
 import com.historialplus.historialplus.hospital.entities.HospitalEntity;
+import com.historialplus.historialplus.state.entities.StateEntity;
 import jakarta.persistence.criteria.*;
 import lombok.NonNull;
 import org.springframework.data.jpa.domain.Specification;

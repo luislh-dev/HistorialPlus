@@ -1,7 +1,7 @@
-package com.historialplus.historialplus.service.stateservice;
+package com.historialplus.historialplus.state.service;
 
-import com.historialplus.historialplus.entities.StateEntity;
-import com.historialplus.historialplus.repository.StateRepository;
+import com.historialplus.historialplus.state.entities.StateEntity;
+import com.historialplus.historialplus.state.repository.StateRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

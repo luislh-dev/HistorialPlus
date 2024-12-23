@@ -2,7 +2,7 @@ package com.historialplus.historialplus.hospital.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.historialplus.historialplus.entities.RecordDetailEntity;
-import com.historialplus.historialplus.entities.StateEntity;
+import com.historialplus.historialplus.state.entities.StateEntity;
 import com.historialplus.historialplus.user.entites.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;

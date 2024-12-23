@@ -1,10 +1,10 @@
 package com.historialplus.historialplus.user.specification;
 
 import com.historialplus.historialplus.entities.RoleEntity;
-import com.historialplus.historialplus.entities.StateEntity;
-import com.historialplus.historialplus.user.entites.UserEntity;
 import com.historialplus.historialplus.hospital.entities.HospitalEntity;
 import com.historialplus.historialplus.people.entities.PeopleEntity;
+import com.historialplus.historialplus.state.entities.StateEntity;
+import com.historialplus.historialplus.user.entites.UserEntity;
 import jakarta.persistence.criteria.*;
 import lombok.NonNull;
 import org.springframework.data.jpa.domain.Specification;

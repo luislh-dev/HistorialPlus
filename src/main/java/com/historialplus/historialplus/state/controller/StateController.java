@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.controller;
+package com.historialplus.historialplus.state.controller;
 
-import com.historialplus.historialplus.service.stateservice.IStateService;
+import com.historialplus.historialplus.state.service.IStateService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

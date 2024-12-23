@@ -5,7 +5,7 @@ import com.historialplus.historialplus.dto.recordDetailDTOs.request.RecordDetail
 import com.historialplus.historialplus.dto.recordDetailDTOs.response.RecordDetailResponseDto;
 import com.historialplus.historialplus.entities.RecordDetailEntity;
 import com.historialplus.historialplus.entities.RecordEntity;
-import com.historialplus.historialplus.entities.StateEntity;
+import com.historialplus.historialplus.state.entities.StateEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
