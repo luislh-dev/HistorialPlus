@@ -1,7 +1,7 @@
-package com.historialplus.historialplus.dto.recordDTOs.mapper;
+package com.historialplus.historialplus.record.mapper;
 
-import com.historialplus.historialplus.dto.recordDTOs.response.RecordResponseDto;
 import com.historialplus.historialplus.dto.recordDetailDTOs.mapper.RecordDetailDtoMapper;
+import com.historialplus.historialplus.record.dto.response.RecordResponseDto;
 import com.historialplus.historialplus.record.entites.RecordEntity;
 import org.springframework.stereotype.Component;
 

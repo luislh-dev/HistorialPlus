@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.dto.recordDTOs.request;
+package com.historialplus.historialplus.record.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

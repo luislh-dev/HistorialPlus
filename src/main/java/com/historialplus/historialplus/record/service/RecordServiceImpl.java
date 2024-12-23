@@ -1,11 +1,11 @@
 package com.historialplus.historialplus.record.service;
 
-import com.historialplus.historialplus.dto.recordDTOs.mapper.RecordDtoMapper;
-import com.historialplus.historialplus.dto.recordDTOs.request.RecordCreateDto;
-import com.historialplus.historialplus.dto.recordDTOs.response.RecordResponseDto;
 import com.historialplus.historialplus.people.entities.PeopleEntity;
 import com.historialplus.historialplus.people.repository.PeopleRepository;
+import com.historialplus.historialplus.record.dto.request.RecordCreateDto;
+import com.historialplus.historialplus.record.dto.response.RecordResponseDto;
 import com.historialplus.historialplus.record.entites.RecordEntity;
+import com.historialplus.historialplus.record.mapper.RecordDtoMapper;
 import com.historialplus.historialplus.record.repository.RecordRepository;
 import com.historialplus.historialplus.user.entites.UserEntity;
 import com.historialplus.historialplus.user.repository.UserRepository;

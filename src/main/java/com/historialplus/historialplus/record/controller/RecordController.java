@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.record.controller;
 
-import com.historialplus.historialplus.dto.recordDTOs.request.RecordCreateDto;
-import com.historialplus.historialplus.dto.recordDTOs.response.RecordResponseDto;
+import com.historialplus.historialplus.record.dto.request.RecordCreateDto;
+import com.historialplus.historialplus.record.dto.response.RecordResponseDto;
 import com.historialplus.historialplus.record.service.IRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
