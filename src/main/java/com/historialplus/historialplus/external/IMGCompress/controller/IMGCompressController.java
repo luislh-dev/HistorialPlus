@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.controller;
+package com.historialplus.historialplus.external.IMGCompress.controller;
 
-import com.historialplus.historialplus.service.ImgCompressService.IMGCompressService;
+import com.historialplus.historialplus.external.IMGCompress.service.IMGCompressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

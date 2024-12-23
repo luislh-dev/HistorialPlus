@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.service.ImgCompressService;
+package com.historialplus.historialplus.external.IMGCompress.service;
 
-import com.historialplus.historialplus.service.cloudflareservice.ICloudflareService;
+import com.historialplus.historialplus.external.r2.service.ICloudflareService;
 import com.historialplus.historialplus.util.InMemoryMultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;

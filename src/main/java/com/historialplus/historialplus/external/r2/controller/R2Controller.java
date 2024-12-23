@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.controller;
+package com.historialplus.historialplus.external.r2.controller;
 
-import com.historialplus.historialplus.service.cloudflareservice.ICloudflareService;
+import com.historialplus.historialplus.external.r2.service.ICloudflareService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

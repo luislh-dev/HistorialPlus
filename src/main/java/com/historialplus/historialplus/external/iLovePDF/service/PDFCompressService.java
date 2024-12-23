@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.service.iLovePDFService;
+package com.historialplus.historialplus.external.iLovePDF.service;
 
 import com.adobe.pdfservices.operation.PDFServices;
 import com.adobe.pdfservices.operation.PDFServicesMediaType;
@@ -10,7 +10,7 @@ import com.adobe.pdfservices.operation.pdfjobs.jobs.CompressPDFJob;
 import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressPDFParams;
 import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressionLevel;
 import com.adobe.pdfservices.operation.pdfjobs.result.CompressPDFResult;
-import com.historialplus.historialplus.service.cloudflareservice.ICloudflareService;
+import com.historialplus.historialplus.external.r2.service.ICloudflareService;
 import com.historialplus.historialplus.util.InMemoryMultipartFile;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

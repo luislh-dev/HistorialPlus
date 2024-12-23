@@ -1,8 +1,7 @@
-package com.historialplus.historialplus.controller;
+package com.historialplus.historialplus.external.iLovePDF.controller;
 
 import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressionLevel;
-import com.historialplus.historialplus.service.iLovePDFService.PDFCompressService;
-import org.springframework.core.io.InputStreamResource;
+import com.historialplus.historialplus.external.iLovePDF.service.PDFCompressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

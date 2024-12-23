@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.service.cloudflareservice;
+package com.historialplus.historialplus.external.r2.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
