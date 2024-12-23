@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.validators.hospital;
+package com.historialplus.historialplus.common.validators.hospital;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

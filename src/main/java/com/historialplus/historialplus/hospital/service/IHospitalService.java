@@ -1,9 +1,9 @@
-package com.historialplus.historialplus.service.hospitalservice;
+package com.historialplus.historialplus.hospital.service;
 
-import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalCreateDto;
-import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalUpdateDto;
-import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalFindByResponseDto;
-import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalResponseDto;
+import com.historialplus.historialplus.hospital.dto.request.HospitalCreateDto;
+import com.historialplus.historialplus.hospital.dto.request.HospitalUpdateDto;
+import com.historialplus.historialplus.hospital.dto.response.HospitalFindByResponseDto;
+import com.historialplus.historialplus.hospital.dto.response.HospitalResponseDto;
 import com.historialplus.historialplus.hospital.projection.HospitalNameProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

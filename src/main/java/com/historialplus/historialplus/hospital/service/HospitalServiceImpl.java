@@ -1,14 +1,14 @@
-package com.historialplus.historialplus.service.hospitalservice;
+package com.historialplus.historialplus.hospital.service;
 
-import com.historialplus.historialplus.dto.hospitalDTOs.mapper.HospitalDtoMapper;
-import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalCreateDto;
-import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalUpdateDto;
-import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalFindByResponseDto;
-import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalResponseDto;
-import com.historialplus.historialplus.entities.HospitalEntity;
 import com.historialplus.historialplus.entities.StateEntity;
+import com.historialplus.historialplus.hospital.dto.request.HospitalCreateDto;
+import com.historialplus.historialplus.hospital.dto.request.HospitalUpdateDto;
+import com.historialplus.historialplus.hospital.dto.response.HospitalFindByResponseDto;
+import com.historialplus.historialplus.hospital.dto.response.HospitalResponseDto;
+import com.historialplus.historialplus.hospital.entities.HospitalEntity;
+import com.historialplus.historialplus.hospital.mapper.HospitalDtoMapper;
 import com.historialplus.historialplus.hospital.projection.HospitalNameProjection;
-import com.historialplus.historialplus.repository.HospitalRepository;
+import com.historialplus.historialplus.hospital.repository.HospitalRepository;
 import com.historialplus.historialplus.repository.StateRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

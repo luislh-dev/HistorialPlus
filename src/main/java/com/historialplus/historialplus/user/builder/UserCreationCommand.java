@@ -1,6 +1,10 @@
 package com.historialplus.historialplus.user.builder;
 
-import com.historialplus.historialplus.entities.*;
+import com.historialplus.historialplus.entities.PeopleEntity;
+import com.historialplus.historialplus.entities.RoleEntity;
+import com.historialplus.historialplus.entities.StateEntity;
+import com.historialplus.historialplus.entities.UserEntity;
+import com.historialplus.historialplus.hospital.entities.HospitalEntity;
 
 import java.util.UUID;
 

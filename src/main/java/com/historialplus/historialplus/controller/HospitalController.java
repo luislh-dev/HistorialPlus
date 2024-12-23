@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.controller;
 
-import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalCreateDto;
-import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalUpdateDto;
-import com.historialplus.historialplus.service.hospitalservice.IHospitalService;
+import com.historialplus.historialplus.hospital.dto.request.HospitalCreateDto;
+import com.historialplus.historialplus.hospital.dto.request.HospitalUpdateDto;
+import com.historialplus.historialplus.hospital.service.IHospitalService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

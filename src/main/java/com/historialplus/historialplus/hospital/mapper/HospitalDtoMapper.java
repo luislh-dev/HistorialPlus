@@ -1,9 +1,9 @@
-package com.historialplus.historialplus.dto.hospitalDTOs.mapper;
+package com.historialplus.historialplus.hospital.mapper;
 
-import com.historialplus.historialplus.dto.hospitalDTOs.request.HospitalCreateDto;
-import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalFindByResponseDto;
-import com.historialplus.historialplus.dto.hospitalDTOs.response.HospitalResponseDto;
-import com.historialplus.historialplus.entities.HospitalEntity;
+import com.historialplus.historialplus.hospital.dto.request.HospitalCreateDto;
+import com.historialplus.historialplus.hospital.dto.response.HospitalFindByResponseDto;
+import com.historialplus.historialplus.hospital.dto.response.HospitalResponseDto;
+import com.historialplus.historialplus.hospital.entities.HospitalEntity;
 
 public class HospitalDtoMapper {
 

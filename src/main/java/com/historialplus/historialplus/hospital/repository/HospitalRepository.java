@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.repository;
+package com.historialplus.historialplus.hospital.repository;
 
-import com.historialplus.historialplus.entities.HospitalEntity;
+import com.historialplus.historialplus.hospital.entities.HospitalEntity;
 import com.historialplus.historialplus.hospital.projection.HospitalNameProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

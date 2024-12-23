@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.dto.hospitalDTOs.request;
+package com.historialplus.historialplus.hospital.dto.request;
 
 import com.historialplus.historialplus.validators.state.ValidStateId;
 import jakarta.validation.constraints.Email;
