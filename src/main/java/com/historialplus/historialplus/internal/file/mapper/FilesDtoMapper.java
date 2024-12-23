@@ -31,11 +31,4 @@ public class FilesDtoMapper {
         );
     }
 
-    public static FilesCreateDto toCreateDto(FileEntity fileEntity) {
-        return new FilesCreateDto(
-                fileEntity.getFileType().getId(),
-                fileEntity.getName(),
-                fileEntity.getUrl()
-        );
-    }
 }
