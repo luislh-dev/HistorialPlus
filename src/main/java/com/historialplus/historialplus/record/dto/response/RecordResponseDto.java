@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.record.dto.response;
 
-import com.historialplus.historialplus.dto.recordDetailDTOs.response.RecordDetailResponseDto;
+import com.historialplus.historialplus.recorddetail.dto.response.RecordDetailResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 

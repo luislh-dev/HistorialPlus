@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.dto.recordDetailDTOs.request;
+package com.historialplus.historialplus.recorddetail.dto.request;
 
 import com.historialplus.historialplus.file.dto.request.FilesCreateDto;
 import jakarta.validation.constraints.NotNull;
