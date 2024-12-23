@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.validators.record;
+package com.historialplus.historialplus.common.validators.record;
 
 import com.historialplus.historialplus.service.recordservice.IRecordService;
 import jakarta.validation.ConstraintValidator;

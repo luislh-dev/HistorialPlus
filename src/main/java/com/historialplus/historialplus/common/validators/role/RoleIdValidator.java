@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.validators.role;
+package com.historialplus.historialplus.common.validators.role;
 
 import com.historialplus.historialplus.service.roleservice.IRoleService;
 import jakarta.validation.ConstraintValidator;

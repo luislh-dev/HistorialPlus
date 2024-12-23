@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.validators.state;
+package com.historialplus.historialplus.common.validators.state;
 
 import com.historialplus.historialplus.service.stateservice.IStateService;
 import jakarta.validation.ConstraintValidator;

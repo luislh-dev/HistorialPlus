@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.dto.userDTOs.request;
 
-import com.historialplus.historialplus.validators.state.ValidStateId;
+import com.historialplus.historialplus.common.validators.state.ValidStateId;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.dto.userDTOs;
 
+import com.historialplus.historialplus.common.validators.state.ValidStateId;
 import com.historialplus.historialplus.common.validators.user.UniqueUserField;
-import com.historialplus.historialplus.validators.state.ValidStateId;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;

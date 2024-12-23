@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.validators.state;
+package com.historialplus.historialplus.common.validators.record;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -8,12 +8,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = StateIdValidator.class)
+@Constraint(validatedBy = RecordIdValidator.class)
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidStateId {
-    String message() default "Estado no encontrado";
+public @interface ValidRecordId {
+    String message() default "Registro médico no encontrado";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
-
