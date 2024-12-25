@@ -5,7 +5,10 @@ import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetai
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,4 +28,13 @@ public class RecordEntity {
 
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
     private List<RecordDetailEntity> visits;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Timestamp createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
+
 }
