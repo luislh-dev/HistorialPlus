@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.error;
 
+import com.historialplus.historialplus.error.exceptions.NotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,13 @@ public class GlobalExceptionHandler {
 
         ApiError response = new ApiError("VALIDATION_ERROR", "Validation failed", errors);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ApiError> handleNotFoundException(NotFoundException ex) {
+        ApiError apiError = new ApiError("NOT_FOUND", ex.getMessage(), Collections.singletonList(ex.getMessage()));
+        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
