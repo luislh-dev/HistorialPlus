@@ -73,6 +73,16 @@ public class RecordServiceImpl implements IRecordService {
     }
 
     @Override
+    @Transactional
+    public RecordEntity save(PeopleEntity people) {
+        // Carer un nuevo registro
+        RecordEntity entity = new RecordEntity();
+        entity.setPerson(people);
+
+        return recordRepository.save(entity);
+    }
+
+    @Override
     public UUID findPersonIdByDocumentNumber(String documentNumber) {
         PeopleEntity person = peopleRepository.findByDocumentNumber(documentNumber)
                 .orElseThrow(() -> new IllegalArgumentException("Person not found with document number: " + documentNumber));

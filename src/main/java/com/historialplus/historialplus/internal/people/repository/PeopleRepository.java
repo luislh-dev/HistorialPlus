@@ -41,4 +41,7 @@ public interface PeopleRepository extends JpaRepository<PeopleEntity, UUID>, Jpa
             @Param("fullName") String fullName,
             Pageable pageable
     );
+
+    @Query("SELECT p.id FROM PeopleEntity p WHERE p.documentNumber = :documentNumber")
+    Optional<UUID> findIdByDocumentNumber(@Param("documentNumber") String documentNumber);
 }

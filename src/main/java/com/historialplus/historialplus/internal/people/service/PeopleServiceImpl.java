@@ -14,12 +14,14 @@ import com.historialplus.historialplus.internal.people.mapper.PeopleDtoMapper;
 import com.historialplus.historialplus.internal.people.presenters.PeopleRecordPresenter;
 import com.historialplus.historialplus.internal.people.projection.PeopleRecordProjection;
 import com.historialplus.historialplus.internal.people.repository.PeopleRepository;
+import com.historialplus.historialplus.internal.record.service.IRecordService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.CE_ID;
 import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.DNI_ID;
@@ -30,17 +32,23 @@ public class PeopleServiceImpl implements IPeopleService {
     private final IReniecService reniecService;
     private final ICeService ceService;
     private final PeopleRepository repository;
+    private final IRecordService recordService;
 
-    public PeopleServiceImpl(PeopleRepository peopleRepository, IReniecService reniecService, ICeService ceService) {
+    public PeopleServiceImpl(PeopleRepository peopleRepository, IReniecService reniecService, ICeService ceService, IRecordService recordService) {
         this.repository = peopleRepository;
         this.reniecService = reniecService;
         this.ceService = ceService;
+        this.recordService = recordService;
     }
 
     @Override
     @Transactional
     public PeopleResponseDto save(PeopleCreateDto peopleCreateDto) {
         var people = repository.save(PeopleDtoMapper.toPeopleEntity(peopleCreateDto));
+
+        // Guardar la persona en la tabla de records
+        recordService.save(people);
+
         return PeopleDtoMapper.toPeopleResponseDto(people);
     }
 
@@ -106,5 +114,10 @@ public class PeopleServiceImpl implements IPeopleService {
         );
 
         return projectionPage.map(PeopleRecordPresenter::fromProjection);
+    }
+
+    @Override
+    public Optional<UUID> findIdByDocumentNumber(String documentNumber) {
+        return repository.findIdByDocumentNumber(documentNumber);
     }
 }
