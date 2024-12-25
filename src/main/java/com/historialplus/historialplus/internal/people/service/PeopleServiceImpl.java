@@ -11,7 +11,11 @@ import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopl
 import com.historialplus.historialplus.internal.people.dto.response.PeopleResponseDto;
 import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
 import com.historialplus.historialplus.internal.people.mapper.PeopleDtoMapper;
+import com.historialplus.historialplus.internal.people.presenters.PeopleRecordPresenter;
+import com.historialplus.historialplus.internal.people.projection.PeopleRecordProjection;
 import com.historialplus.historialplus.internal.people.repository.PeopleRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,7 +70,7 @@ public class PeopleServiceImpl implements IPeopleService {
         }
 
         // si no existe, consultamos a reniec
-        if(id.equals(DNI_ID)){
+        if (id.equals(DNI_ID)) {
             try {
                 Optional<ReniecResponseDto> reniecResponse = reniecService.getPersonData(documentNumber);
                 return reniecResponse.map(reniecMapper::toMinimalPeopleDto);
@@ -76,7 +80,7 @@ public class PeopleServiceImpl implements IPeopleService {
         }
 
         // Validamos si el tipo es Carnet de Extranjería
-        if (id.equals(CE_ID)){
+        if (id.equals(CE_ID)) {
 
             if (documentNumber.length() < 9) {
                 return Optional.empty();
@@ -92,5 +96,15 @@ public class PeopleServiceImpl implements IPeopleService {
 
         // Si no es ninguno de los dos, retornamos un optional vacío
         return Optional.empty();
+    }
+
+    public Page<PeopleRecordPresenter> findAllWithVisitsStats(String documentNumber, String fullName, Pageable pageable) {
+        Page<PeopleRecordProjection> projectionPage = repository.findAllWithVisitsStats(
+                documentNumber != null && !documentNumber.trim().isEmpty() ? documentNumber.trim() : null,
+                fullName != null && !fullName.trim().isEmpty() ? fullName.trim() : null,
+                pageable
+        );
+
+        return projectionPage.map(PeopleRecordPresenter::fromProjection);
     }
 }

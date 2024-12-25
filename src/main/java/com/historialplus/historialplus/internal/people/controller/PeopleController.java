@@ -3,6 +3,8 @@ package com.historialplus.historialplus.internal.people.controller;
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
 import com.historialplus.historialplus.internal.people.service.IPeopleService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -37,6 +39,15 @@ public class PeopleController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/findAllWithVisitsStats")
+    public Page<?> findAllWithVisitsStats(
+            @RequestParam(required = false) String documentNumber,
+            @RequestParam(required = false) String fullName,
+            Pageable pageable
+    ) {
+        return service.findAllWithVisitsStats(documentNumber, fullName, pageable);
     }
 
 }

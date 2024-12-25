@@ -12,7 +12,7 @@ public class PeopleDtoMapper {
     private PeopleDtoMapper() {
     }
 
-    // Método para mapear de PeopleEntity a PeopleResponseDto
+    // Mapper de PeopleEntity a PeopleResponseDto
     public static PeopleResponseDto toPeopleResponseDto(PeopleEntity entity) {
         return new PeopleResponseDto(
                 entity.getId(),
