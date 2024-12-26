@@ -129,8 +129,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserEntity findByUsername(String username) {
-        return repository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("Usuario no " + "encontrado"));
+    public Optional<UserEntity> findByUsername(String username) {
+        return repository.findByUsername(username);
     }
 
     @Override
@@ -187,7 +187,9 @@ public class UserServiceImpl implements IUserService {
         String usernameAuth = authService.getUsername();
 
         // Recuperar el ID del hospital del usuario autenticado
-        Integer hospitalId = this.findByUsername(usernameAuth).getHospital().getId();
+        Integer hospitalId = repository.findByUsername(usernameAuth)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"))
+                .getHospital().getId();
 
         // Verificar si hay hospitalId
         if (hospitalId == null) {

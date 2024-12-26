@@ -25,7 +25,7 @@ public interface IUserService {
 
     Page<UserListResponseDto> searchUsers(String name, String dni, String hospitalName, Integer roleId, Integer stateId, Pageable pageable);
 
-    UserEntity findByUsername(String username);
+    Optional<UserEntity> findByUsername(String username);
 
     UserResponseDto createManagementUser(ManagementCreationDto userDto);
 
