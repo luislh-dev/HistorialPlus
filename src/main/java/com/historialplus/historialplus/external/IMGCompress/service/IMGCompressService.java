@@ -12,12 +12,22 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Collections;
 
+/**
+ * Servicio para comprimir imágenes mediante una API externa.
+ */
 @Service
 @RequiredArgsConstructor
 public class IMGCompressService implements IIMGCompressService {
 
     private final RestTemplate restTemplate;
 
+    /**
+     * Comprime un archivo de imagen enviándolo a una API externa.
+     *
+     * @param file el archivo de imagen que se comprimirá
+     * @return un MultipartFile que contiene la imagen comprimida
+     * @throws IOException si ocurre un error de E/S
+     */
     public MultipartFile compressImage(MultipartFile file) throws IOException {
         int quality = 80;
 
