@@ -19,13 +19,21 @@ public class FileTypeEntity {
     @Enumerated(EnumType.STRING)
     private FileType name;
 
+    @Getter
     public enum FileType {
-        PRESCRIPTION,       // Recetas
-        MEDICAL_REPORT,    // Informes médicos
-        LAB_RESULT,        // Resultados de laboratorio
-        XRAY,              // Radiografías
-        SCAN,              // Otros tipos de imágenes médicas
-        OTHER             // Otros documentos
+        PRESCRIPTION("Recetas"),
+        MEDICAL_REPORT("Informes médicos"),
+        LAB_RESULT("Resultados de laboratorio"),
+        XRAY("Radiografías"),
+        SCAN("Otros tipos de imágenes médicas"),
+        OTHER("Otros documentos");
+
+        private final String displayName;
+
+        FileType(String displayName) {
+            this.displayName = displayName;
+        }
+
     }
 
     @Column(name = "created_at", nullable = false, updatable = false)
