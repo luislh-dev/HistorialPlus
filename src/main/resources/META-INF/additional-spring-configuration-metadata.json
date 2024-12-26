@@ -19,5 +19,15 @@
       "name": "cee.api.url",
       "type": "java.lang.String",
       "description": "Description for cee.api.url."
+    },
+    {
+      "name": "adobe.client.id",
+      "type": "java.lang.String",
+      "description": "Description for adobe.client.id."
+    },
+    {
+      "name": "adobe.client.secret",
+      "type": "java.lang.String",
+      "description": "Description for adobe.client.secret."
     }
   ] }
