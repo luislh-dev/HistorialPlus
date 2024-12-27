@@ -4,6 +4,7 @@ import com.historialplus.historialplus.internal.recorddetail.dto.request.RecordD
 import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailResponseDto;
 import com.historialplus.historialplus.internal.recorddetail.service.IRecordDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,7 +45,7 @@ public class RecordDetailController {
         return ResponseEntity.ok(recordDetails);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> createRecordDetail(
             @RequestParam("recordId") UUID recordId,
             @RequestParam("stateId") Integer stateId,
@@ -67,11 +68,9 @@ public class RecordDetailController {
             HashSet<RecordDetailCreateRequestDTO.FileDTO> fileDTOs = new HashSet<>();
 
             for (int i = 0; i < files.length; i++) {
-                MultipartFile file = files[i];
-                Integer fileTypeId = fileTypeIds[i];
                 RecordDetailCreateRequestDTO.FileDTO fileDTO = new RecordDetailCreateRequestDTO.FileDTO();
-                fileDTO.setFile(file);
-                fileDTO.setFileTypeId(fileTypeId);
+                fileDTO.setFile(files[i]);
+                fileDTO.setFileTypeId(fileTypeIds[i]);
                 fileDTOs.add(fileDTO);
             }
 

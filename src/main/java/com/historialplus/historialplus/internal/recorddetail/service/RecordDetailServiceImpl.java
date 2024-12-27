@@ -2,6 +2,7 @@ package com.historialplus.historialplus.internal.recorddetail.service;
 
 import com.historialplus.historialplus.auth.AuthService.IAuthService;
 import com.historialplus.historialplus.error.exceptions.NotFoundException;
+import com.historialplus.historialplus.external.compress.dto.CompressFileDto;
 import com.historialplus.historialplus.external.facade.CompressAndUploadService.ICompressAndUploadService;
 import com.historialplus.historialplus.internal.file.entites.FileEntity;
 import com.historialplus.historialplus.internal.file.entites.FileTypeEntity;
@@ -20,12 +21,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class RecordDetailServiceImpl implements IRecordDetailService {
 
     private final RecordDetailRepository recordDetailRepository;
@@ -68,70 +73,79 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
     }
 
     @Override
-    @Transactional
     public CompletableFuture<RecordDetailResponseDto> save(RecordDetailCreateRequestDTO dto) {
         // Recuperar el usuario autenticado
         String username = authService.getUsername();
 
         return CompletableFuture.supplyAsync(() -> {
-
-            //Recuperar la persona asociada al usuario, con el nombre
             UserEntity doctor = userService.findByUsername(username)
-                    .orElseThrow(() -> new NotFoundException("Usuario no encontrado con el nombre de usuario: " + username));
+                    .orElseThrow(() -> new NotFoundException("Usuario no encontrado: " + username));
 
             HospitalEntity hospital = doctor.getHospital();
 
             RecordEntity record = recordRepository.findById(dto.getRecordId())
-                    .orElseThrow(() -> new NotFoundException("Historial no encontrado con ID: " + dto.getRecordId()));
+                    .orElseThrow(() -> new NotFoundException("Historial no encontrado: " + dto.getRecordId()));
 
-            // Crear el objeto RecordDetailEntity
-            RecordDetailEntity detail = new RecordDetailEntity();
-            detail.setRecord(record);
-            detail.setHospital(hospital);
-            detail.setDoctor(doctor);
-            detail.setVisitDate(dto.getVisitDate());
-            detail.setReason(dto.getReason());
-            detail.setDiagnosis(dto.getDiagnosis());
-            detail.setTreatment(dto.getTreatment());
-
-            StateEntity state = new StateEntity();
-            state.setId(dto.getStateId());
-            detail.setState(state);
-
-            // Mapear los archivos
-            Set<FileEntity> files = new HashSet<>();
-            List<CompletableFuture<FileEntity>> fileFutures = new ArrayList<>();
-
-            // Comprimir y subir los archivos a Cloudflare
-            dto.getFiles().forEach(fileDto -> {
-                CompletableFuture<FileEntity> fileFuture = compressAndUploadService.compressAndUpload(fileDto.getFile())
-                        .thenApply(compressFileDto -> {
-                            FileEntity file = new FileEntity();
-                            file.setRecordDetail(detail);
-                            file.setName(compressFileDto.getName());
-                            file.setUrl(compressFileDto.getPreviewUrl());
-                            file.setSizeInBytes(compressFileDto.getSizeBytes());
-                            file.setMimeType(compressFileDto.getMimeType());
-
-                            FileTypeEntity fileType = new FileTypeEntity();
-                            fileType.setId(fileDto.getFileTypeId());
-                            file.setFileType(fileType);
-
-                            return file;
-                        });
-                fileFutures.add(fileFuture);
-            });
-
-            // Esperar a que todos los archivos se suban a Cloudflare
-            CompletableFuture.allOf(fileFutures.toArray(new CompletableFuture[0])).join();
-
-            // Obtener los archivos
-            fileFutures.forEach(future -> files.add(future.join()));
-
+            RecordDetailEntity detail = createRecordDetail(dto, doctor, hospital, record);
+            Set<FileEntity> files = processFiles(dto.getFiles(), detail);
             detail.setFiles(files);
-            RecordDetailEntity savedDetail = recordDetailRepository.save(detail);
 
+            RecordDetailEntity savedDetail = recordDetailRepository.save(detail);
             return RecordDetailDtoMapper.toResponseDto(savedDetail);
         });
+    }
+
+    private RecordDetailEntity createRecordDetail(
+            RecordDetailCreateRequestDTO dto,
+            UserEntity doctor,
+            HospitalEntity hospital,
+            RecordEntity record
+    ) {
+        RecordDetailEntity detail = new RecordDetailEntity();
+        detail.setRecord(record);
+        detail.setHospital(hospital);
+        detail.setDoctor(doctor);
+        detail.setVisitDate(dto.getVisitDate());
+        detail.setReason(dto.getReason());
+        detail.setDiagnosis(dto.getDiagnosis());
+        detail.setTreatment(dto.getTreatment());
+
+        StateEntity state = new StateEntity();
+        state.setId(dto.getStateId());
+        detail.setState(state);
+
+        return detail;
+    }
+
+    private Set<FileEntity> processFiles(Set<RecordDetailCreateRequestDTO.FileDTO> files, RecordDetailEntity detail) {
+        List<CompletableFuture<FileEntity>> fileFutures = files.stream()
+                .map(fileDto -> compressAndUploadService.compressAndUpload(fileDto.getFile())
+                        .thenApply(compressFileDto -> createFileEntity(compressFileDto, fileDto, detail)))
+                .toList();
+
+        CompletableFuture.allOf(fileFutures.toArray(new CompletableFuture[0])).join();
+
+        return fileFutures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toSet());
+    }
+
+    private FileEntity createFileEntity(
+            CompressFileDto compressFileDto,
+            RecordDetailCreateRequestDTO.FileDTO fileDto,
+            RecordDetailEntity detail
+    ) {
+        FileEntity file = new FileEntity();
+        file.setRecordDetail(detail);
+        file.setName(compressFileDto.getName());
+        file.setUrl(compressFileDto.getPreviewUrl());
+        file.setSizeInBytes(compressFileDto.getSizeBytes());
+        file.setMimeType(compressFileDto.getMimeType());
+
+        FileTypeEntity fileType = new FileTypeEntity();
+        fileType.setId(fileDto.getFileTypeId());
+        file.setFileType(fileType);
+
+        return file;
     }
 }
