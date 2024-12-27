@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.recorddetail.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.historialplus.historialplus.internal.file.entites.FileEntity;
 import com.historialplus.historialplus.internal.hospital.entities.HospitalEntity;
 import com.historialplus.historialplus.internal.record.entites.RecordEntity;
@@ -34,7 +35,8 @@ public class RecordDetailEntity {
     @JoinColumn(name = "hospital_id", nullable = false)
     private HospitalEntity hospital;
 
-    @ManyToOne
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id", nullable = false)
     private UserEntity doctor;
 

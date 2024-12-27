@@ -4,12 +4,14 @@ import com.historialplus.historialplus.auth.AuthService.IAuthService;
 import com.historialplus.historialplus.error.exceptions.NotFoundException;
 import com.historialplus.historialplus.external.compress.dto.CompressFileDto;
 import com.historialplus.historialplus.external.facade.CompressAndUploadService.ICompressAndUploadService;
+import com.historialplus.historialplus.internal.file.dto.response.FileDetailResponseDto;
 import com.historialplus.historialplus.internal.file.entites.FileEntity;
 import com.historialplus.historialplus.internal.file.entites.FileTypeEntity;
 import com.historialplus.historialplus.internal.hospital.entities.HospitalEntity;
 import com.historialplus.historialplus.internal.record.entites.RecordEntity;
 import com.historialplus.historialplus.internal.record.repository.RecordRepository;
 import com.historialplus.historialplus.internal.recorddetail.dto.request.RecordDetailCreateRequestDTO;
+import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailExtenseResponseDto;
 import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailResponseDto;
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
 import com.historialplus.historialplus.internal.recorddetail.mapper.RecordDetailDtoMapper;
@@ -18,6 +20,9 @@ import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import com.historialplus.historialplus.internal.user.service.IUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,6 +98,24 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
             RecordDetailEntity savedDetail = recordDetailRepository.save(detail);
             return RecordDetailDtoMapper.toResponseDto(savedDetail);
         });
+    }
+
+    @Override
+    public Page<RecordDetailExtenseResponseDto> getRecordDetails(UUID peopleId, Pageable pageable) {
+        Page<RecordDetailExtenseResponseDto> records = recordDetailRepository.findAllByPeopleId(peopleId, pageable);
+        List<RecordDetailExtenseResponseDto> updatedRecords = records.stream()
+                .map(record -> {
+                    Set<FileDetailResponseDto> files = recordDetailRepository.findFilesByRecordDetailId(record.id());
+                    return new RecordDetailExtenseResponseDto(
+                            record.id(),
+                            record.reason(),
+                            record.hospitalName(),
+                            record.doctorFullName(),
+                            files
+                    );
+                })
+                .collect(Collectors.toList());
+        return new PageImpl<>(updatedRecords, pageable, records.getTotalElements());
     }
 
     private RecordDetailEntity createRecordDetail(

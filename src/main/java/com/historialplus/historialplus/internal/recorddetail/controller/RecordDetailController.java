@@ -4,6 +4,8 @@ import com.historialplus.historialplus.internal.recorddetail.dto.request.RecordD
 import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailResponseDto;
 import com.historialplus.historialplus.internal.recorddetail.service.IRecordDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -90,5 +92,10 @@ public class RecordDetailController {
     public ResponseEntity<Void> updateRecordDetailState(@PathVariable UUID id, @RequestParam Integer stateId) {
         recordDetailService.updateState(id, stateId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("findAllByRecordId/{recordId}")
+    public Page<?> findAllByRecordId(@PathVariable UUID recordId, Pageable pageable) {
+        return recordDetailService.getRecordDetails(recordId, pageable);
     }
 }
