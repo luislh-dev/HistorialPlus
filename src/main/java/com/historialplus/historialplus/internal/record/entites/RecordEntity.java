@@ -9,7 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -27,7 +28,7 @@ public class RecordEntity {
     private PeopleEntity person;
 
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
-    private List<RecordDetailEntity> visits;
+    private Set<RecordDetailEntity> visits = new HashSet<>();
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
