@@ -21,6 +21,21 @@
       "description": "Description for cee.api.url."
     },
     {
+      "name": "app.temp.directory",
+      "type": "java.lang.String",
+      "description": "Description for app.temp.directory."
+    },
+    {
+      "name": "app.temp.expiration",
+      "type": "java.lang.String",
+      "description": "Description for app.temp.expiration."
+    },
+    {
+      "name": "app.base-url",
+      "type": "java.lang.String",
+      "description": "Description for app.base-url."
+    },
+    {
       "name": "adobe.client.id",
       "type": "java.lang.String",
       "description": "Description for adobe.client.id."

@@ -4,6 +4,7 @@ import com.historialplus.historialplus.auth.AuthService.IAuthService;
 import com.historialplus.historialplus.auth.filter.JwtAuthenticationFilter;
 import com.historialplus.historialplus.auth.filter.JwtValidationFilter;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,17 +28,15 @@ import java.util.List;
 @Configuration
 public class SpringSecurityConfig {
 
-    private static final String JWT_SECRET = System.getenv("JWT_SECRET_RECORD_PLUS") != null
-            ? System.getenv("JWT_SECRET_RECORD_PLUS")
-            : "default_secret_key_for_testing_purposes";
+    @Value("${jwt.secret}")
+    private String jwtSecret;
 
-    private static final String FRONTEND_URL = System.getenv("FRONTEND_URL") != null
-            ? System.getenv("FRONTEND_URL")
-            : "http://localhost:3000";
+    @Value("${frontend.url}")
+    private String frontendUrl;
 
     @Bean
     SecretKey jwtSecretKey() {
-        return Keys.hmacShaKeyFor(JWT_SECRET.getBytes());
+        return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
 
     @Bean
@@ -66,6 +65,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users/createManagementUser").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/users/createDoctorUser").hasRole("MANAGEMENT")
                         .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/record-details").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/compress-image").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/pdf/compress").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/hospitals").hasRole("ADMIN")
@@ -76,11 +76,6 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/files").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/files/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/files").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/record-details").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/record-details/{id}").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/record-details/record/{recordId}").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/record-details").permitAll()
-                        .requestMatchers(HttpMethod.PATCH, "/api/record-details/{id}/state").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/hospitals/{id}").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -94,7 +89,7 @@ public class SpringSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of(FRONTEND_URL));
+        corsConfiguration.setAllowedOrigins(List.of(frontendUrl));
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         corsConfiguration.setAllowCredentials(true);
