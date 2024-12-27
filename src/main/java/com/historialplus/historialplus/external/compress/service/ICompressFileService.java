@@ -1,8 +1,9 @@
 package com.historialplus.historialplus.external.compress.service;
 
-import com.historialplus.historialplus.external.compress.dto.CompressFileDto;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.concurrent.CompletableFuture;
+
 public interface ICompressFileService {
-    CompressFileDto compress(MultipartFile file);
+    CompletableFuture<MultipartFile> compress(MultipartFile file);
 }

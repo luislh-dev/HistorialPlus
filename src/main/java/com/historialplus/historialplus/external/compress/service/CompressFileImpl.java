@@ -1,8 +1,6 @@
 package com.historialplus.historialplus.external.compress.service;
 
-import com.adobe.pdfservices.operation.exception.ServiceApiException;
 import com.historialplus.historialplus.external.IMGCompress.service.IIMGCompressService;
-import com.historialplus.historialplus.external.compress.dto.CompressFileDto;
 import com.historialplus.historialplus.external.iLovePDF.service.IPDFCompressService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -11,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
@@ -22,10 +20,11 @@ public class CompressFileImpl implements ICompressFileService {
     private final IPDFCompressService pdfCompressService;
 
     @Override
-    public CompressFileDto compress(MultipartFile file) {
+    public CompletableFuture<MultipartFile> compress(MultipartFile file) {
+
         if (file == null) {
             logger.error("Se intentó comprimir un archivo nulo");
-            throw new IllegalArgumentException("El archivo no puede ser nulo");
+            return CompletableFuture.failedFuture(new IllegalArgumentException("El archivo no puede ser nulo"));
         }
 
         String contentType = file.getContentType();
@@ -49,36 +48,25 @@ public class CompressFileImpl implements ICompressFileService {
         }
     }
 
-    private CompressFileDto compressImage(MultipartFile file) throws IOException {
-        try {
-            MultipartFile compressedImage = imgCompressService.compressImage(file);
-            return createCompressFileDto(compressedImage);
-        } catch (IOException e) {
-            logger.error("Error al comprimir la imagen: {}", file.getOriginalFilename(), e);
-            throw e;
-        }
+    private CompletableFuture<MultipartFile> compressImage(MultipartFile file) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return imgCompressService.compressImage(file);
+            } catch (IOException e) {
+                logger.error("Error al comprimir la imagen: {}", file.getOriginalFilename(), e);
+                throw new RuntimeException("Error al procesar el archivo", e);
+            }
+        });
     }
 
-    private CompressFileDto compressPDF(MultipartFile file) throws IOException, ServiceApiException {
-        try {
-            MultipartFile compressedPDF = pdfCompressService.compress(file);
-            return createCompressFileDto(compressedPDF);
-        } catch (Exception e) {
-            logger.error("Error al comprimir el PDF: {}", file.getOriginalFilename(), e);
-            throw e;
-        }
-    }
-
-    private CompressFileDto createCompressFileDto(MultipartFile compressedFile) {
-        CompressFileDto dto = new CompressFileDto();
-        dto.setPreviewUrl(compressedFile.getOriginalFilename());
-        dto.setSizeBytes(compressedFile.getSize());
-        dto.setMimeType(compressedFile.getContentType());
-        dto.setName(compressedFile.getOriginalFilename());
-
-        logger.info("Archivo comprimido exitosamente: {}, tamaño: {} bytes",
-                compressedFile.getOriginalFilename(), compressedFile.getSize());
-
-        return dto;
+    private CompletableFuture<MultipartFile> compressPDF(MultipartFile file) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return pdfCompressService.compress(file);
+            } catch (Exception e) {
+                logger.error("Error al comprimir el PDF: {}", file.getOriginalFilename(), e);
+                throw new RuntimeException("Error al procesar el archivo", e);
+            }
+        });
     }
 }
