@@ -12,6 +12,7 @@ import software.amazon.awssdk.services.s3.model.ListBucketsResponse;
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
+import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,7 +54,7 @@ public class CloudflareServiceImpl implements ICloudflareService{
     }
 
     @Override
-    public String uploadObject(MultipartFile file) throws Exception {
+    public String uploadObject(MultipartFile file) throws IOException {
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("El archivo está vacío o no se proporciona");
         }
