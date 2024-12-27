@@ -12,7 +12,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -50,7 +51,7 @@ public class RecordDetailEntity {
     private String treatment;
 
     @OneToMany(mappedBy = "recordDetail", cascade = CascadeType.ALL)
-    private List<FileEntity> files;
+    private Set<FileEntity> files = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "state_id", nullable = false)

@@ -1,14 +1,18 @@
 package com.historialplus.historialplus.internal.recorddetail.controller;
 
-import com.historialplus.historialplus.internal.recorddetail.dto.request.RecordDetailCreateDto;
+import com.historialplus.historialplus.internal.recorddetail.dto.request.RecordDetailCreateRequestDTO;
 import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailResponseDto;
 import com.historialplus.historialplus.internal.recorddetail.service.IRecordDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/record-details")
@@ -41,9 +45,46 @@ public class RecordDetailController {
     }
 
     @PostMapping
-    public ResponseEntity<RecordDetailResponseDto> createRecordDetail(@RequestBody RecordDetailCreateDto recordDetailCreateDto) {
-        RecordDetailResponseDto response = recordDetailService.save(recordDetailCreateDto);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> createRecordDetail(
+            @RequestParam("recordId") UUID recordId,
+            @RequestParam("stateId") Integer stateId,
+            @RequestParam("reason") String reason,
+            @RequestParam(required = false) String diagnosis,
+            @RequestParam(required = false) String treatment,
+            @RequestParam("visitDate") String visitDate,
+            @RequestParam("fileTypeIds") Integer[] fileTypeIds,
+            @RequestParam("files") MultipartFile[] files
+    ) {
+        try {
+            RecordDetailCreateRequestDTO dto = new RecordDetailCreateRequestDTO();
+            dto.setRecordId(recordId);
+            dto.setStateId(stateId);
+            dto.setReason(reason);
+            dto.setDiagnosis(diagnosis);
+            dto.setTreatment(treatment);
+            dto.setVisitDate(LocalDateTime.parse(visitDate));
+
+            HashSet<RecordDetailCreateRequestDTO.FileDTO> fileDTOs = new HashSet<>();
+
+            for (int i = 0; i < files.length; i++) {
+                MultipartFile file = files[i];
+                Integer fileTypeId = fileTypeIds[i];
+                RecordDetailCreateRequestDTO.FileDTO fileDTO = new RecordDetailCreateRequestDTO.FileDTO();
+                fileDTO.setFile(file);
+                fileDTO.setFileTypeId(fileTypeId);
+                fileDTOs.add(fileDTO);
+            }
+
+            dto.setFiles(fileDTOs);
+
+            CompletableFuture<RecordDetailResponseDto> future = recordDetailService.save(dto);
+            RecordDetailResponseDto result = future.get();
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body("Error al procesar la solicitud: " + e.getMessage());
+        }
     }
 
     @PatchMapping("/{id}/state")
