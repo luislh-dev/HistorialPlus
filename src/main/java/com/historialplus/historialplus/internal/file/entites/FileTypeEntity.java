@@ -43,6 +43,7 @@ public class FileTypeEntity {
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+
     @PrePersist
     protected void onCreate() {
         createdAt = new Date();
