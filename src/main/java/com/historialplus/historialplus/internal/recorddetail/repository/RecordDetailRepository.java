@@ -41,6 +41,7 @@ public interface RecordDetailRepository extends JpaRepository<RecordDetailEntity
            rd.reason,
            h.name,
            CONCAT(p.name, ' ', p.paternalSurname),
+           rd.visitDate,
            NULL
        )
        FROM RecordDetailEntity rd
