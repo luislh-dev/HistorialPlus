@@ -88,8 +88,9 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
 
             HospitalEntity hospital = doctor.getHospital();
 
-            RecordEntity record = recordRepository.findById(dto.getRecordId())
-                    .orElseThrow(() -> new NotFoundException("Historial no encontrado: " + dto.getRecordId()));
+            //Recuperar el historial del paciente, por su id
+            RecordEntity record = recordRepository.findByPersonId(dto.getPersonId())
+                    .orElseThrow(() -> new NotFoundException("Historial no encontrado para la persona con id: " + dto.getPersonId()));
 
             RecordDetailEntity detail = createRecordDetail(dto, doctor, hospital, record);
             Set<FileEntity> files = processFiles(dto.getFiles(), detail);
@@ -111,6 +112,7 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
                             record.reason(),
                             record.hospitalName(),
                             record.doctorFullName(),
+                            record.visitDate(),
                             files
                     );
                 })

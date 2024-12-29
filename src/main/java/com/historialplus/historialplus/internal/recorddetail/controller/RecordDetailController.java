@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/api/record-details")
@@ -49,7 +50,7 @@ public class RecordDetailController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> createRecordDetail(
-            @RequestParam("recordId") UUID recordId,
+            @RequestParam("personId") UUID personId,
             @RequestParam("stateId") Integer stateId,
             @RequestParam("reason") String reason,
             @RequestParam(required = false) String diagnosis,
@@ -57,35 +58,29 @@ public class RecordDetailController {
             @RequestParam("visitDate") String visitDate,
             @RequestParam("fileTypeIds") Integer[] fileTypeIds,
             @RequestParam("files") MultipartFile[] files
-    ) {
-        try {
-            RecordDetailCreateRequestDTO dto = new RecordDetailCreateRequestDTO();
-            dto.setRecordId(recordId);
-            dto.setStateId(stateId);
-            dto.setReason(reason);
-            dto.setDiagnosis(diagnosis);
-            dto.setTreatment(treatment);
-            dto.setVisitDate(LocalDateTime.parse(visitDate));
+    ) throws ExecutionException, InterruptedException {
+        RecordDetailCreateRequestDTO dto = new RecordDetailCreateRequestDTO();
+        dto.setPersonId(personId);
+        dto.setStateId(stateId);
+        dto.setReason(reason);
+        dto.setDiagnosis(diagnosis);
+        dto.setTreatment(treatment);
+        dto.setVisitDate(LocalDateTime.parse(visitDate));
 
-            HashSet<RecordDetailCreateRequestDTO.FileDTO> fileDTOs = new HashSet<>();
+        HashSet<RecordDetailCreateRequestDTO.FileDTO> fileDTOs = new HashSet<>();
 
-            for (int i = 0; i < files.length; i++) {
-                RecordDetailCreateRequestDTO.FileDTO fileDTO = new RecordDetailCreateRequestDTO.FileDTO();
-                fileDTO.setFile(files[i]);
-                fileDTO.setFileTypeId(fileTypeIds[i]);
-                fileDTOs.add(fileDTO);
-            }
-
-            dto.setFiles(fileDTOs);
-
-            CompletableFuture<RecordDetailResponseDto> future = recordDetailService.save(dto);
-            RecordDetailResponseDto result = future.get();
-            return ResponseEntity.ok(result);
-
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                    .body("Error al procesar la solicitud: " + e.getMessage());
+        for (int i = 0; i < files.length; i++) {
+            RecordDetailCreateRequestDTO.FileDTO fileDTO = new RecordDetailCreateRequestDTO.FileDTO();
+            fileDTO.setFile(files[i]);
+            fileDTO.setFileTypeId(fileTypeIds[i]);
+            fileDTOs.add(fileDTO);
         }
+
+        dto.setFiles(fileDTOs);
+
+        CompletableFuture<RecordDetailResponseDto> future = recordDetailService.save(dto);
+        RecordDetailResponseDto result = future.get();
+        return ResponseEntity.ok(result);
     }
 
     @PatchMapping("/{id}/state")

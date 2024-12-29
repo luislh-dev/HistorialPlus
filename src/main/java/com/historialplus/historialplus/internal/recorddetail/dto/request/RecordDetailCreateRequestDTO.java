@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 public class RecordDetailCreateRequestDTO {
     @NotNull(message = "El ID del registro médico es requerido")
-    private UUID recordId;
+    private UUID personId;
 
     @NotNull(message = "El estado es requerido")
     private Integer stateId;
