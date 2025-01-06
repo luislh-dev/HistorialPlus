@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.record.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
 import jakarta.persistence.*;
@@ -27,7 +28,8 @@ public class RecordEntity {
     @JoinColumn(name = "people_id", nullable = false, unique = true)
     private PeopleEntity person;
 
-    @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<RecordDetailEntity> visits = new HashSet<>();
 
     @CreationTimestamp
