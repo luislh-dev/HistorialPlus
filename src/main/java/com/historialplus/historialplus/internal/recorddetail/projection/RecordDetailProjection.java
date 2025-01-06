@@ -23,7 +23,7 @@ public interface RecordDetailProjection {
         String getName();
         Long getSizeInBytes();
         String getUrl();
-
+        String getMimeType();
         @Value("#{target.fileType.name.displayName}")
         String getTypeName();
     }
