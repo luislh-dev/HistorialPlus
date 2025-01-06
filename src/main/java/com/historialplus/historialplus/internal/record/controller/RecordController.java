@@ -1,11 +1,13 @@
 package com.historialplus.historialplus.internal.record.controller;
 
-import com.historialplus.historialplus.internal.record.dto.request.RecordCreateDto;
 import com.historialplus.historialplus.internal.record.dto.response.RecordResponseDto;
 import com.historialplus.historialplus.internal.record.service.IRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,10 +35,5 @@ public class RecordController {
         return recordService.findById(personId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public ResponseEntity<?> createRecord(@RequestBody RecordCreateDto recordCreateDto) {
-    return ResponseEntity.ok(recordService.save(recordCreateDto));
     }
 }
