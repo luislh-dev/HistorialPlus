@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,10 +26,16 @@ public interface RecordDetailRepository extends JpaRepository<RecordDetailEntity
                 LEFT JOIN FETCH d.person p
                 LEFT JOIN FETCH p.sexType
                 WHERE rd.record.person.id = :peopleId
+                AND (:hospitalName IS NULL OR rd.hospital.name LIKE CONCAT('%', :hospitalName, '%'))
+                AND (:startDate IS NULL OR rd.visitDate >= :startDate)
+                AND (:endDate IS NULL OR rd.visitDate <= :endDate)
                 ORDER BY rd.visitDate DESC
             """)
     Page<RecordDetailProjection> findProjectedByRecord_Person_Id(
             @Param("peopleId") UUID peopleId,
+            @Param("hospitalName") String hospitalName,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate,
             Pageable pageable
     );
 }

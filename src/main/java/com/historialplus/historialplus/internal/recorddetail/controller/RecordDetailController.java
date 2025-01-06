@@ -90,7 +90,12 @@ public class RecordDetailController {
     }
 
     @GetMapping("findAllByPeopleId/{peopleId}")
-    public Page<?> findAllByPeopleId(@PathVariable UUID peopleId, Pageable pageable) {
-        return recordDetailService.getRecordDetails(peopleId, pageable);
+    public Page<?> findAllByPeopleId(
+            @PathVariable UUID peopleId,
+            @RequestParam(required = false) String hospitalName,
+            @RequestParam(required = false) LocalDateTime startDate,
+            @RequestParam(required = false) LocalDateTime endDate,
+            Pageable pageable) {
+        return recordDetailService.getRecordDetails(peopleId, hospitalName, startDate, endDate, pageable);
     }
 }
