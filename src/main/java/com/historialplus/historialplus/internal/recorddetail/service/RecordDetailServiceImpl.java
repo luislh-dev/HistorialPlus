@@ -13,7 +13,7 @@ import com.historialplus.historialplus.internal.recorddetail.dto.request.RecordD
 import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailResponseDto;
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
 import com.historialplus.historialplus.internal.recorddetail.mapper.RecordDetailDtoMapper;
-import com.historialplus.historialplus.internal.recorddetail.projection.RecordDetailProjection;
+import com.historialplus.historialplus.internal.recorddetail.presenters.RecordDetailPresenter;
 import com.historialplus.historialplus.internal.recorddetail.repository.RecordDetailRepository;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
@@ -100,8 +100,8 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
     }
 
     @Override
-    public Page<RecordDetailProjection> getRecordDetails(UUID peopleId, Pageable pageable) {
-        return recordDetailRepository.findProjectedByRecord_Person_Id(peopleId, pageable);
+    public Page<RecordDetailPresenter> getRecordDetails(UUID peopleId, Pageable pageable) {
+        return recordDetailRepository.findProjectedByRecord_Person_Id(peopleId, pageable).map(RecordDetailDtoMapper::toPresenter);
     }
 
     private RecordDetailEntity createRecordDetail(
