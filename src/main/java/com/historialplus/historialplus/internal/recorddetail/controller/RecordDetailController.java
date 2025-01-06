@@ -89,8 +89,8 @@ public class RecordDetailController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("findAllByRecordId/{recordId}")
-    public Page<?> findAllByRecordId(@PathVariable UUID recordId, Pageable pageable) {
-        return recordDetailService.getRecordDetails(recordId, pageable);
+    @GetMapping("findAllByPeopleId/{peopleId}")
+    public Page<?> findAllByPeopleId(@PathVariable UUID peopleId, Pageable pageable) {
+        return recordDetailService.getRecordDetails(peopleId, pageable);
     }
 }

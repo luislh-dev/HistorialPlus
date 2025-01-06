@@ -1,24 +1,30 @@
 package com.historialplus.historialplus.internal.recorddetail.projection;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 public interface RecordDetailProjection {
     UUID getId();
-
+    String getReason();
     LocalDateTime getVisitDate();
 
-    String getReason();
+    @Value("#{target.hospital.name}")
+    String getHospitalName();
 
-    HospitalProjection getHospital();
+    @Value("#{target.doctor.person.name + ' ' + target.doctor.person.paternalSurname}")
+    String getDoctorFullName();
 
-    DoctorProjection getDoctor();
+    Set<FileProjection> getFiles();
 
-    interface HospitalProjection {
+    interface FileProjection {
         String getName();
-    }
+        Long getSizeInBytes();
+        String getUrl();
 
-    interface DoctorProjection {
-        String getName();
+        @Value("#{target.fileType.name.displayName}")
+        String getTypeName();
     }
 }

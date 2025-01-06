@@ -1,9 +1,9 @@
 package com.historialplus.historialplus.internal.recorddetail.service;
 
 import com.historialplus.historialplus.internal.recorddetail.dto.request.RecordDetailCreateRequestDTO;
-import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailExtenseResponseDto;
 import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailResponseDto;
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
+import com.historialplus.historialplus.internal.recorddetail.projection.RecordDetailProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,5 +25,5 @@ public interface IRecordDetailService {
 
     CompletableFuture<RecordDetailResponseDto> save(RecordDetailCreateRequestDTO dto);
 
-    Page<RecordDetailExtenseResponseDto> getRecordDetails(UUID recordId, Pageable pageable);
+    Page<RecordDetailProjection> getRecordDetails(UUID recordId, Pageable pageable);
 }
