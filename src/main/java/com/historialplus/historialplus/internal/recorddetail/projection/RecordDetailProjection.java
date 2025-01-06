@@ -14,6 +14,9 @@ public interface RecordDetailProjection {
     @Value("#{target.hospital.name}")
     String getHospitalName();
 
+    @Value("#{target.doctor.person.sexType.id}")
+    Integer getSexTypeId();
+
     @Value("#{target.doctor.person.name + ' ' + target.doctor.person.paternalSurname}")
     String getDoctorFullName();
 

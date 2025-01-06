@@ -22,7 +22,8 @@ public interface RecordDetailRepository extends JpaRepository<RecordDetailEntity
                 LEFT JOIN FETCH f.fileType
                 LEFT JOIN FETCH rd.hospital
                 LEFT JOIN FETCH rd.doctor d
-                LEFT JOIN FETCH d.person
+                LEFT JOIN FETCH d.person p
+                LEFT JOIN FETCH p.sexType
                 WHERE rd.record.person.id = :peopleId
                 ORDER BY rd.visitDate DESC
             """)
