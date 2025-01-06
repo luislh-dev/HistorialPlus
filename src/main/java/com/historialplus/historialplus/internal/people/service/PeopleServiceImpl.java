@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.CE_ID;
 import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.DNI_ID;
@@ -114,10 +113,5 @@ public class PeopleServiceImpl implements IPeopleService {
         );
 
         return projectionPage.map(PeopleRecordPresenter::fromProjection);
-    }
-
-    @Override
-    public Optional<UUID> findIdByDocumentNumber(String documentNumber) {
-        return repository.findIdByDocumentNumber(documentNumber);
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public interface IPeopleService {
     PeopleResponseDto save(PeopleCreateDto peopleCreateDto);
@@ -22,5 +21,4 @@ public interface IPeopleService {
 
     Page<PeopleRecordPresenter> findAllWithVisitsStats(String documentNumber, String fullName, Pageable pageable);
 
-    Optional<UUID> findIdByDocumentNumber(String documentNumber);
 }
