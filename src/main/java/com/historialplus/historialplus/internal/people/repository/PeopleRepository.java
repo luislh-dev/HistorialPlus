@@ -2,6 +2,7 @@ package com.historialplus.historialplus.internal.people.repository;
 
 import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
 import com.historialplus.historialplus.internal.people.projection.PeopleRecordProjection;
+import com.historialplus.historialplus.internal.people.projection.PersonaBasicProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -41,4 +42,10 @@ public interface PeopleRepository extends JpaRepository<PeopleEntity, UUID>, Jpa
             @Param("fullName") String fullName,
             Pageable pageable
     );
+
+    @Query("SELECT p FROM PeopleEntity p " +
+            "LEFT JOIN FETCH p.sexType " +
+            "LEFT JOIN FETCH p.typeDocument " +
+            "WHERE p.id = :id")
+    Optional<PersonaBasicProjection> findBasicById(@Param("id") UUID id);
 }

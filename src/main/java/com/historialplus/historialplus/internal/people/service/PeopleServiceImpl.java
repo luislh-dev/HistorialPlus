@@ -13,6 +13,7 @@ import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
 import com.historialplus.historialplus.internal.people.mapper.PeopleDtoMapper;
 import com.historialplus.historialplus.internal.people.presenters.PeopleRecordPresenter;
 import com.historialplus.historialplus.internal.people.projection.PeopleRecordProjection;
+import com.historialplus.historialplus.internal.people.projection.PersonaBasicProjection;
 import com.historialplus.historialplus.internal.people.repository.PeopleRepository;
 import com.historialplus.historialplus.internal.record.service.IRecordService;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.CE_ID;
 import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.DNI_ID;
@@ -105,6 +107,7 @@ public class PeopleServiceImpl implements IPeopleService {
         return Optional.empty();
     }
 
+    @Override
     public Page<PeopleRecordPresenter> findAllWithVisitsStats(String documentNumber, String fullName, Pageable pageable) {
         Page<PeopleRecordProjection> projectionPage = repository.findAllWithVisitsStats(
                 documentNumber != null && !documentNumber.trim().isEmpty() ? documentNumber.trim() : null,
@@ -113,5 +116,10 @@ public class PeopleServiceImpl implements IPeopleService {
         );
 
         return projectionPage.map(PeopleRecordPresenter::fromProjection);
+    }
+
+    @Override
+    public Optional<PersonaBasicProjection> findBasicById(UUID id) {
+        return repository.findBasicById(id);
     }
 }

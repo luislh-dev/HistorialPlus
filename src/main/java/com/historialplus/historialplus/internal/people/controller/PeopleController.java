@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/people")
 @Validated
@@ -48,6 +50,13 @@ public class PeopleController {
             Pageable pageable
     ) {
         return service.findAllWithVisitsStats(documentNumber, fullName, pageable);
+    }
+
+    @GetMapping("/findBasicById/{id}")
+    public ResponseEntity<?> findBasicById(@PathVariable UUID id) {
+        return service.findBasicById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 }
