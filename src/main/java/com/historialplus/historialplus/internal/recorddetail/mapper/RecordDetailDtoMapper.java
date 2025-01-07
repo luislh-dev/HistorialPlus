@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.recorddetail.mapper;
 
+import com.historialplus.historialplus.internal.file.entites.FileTypeEntity;
 import com.historialplus.historialplus.internal.file.projection.FileBasicProjection;
 import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailResponseDto;
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
@@ -32,23 +33,26 @@ public class RecordDetailDtoMapper {
                 projection.getReason(),
                 (projection.getVisitDate() != null ? projection.getVisitDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) : null),
                 projection.getHospitalName(),
-                // Verificar el tipo de sexo del doctor para agregar el prefijo Dr. o Dra.
                 (Objects.equals(projection.getSexTypeId(), MALE_ID) ? "Dr. " : "Dra. ") + projection.getDoctorFullName(),
-                // Mapear los archivos de la proyeccion a la presentacion
-                (orDefault != null ? orDefault.stream().map(f ->
-                        new RecordDetailPresenter.FileDetailPresenter(
-                                f.getName(),
-                                // Cambiar el tamaño del archivo a KB o MB si es mayor a 1 KB o 1 MB respectivamente
-                                (f.getSizeInBytes() > 1024 ?
-                                        (f.getSizeInBytes() > 1024 * 1024 ?
-                                                String.format("%.2f MB", f.getSizeInBytes() / (1024.0 * 1024)) :
-                                                String.format("%.2f KB", f.getSizeInBytes() / 1024.0)) :
-                                        f.getSizeInBytes() + " B"),
-                                f.getUrl(),
-                                f.getTypeName(),
-                                f.getMimeType()
-                        )
-                ).collect(Collectors.toList()) : null)
+                (orDefault != null ? orDefault.stream().map(f -> {
+                    String typeName;
+                    try {
+                        typeName = FileTypeEntity.FileType.valueOf(f.getTypeName()).getDisplayName();
+                    } catch (IllegalArgumentException e) {
+                        typeName = f.getTypeName();
+                    }
+                    return new RecordDetailPresenter.FileDetailPresenter(
+                            f.getName(),
+                            (f.getSizeInBytes() > 1024 ?
+                                    (f.getSizeInBytes() > 1024 * 1024 ?
+                                            String.format("%.2f MB", f.getSizeInBytes() / (1024.0 * 1024)) :
+                                            String.format("%.2f KB", f.getSizeInBytes() / 1024.0)) :
+                                    f.getSizeInBytes() + " B"),
+                            f.getUrl(),
+                            typeName,
+                            f.getMimeType()
+                    );
+                }).collect(Collectors.toList()) : null)
         );
     }
 
