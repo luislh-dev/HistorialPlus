@@ -17,21 +17,24 @@ import java.util.UUID;
 public interface RecordDetailRepository extends JpaRepository<RecordDetailEntity, UUID> {
     List<RecordDetailEntity> findByRecordId(UUID recordId);
 
-    @Query("""
-                SELECT rd FROM RecordDetailEntity rd
-                LEFT JOIN FETCH rd.files f
-                LEFT JOIN FETCH f.fileType
-                LEFT JOIN FETCH rd.hospital
-                LEFT JOIN FETCH rd.doctor d
-                LEFT JOIN FETCH d.person p
-                LEFT JOIN FETCH p.sexType
-                WHERE rd.record.person.id = :peopleId
-                AND (:hospitalName IS NULL OR rd.hospital.name LIKE CONCAT('%', :hospitalName, '%'))
-                AND (:startDate IS NULL OR rd.visitDate >= :startDate)
-                AND (:endDate IS NULL OR rd.visitDate <= :endDate)
-                ORDER BY rd.visitDate DESC
-            """)
-    Page<RecordDetailProjection> findProjectedByRecord_Person_Id(
+    @Query(value = """
+        SELECT rd.id as id, rd.reason as reason, rd.visitDate as visitDate,
+               h.name as hospitalName,
+               CONCAT(p.name, ' ', p.paternalSurname) as doctorFullName,
+               p.sexType.id as sexTypeId
+        FROM RecordDetailEntity rd
+        JOIN HospitalEntity h ON rd.hospital.id = h.id
+        JOIN UserEntity u ON rd.doctor.id = u.id
+        JOIN PeopleEntity p ON u.person.id = p.id
+        WHERE rd.record.id IN (
+            SELECT r.id FROM RecordEntity r WHERE r.person.id = :peopleId
+        )
+        AND (:hospitalName IS NULL OR h.name LIKE CONCAT('%', :hospitalName, '%'))
+        AND (:startDate IS NULL OR rd.visitDate >= :startDate)
+        AND (:endDate IS NULL OR rd.visitDate <= :endDate)
+        ORDER BY rd.visitDate DESC
+    """)
+    Page<RecordDetailProjection> findBasicDetailsByPersonId(
             @Param("peopleId") UUID peopleId,
             @Param("hospitalName") String hospitalName,
             @Param("startDate") LocalDateTime startDate,

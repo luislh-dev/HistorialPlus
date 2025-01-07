@@ -6,6 +6,8 @@ import com.historialplus.historialplus.external.compress.dto.CompressFileDto;
 import com.historialplus.historialplus.external.facade.CompressAndUploadService.ICompressAndUploadService;
 import com.historialplus.historialplus.internal.file.entites.FileEntity;
 import com.historialplus.historialplus.internal.file.entites.FileTypeEntity;
+import com.historialplus.historialplus.internal.file.projection.FileBasicProjection;
+import com.historialplus.historialplus.internal.file.repository.FileRepository;
 import com.historialplus.historialplus.internal.hospital.entities.HospitalEntity;
 import com.historialplus.historialplus.internal.record.entites.RecordEntity;
 import com.historialplus.historialplus.internal.record.repository.RecordRepository;
@@ -14,23 +16,24 @@ import com.historialplus.historialplus.internal.recorddetail.dto.response.Record
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
 import com.historialplus.historialplus.internal.recorddetail.mapper.RecordDetailDtoMapper;
 import com.historialplus.historialplus.internal.recorddetail.presenters.RecordDetailPresenter;
+import com.historialplus.historialplus.internal.recorddetail.projection.RecordDetailProjection;
 import com.historialplus.historialplus.internal.recorddetail.repository.RecordDetailRepository;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import com.historialplus.historialplus.internal.user.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
+
+import static com.historialplus.historialplus.internal.recorddetail.mapper.RecordDetailDtoMapper.toPresenter;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +45,7 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
     private final IAuthService authService;
     private final IUserService userService;
     private final ICompressAndUploadService compressAndUploadService;
+    private final FileRepository fileRepository;
 
     @Override
     public List<RecordDetailResponseDto> findAll() {
@@ -100,9 +104,35 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
         });
     }
 
+
     @Override
     public Page<RecordDetailPresenter> getRecordDetails(UUID peopleId, String hospitalName, LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
-        return recordDetailRepository.findProjectedByRecord_Person_Id(peopleId, hospitalName, startDate, endDate, pageable).map(RecordDetailDtoMapper::toPresenter);
+        // Recuperar los detalles basicos de los registros
+        Page<RecordDetailProjection> basicDetails = recordDetailRepository
+                .findBasicDetailsByPersonId(peopleId, hospitalName, startDate, endDate, pageable);
+
+        // Recuperar los archivos de los detalles basicos
+        Map<UUID, List<FileBasicProjection>> filesMap = new HashMap<>();
+        if (!basicDetails.isEmpty()) {
+            // Recuperar los ids de los detalles basicos
+            List<UUID> detailIds = basicDetails.getContent().stream()
+                    .map(RecordDetailProjection::getId)
+                    .toList();
+
+            // Recuperar los archivos por los ids de los detalles basicos
+            fileRepository.findFilesByRecordDetailIds(detailIds)
+                    .forEach(file -> filesMap
+                            .computeIfAbsent(file.getRecordDetailId(), k -> new ArrayList<>())
+                            .add(file));
+        }
+
+        return new PageImpl<>(
+                basicDetails.getContent().stream()
+                        .map(detail -> toPresenter(detail, filesMap.getOrDefault(detail.getId(), List.of())))
+                        .toList(),
+                pageable,
+                basicDetails.getTotalElements()
+        );
     }
 
     private RecordDetailEntity createRecordDetail(
