@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.internal.recorddetail.mapper;
 
 import com.historialplus.historialplus.internal.file.entites.FileTypeEntity;
+import com.historialplus.historialplus.internal.file.presenter.FileDetailPresenter;
 import com.historialplus.historialplus.internal.file.projection.FileBasicProjection;
 import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailResponseDto;
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
@@ -41,7 +42,7 @@ public class RecordDetailDtoMapper {
                     } catch (IllegalArgumentException e) {
                         typeName = f.getTypeName();
                     }
-                    return new RecordDetailPresenter.FileDetailPresenter(
+                    return new FileDetailPresenter(
                             f.getName(),
                             (f.getSizeInBytes() > 1024 ?
                                     (f.getSizeInBytes() > 1024 * 1024 ?
