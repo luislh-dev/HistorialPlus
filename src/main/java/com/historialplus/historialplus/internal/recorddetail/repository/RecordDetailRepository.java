@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.internal.recorddetail.repository;
 
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
+import com.historialplus.historialplus.internal.recorddetail.projection.RecordDetailExtenseProjection;
 import com.historialplus.historialplus.internal.recorddetail.projection.RecordDetailProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,4 +42,24 @@ public interface RecordDetailRepository extends JpaRepository<RecordDetailEntity
             @Param("endDate") LocalDateTime endDate,
             Pageable pageable
     );
+
+	@Query(value = """
+		    SELECT rd.id as id,
+		           u.person.name as doctorName,
+		           p.paternalSurname as doctorPaternalSurname,
+		           p.maternalSurname as doctorMaternalSurname,
+				   st.id as doctorSexTypeId,
+		           h.name as hospitalName,
+		           rd.visitDate as visitDate,
+		           rd.reason as reason,
+				   rd.diagnosis as diagnostic,
+				   rd.treatment as treatment
+		    FROM RecordDetailEntity rd
+			JOIN HospitalEntity h ON rd.hospital.id = h.id
+			JOIN UserEntity u ON rd.doctor.id = u.id
+			JOIN PeopleEntity p ON u.person.id = p.id
+			JOIN SexTypeEntity st ON p.sexType.id = st.id
+			WHERE rd.id = :recordDetailId
+		""")
+	RecordDetailExtenseProjection findExtenseDetailById(@Param("recordDetailId") UUID recordDetailId);
 }

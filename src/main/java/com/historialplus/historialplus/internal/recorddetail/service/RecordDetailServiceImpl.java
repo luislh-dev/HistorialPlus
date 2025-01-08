@@ -16,8 +16,10 @@ import com.historialplus.historialplus.internal.recorddetail.dto.response.Record
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
 import com.historialplus.historialplus.internal.recorddetail.mapper.RecordDetailDtoMapper;
 import com.historialplus.historialplus.internal.recorddetail.presenters.RecordDetailPresenter;
+import com.historialplus.historialplus.internal.recorddetail.projection.RecordDetailExtenseProjection;
 import com.historialplus.historialplus.internal.recorddetail.projection.RecordDetailProjection;
 import com.historialplus.historialplus.internal.recorddetail.repository.RecordDetailRepository;
+import com.historialplus.historialplus.internal.recorddetail.viewmodel.RecordDetailExtenseViewModel;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import com.historialplus.historialplus.internal.user.service.IUserService;
@@ -133,6 +135,17 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
                 pageable,
                 basicDetails.getTotalElements()
         );
+    }
+
+    @Override
+    public RecordDetailExtenseViewModel getRecordDetail(UUID recordDetailId) {
+        RecordDetailExtenseProjection projection = recordDetailRepository.findExtenseDetailById(recordDetailId);
+
+        // Recuperar los archivos por el id del detalle, pero usando el metodo findFilesByRecordDetailIds
+        List<FileBasicProjection> files = fileRepository.findFilesByRecordDetailIds(List.of(recordDetailId));
+
+        // Como solo se recupera un solo detalle, se puede obtener el primer elemento de la lista de archivos
+        return toPresenter(projection, files);
     }
 
     private RecordDetailEntity createRecordDetail(

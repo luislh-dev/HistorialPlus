@@ -98,4 +98,9 @@ public class RecordDetailController {
             Pageable pageable) {
         return recordDetailService.getRecordDetails(peopleId, hospitalName, startDate, endDate, pageable);
     }
+
+    @GetMapping("/FindById/{recordDetailId}")
+    public ResponseEntity<?> getRecordDetail(@PathVariable UUID recordDetailId) {
+        return ResponseEntity.ok(recordDetailService.getRecordDetail(recordDetailId));
+    }
 }

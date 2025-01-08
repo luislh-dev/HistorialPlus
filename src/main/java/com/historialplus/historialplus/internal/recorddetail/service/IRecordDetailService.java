@@ -4,6 +4,7 @@ import com.historialplus.historialplus.internal.recorddetail.dto.request.RecordD
 import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailResponseDto;
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
 import com.historialplus.historialplus.internal.recorddetail.presenters.RecordDetailPresenter;
+import com.historialplus.historialplus.internal.recorddetail.viewmodel.RecordDetailExtenseViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,4 +28,6 @@ public interface IRecordDetailService {
     CompletableFuture<RecordDetailResponseDto> save(RecordDetailCreateRequestDTO dto);
 
     Page<RecordDetailPresenter> getRecordDetails(UUID recordId, String hospitalName, LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
+
+    RecordDetailExtenseViewModel getRecordDetail(UUID recordDetailId);
 }
