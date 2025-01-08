@@ -128,13 +128,12 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
                             .add(file));
         }
 
-        return new PageImpl<>(
-                basicDetails.getContent().stream()
-                        .map(detail -> toPresenter(detail, filesMap.getOrDefault(detail.getId(), List.of())))
-                        .toList(),
-                pageable,
-                basicDetails.getTotalElements()
-        );
+        // Convertir los detalles basicos y los archivos a presentadores
+        List<RecordDetailPresenter> presenters = basicDetails.stream()
+                .map(projection -> toPresenter(projection, filesMap.getOrDefault(projection.getId(), List.of())))
+                .toList();
+
+        return new PageImpl<>(presenters, pageable, basicDetails.getTotalElements());
     }
 
     @Override
