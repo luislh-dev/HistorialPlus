@@ -1,5 +1,7 @@
 package com.historialplus.historialplus.external.r2.service;
 
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -9,99 +11,113 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.Bucket;
 import software.amazon.awssdk.services.s3.model.ListBucketsResponse;
-import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 
+import static com.historialplus.historialplus.config.FileConfig.ALLOWED_FILE_TYPES;
+import static com.historialplus.historialplus.config.FileConfig.MAX_FILE_SIZE;
+
 @Service
-public class CloudflareServiceImpl implements ICloudflareService{
+public class CloudflareServiceImpl implements ICloudflareService {
 
-    private final S3Client s3Client;
-    private final long MAX_FILE_SIZE = 3 * 1024 * 1024;
-    private final List<String> ALLOWED_FILE_TYPES = Arrays.asList("image/jpeg", "image/png", "image/webp", "application/pdf");
-    private final String BUCKET_NAME = "historialplus";
+	@Value("${service.cloudflare.r2.url}")
+	private String serviceUrl;
 
-    public CloudflareServiceImpl() {
-        this.s3Client = createS3Client();
-    }
+	@Value("${service.cloudflare.bucket.name}")
+	private String bucketName;
 
-    private S3Client createS3Client() {
-        String accessKey = System.getenv("AWS_ACCESS_KEY_ID") != null ? System.getenv("AWS_ACCESS_KEY_ID") : "fake";
-        String secretKey = System.getenv("AWS_SECRET_ACCESS_KEY") != null ? System.getenv("AWS_SECRET_ACCESS_KEY") : "fake";
-        String serviceUrl = System.getenv("SERVICE_CLOUDFLARE_R2_URL") != null ? System.getenv("SERVICE_CLOUDFLARE_R2_URL") : "http://localhost:9000";
+	@Value("${aws.access.key.id}")
+	private String accessKeyId;
 
-        AwsBasicCredentials credentials = AwsBasicCredentials.create(accessKey, secretKey);
+	@Value("${aws.secret.access.key}")
+	private String secretAccessKey;
 
-        return S3Client.builder()
-                .endpointOverride(URI.create(serviceUrl))
-                .region(Region.US_EAST_1)
-                .credentialsProvider(StaticCredentialsProvider.create(credentials))
-                .build();
-    }
+	private S3Client s3Client;
 
-    @Override
-    public List<String> listBuckets() throws Exception {
-        ListBucketsResponse response = s3Client.listBuckets();
-        return response.buckets().stream()
-                .map(Bucket::name)
-                .toList();
-    }
+	@PostConstruct
+	private void init() {
+		this.s3Client = createS3Client();
+	}
 
-    @Override
-    public String uploadObject(MultipartFile file) throws IOException {
-        if (file == null || file.isEmpty()) {
-            throw new IllegalArgumentException("El archivo está vacío o no se proporciona");
-        }
+	private S3Client createS3Client() {
+		if (accessKeyId == null || secretAccessKey == null) {
+			throw new IllegalArgumentException("No se proporcionaron las credenciales de AWS");
+		}
 
-        if (file.getSize() > MAX_FILE_SIZE) {
-            throw new IllegalArgumentException("El tamaño del archivo excede el límite máximo de 500 KB");
-        }
+		if (serviceUrl == null) {
+			throw new IllegalArgumentException("No se proporcionó la URL del servicio de Cloudflare");
+		}
 
-        if (!ALLOWED_FILE_TYPES.contains(file.getContentType())) {
-            throw new IllegalArgumentException("No se permite ningún tipo de archivo. Solo se admiten JPEG, PNG y WebP.");
-        }
+		AwsBasicCredentials credentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
 
-        Path tempFile = null;
-        try {
-            tempFile = Files.createTempFile("upload", null);
-            Files.write(tempFile, file.getBytes());
+		return S3Client.builder()
+			.endpointOverride(URI.create(serviceUrl))
+			.region(Region.US_EAST_1)
+			.credentialsProvider(StaticCredentialsProvider.create(credentials))
+			.build();
+	}
 
-            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket(BUCKET_NAME)
-                    .key(file.getOriginalFilename())
-                    .contentType(file.getContentType())
-                    .acl(ObjectCannedACL.PUBLIC_READ)
-                    .build();
+	@Override
+	public List<String> listBuckets() throws Exception {
+		ListBucketsResponse response = s3Client.listBuckets();
+		return response.buckets().stream()
+			.map(Bucket::name)
+			.toList();
+	}
 
-            s3Client.putObject(putObjectRequest,
-                    RequestBody.fromFile(tempFile));
+	@Override
+	public String uploadObject(MultipartFile file) throws IOException {
+		if (file == null || file.isEmpty()) {
+			throw new IllegalArgumentException("El archivo está vacío o no se proporciona");
+		}
 
-            return String.format("https://luislh.dev/%s", file.getOriginalFilename());
-        } finally {
-            if (tempFile != null) {
-                Files.deleteIfExists(tempFile);
-            }
-        }
-    }
+		if (file.getSize() > MAX_FILE_SIZE) {
+			throw new IllegalArgumentException("El tamaño del archivo excede el límite máximo de 500 KB");
+		}
 
-    @Override
-    public void deleteObjectByUrl(String url) throws Exception {
+		if (!ALLOWED_FILE_TYPES.contains(file.getContentType())) {
+			throw new IllegalArgumentException("No se permite ningún tipo de archivo. Solo se admiten JPEG, PNG y WebP.");
+		}
 
-    }
+		Path tempFile = null;
+		try {
+			tempFile = Files.createTempFile("upload", null);
+			Files.write(tempFile, file.getBytes());
 
-    @Override
-    public void deleteObjectsByUrls(List<String> urls) throws Exception {
+			PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+				.bucket(bucketName)
+				.key(file.getOriginalFilename())
+				.contentType(file.getContentType())
+				.build();
 
-    }
+			s3Client.putObject(putObjectRequest,
+				RequestBody.fromFile(tempFile));
 
-    @Override
-    public void deleteObject(String objectKey) throws Exception {
+			return String.format("https://luislh.dev/%s", file.getOriginalFilename());
+		} finally {
+			if (tempFile != null) {
+				Files.deleteIfExists(tempFile);
+			}
+		}
+	}
 
-    }
+	@Override
+	public void deleteObjectByUrl(String url) throws Exception {
+
+	}
+
+	@Override
+	public void deleteObjectsByUrls(List<String> urls) throws Exception {
+
+	}
+
+	@Override
+	public void deleteObject(String objectKey) throws Exception {
+
+	}
 }

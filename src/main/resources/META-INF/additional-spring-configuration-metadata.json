@@ -44,5 +44,25 @@
       "name": "adobe.client.secret",
       "type": "java.lang.String",
       "description": "Description for adobe.client.secret."
+    },
+    {
+      "name": "aws.access.key.id",
+      "type": "java.lang.String",
+      "description": "Description for aws.access.key.id."
+    },
+    {
+      "name": "aws.secret.access.key",
+      "type": "java.lang.String",
+      "description": "Description for aws.secret.access.key."
+    },
+    {
+      "name": "service.cloudflare.r2.url",
+      "type": "java.lang.String",
+      "description": "Description for service.cloudflare.r2.url."
+    },
+    {
+      "name": "service.cloudflare.bucket.name",
+      "type": "java.lang.String",
+      "description": "Description for service.cloudflare.bucket.name."
     }
   ] }
