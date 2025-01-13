@@ -23,6 +23,11 @@ public class R2Controller {
         return cloudflareService.listBuckets();
     }
 
+    @GetMapping("/presigned-url")
+    public String generatePresignedUrl(@RequestParam String objectKey) throws Exception {
+        return cloudflareService.generatePresignedUrl(objectKey);
+    }
+
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Map<String, Object>> uploadFile(@RequestParam("file") MultipartFile file) {
         Map<String, Object> response = new HashMap<>();

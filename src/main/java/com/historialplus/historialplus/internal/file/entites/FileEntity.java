@@ -29,8 +29,11 @@ public class FileEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "url", nullable = false)
+    @Column(name = "url")
     private String url;
+
+    @Column(name = "object_key")
+    private String objectKey;
 
     @Column(name = "size_in_bytes")
     private Long sizeInBytes;

@@ -21,11 +21,12 @@ public class CompressAndUploadServiceImpl implements ICompressAndUploadService {
 
     @Override
     public CompletableFuture<CompressFileDto> compressAndUpload(MultipartFile file) {
+
         return compressFileService.compress(file)
                 .thenCompose(compressedFile -> {
                     try {
-                        String previewUrl = cloudflareService.uploadObject(compressedFile);
-                        CompressFileDto dto = createCompressFileDto(compressedFile, previewUrl);
+                        String objectKey = cloudflareService.uploadObject(compressedFile);
+                        CompressFileDto dto = createCompressFileDto(compressedFile, objectKey);
                         return CompletableFuture.completedFuture(dto);
                     } catch (Exception e) {
                         logger.error("Error al subir el archivo comprimido a Cloudflare: {}", compressedFile.getOriginalFilename(), e);
@@ -34,9 +35,9 @@ public class CompressAndUploadServiceImpl implements ICompressAndUploadService {
                 });
     }
 
-    private CompressFileDto createCompressFileDto(MultipartFile compressedFile, String previewUrl) {
+    private CompressFileDto createCompressFileDto(MultipartFile compressedFile,  String objectKey) {
         CompressFileDto dto = new CompressFileDto();
-        dto.setPreviewUrl(previewUrl);
+        dto.setObjectKey(objectKey);
         dto.setSizeBytes(compressedFile.getSize());
         dto.setMimeType(compressedFile.getContentType());
         dto.setName(compressedFile.getOriginalFilename());
