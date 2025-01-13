@@ -7,6 +7,8 @@ public interface FileBasicProjection {
 
     String getName();
 
+    String getObjectKey();
+
     Long getSizeInBytes();
 
     String getUrl();

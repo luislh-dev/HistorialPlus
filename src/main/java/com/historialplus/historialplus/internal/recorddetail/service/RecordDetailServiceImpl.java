@@ -189,11 +189,11 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
     ) {
         FileEntity file = new FileEntity();
         file.setRecordDetail(detail);
+        file.setObjectKey(compressFileDto.getObjectKey());
         file.setName(compressFileDto.getName());
         file.setUrl(compressFileDto.getPreviewUrl());
         file.setSizeInBytes(compressFileDto.getSizeBytes());
         file.setMimeType(compressFileDto.getMimeType());
-
         FileTypeEntity fileType = new FileTypeEntity();
         fileType.setId(fileDto.getFileTypeId());
         file.setFileType(fileType);

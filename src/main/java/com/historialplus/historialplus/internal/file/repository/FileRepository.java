@@ -15,6 +15,7 @@ public interface FileRepository extends JpaRepository<FileEntity, UUID> {
     @Query("""
                 SELECT f.recordDetail.id as recordDetailId,f.name as name, f.sizeInBytes as sizeInBytes,
                        f.url as url, f.mimeType as mimeType,
+                       f.objectKey as objectKey,
                        ft.name as typeName
                 FROM FileEntity f
                 JOIN f.fileType ft

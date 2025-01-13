@@ -29,7 +29,8 @@ public class FilesPresenter {
                 sizeFormatted,
                 projection.getUrl(),
                 typeName,
-                projection.getMimeType()
+                projection.getMimeType(),
+                projection.getObjectKey()
         );
     }
 }
