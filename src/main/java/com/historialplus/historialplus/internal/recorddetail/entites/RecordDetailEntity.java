@@ -49,7 +49,8 @@ public class RecordDetailEntity {
     @Column(name = "diagnosis")
     private String diagnosis;
 
-    @Column(name = "treatment")
+    @Lob
+    @Column(name = "treatment", columnDefinition = "TEXT")
     private String treatment;
 
     @OneToMany(mappedBy = "recordDetail", cascade = CascadeType.ALL)
