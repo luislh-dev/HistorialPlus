@@ -9,8 +9,6 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.Bucket;
-import software.amazon.awssdk.services.s3.model.ListBucketsResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
@@ -21,7 +19,6 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
-import java.util.List;
 import java.util.UUID;
 
 import static com.historialplus.historialplus.config.FileConfig.ALLOWED_FILE_TYPES;
@@ -45,7 +42,8 @@ public class CloudflareServiceImpl implements ICloudflareService {
 	private S3Client s3Client;
 	private S3Presigner s3Presigner;
 
-	public CloudflareServiceImpl() {}
+	public CloudflareServiceImpl() {
+	}
 
 	@PostConstruct
 	private void init() {
@@ -79,14 +77,6 @@ public class CloudflareServiceImpl implements ICloudflareService {
 			.region(Region.US_EAST_1)
 			.credentialsProvider(StaticCredentialsProvider.create(credentials))
 			.build();
-	}
-
-	@Override
-	public List<String> listBuckets() throws Exception {
-		ListBucketsResponse response = s3Client.listBuckets();
-		return response.buckets().stream()
-			.map(Bucket::name)
-			.toList();
 	}
 
 	@Override
@@ -143,20 +133,5 @@ public class CloudflareServiceImpl implements ICloudflareService {
 		} catch (Exception e) {
 			throw new RuntimeException("Error generando URL prefirmada: " + e.getMessage(), e);
 		}
-	}
-
-	@Override
-	public void deleteObjectByUrl(String url) throws Exception {
-
-	}
-
-	@Override
-	public void deleteObjectsByUrls(List<String> urls) throws Exception {
-
-	}
-
-	@Override
-	public void deleteObject(String objectKey) throws Exception {
-
 	}
 }
