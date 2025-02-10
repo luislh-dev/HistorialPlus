@@ -121,7 +121,7 @@ public class CloudflareServiceImpl implements ICloudflareService {
 	public String generatePresignedUrl(String objectKey) {
 		try {
 			GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
-				.signatureDuration(Duration.ofMinutes(2)) // 2 minuto
+				.signatureDuration(Duration.ofMinutes(240)) // 4 horas
 				.getObjectRequest(builder -> builder
 					.bucket(bucketName)
 					.key(objectKey)

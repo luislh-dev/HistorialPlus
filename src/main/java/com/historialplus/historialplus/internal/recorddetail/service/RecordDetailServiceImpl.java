@@ -172,7 +172,7 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
     private Set<FileEntity> processFiles(Set<RecordDetailCreateRequestDTO.FileDTO> files, RecordDetailEntity detail) {
         List<CompletableFuture<FileEntity>> fileFutures = files.stream()
                 .map(fileDto -> compressAndUploadService.compressAndUpload(fileDto.getFile())
-                        .thenApply(compressFileDto -> createFileEntity(compressFileDto, fileDto, detail)))
+                        .thenApply(compressFileDto -> createFileEntity(Objects.requireNonNull(fileDto.getFile().getOriginalFilename()),compressFileDto, fileDto, detail)))
                 .toList();
 
         CompletableFuture.allOf(fileFutures.toArray(new CompletableFuture[0])).join();
@@ -183,17 +183,23 @@ public class RecordDetailServiceImpl implements IRecordDetailService {
     }
 
     private FileEntity createFileEntity(
+            String originalName,
             CompressFileDto compressFileDto,
             RecordDetailCreateRequestDTO.FileDTO fileDto,
             RecordDetailEntity detail
     ) {
+
+        String originalNameWithoutExtension = originalName.contains(".")
+            ? originalName.substring(0, originalName.lastIndexOf('.'))
+            : originalName;
+
         FileEntity file = new FileEntity();
         file.setRecordDetail(detail);
         file.setObjectKey(compressFileDto.getObjectKey());
-        file.setName(compressFileDto.getName());
-        file.setUrl(compressFileDto.getPreviewUrl());
-        file.setSizeInBytes(compressFileDto.getSizeBytes());
-        file.setMimeType(compressFileDto.getMimeType());
+        file.setName(originalNameWithoutExtension);
+        file.setUrl(null);
+        file.setSizeInBytes(compressFileDto.getFile().getSize());
+        file.setMimeType(compressFileDto.getFile().getContentType());
         FileTypeEntity fileType = new FileTypeEntity();
         fileType.setId(fileDto.getFileTypeId());
         file.setFileType(fileType);

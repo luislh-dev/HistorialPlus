@@ -38,9 +38,7 @@ public class CompressAndUploadServiceImpl implements ICompressAndUploadService {
     private CompressFileDto createCompressFileDto(MultipartFile compressedFile,  String objectKey) {
         CompressFileDto dto = new CompressFileDto();
         dto.setObjectKey(objectKey);
-        dto.setSizeBytes(compressedFile.getSize());
-        dto.setMimeType(compressedFile.getContentType());
-        dto.setName(compressedFile.getOriginalFilename());
+        dto.setFile(compressedFile);
 
         logger.info("Archivo comprimido y subido exitosamente: {}, tamaño: {} bytes",
                 compressedFile.getOriginalFilename(), compressedFile.getSize());

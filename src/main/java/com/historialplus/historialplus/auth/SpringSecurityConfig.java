@@ -65,7 +65,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users/createManagementUser").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/users/createDoctorUser").hasRole("MANAGEMENT")
                         .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/record-details").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/record-details").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/compress-image").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/pdf/compress").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/hospitals").hasRole("ADMIN")
