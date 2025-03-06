@@ -61,7 +61,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public UserResponseDto update(UUID id, UserUpdateDto userDto) {
-        // actualizacion parcial
+        // actualizar el usuario
         return repository.findById(id).map(user -> {
             if (userDto.getName() != null) {
                 user.setUsername(userDto.getName());
@@ -101,7 +101,7 @@ public class UserServiceImpl implements IUserService {
             pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), newSort);
         }
 
-        // Si el hordenamiento es hospitalName, se ordena por el nombre del hospital
+        // Si el ordenamiento es hospitalName, se ordena por el nombre del hospital
         if (pageable.getSort().getOrderFor("hospital") != null) {
             Sort.Order order = pageable.getSort().getOrderFor("hospital");
             assert order != null;
@@ -131,7 +131,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     @AdminOnly
     public UserResponseDto createManagementUser(ManagementCreationDto userDto) {
-        // buscar el id de la persona por su dni
+        // buscar el ID de la persona por su DNI
         UUID personId = peopleService.findByDocumentNumber(userDto.getPersonDNI())
                 .orElseThrow(() -> new IllegalArgumentException("Persona no encontrada"))
                 .getId();
