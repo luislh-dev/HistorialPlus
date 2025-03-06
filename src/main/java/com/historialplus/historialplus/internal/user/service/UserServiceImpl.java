@@ -90,8 +90,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Page<UserListResponseDto> searchUsers(String name, String dni, String hospitalName, Integer roleId, Integer stateId, Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        List<String> roles = authentication.getAuthorities().stream().map(Object::toString).toList();
+
         UserEntity user = repository.findByUsername(authentication.getName()).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-        String role = user.getRoleEntities().stream().findFirst().orElseThrow(() -> new IllegalArgumentException("Rol" + " no encontrado")).getName();
 
         //  Si el ordenamiento es por DNI, se ordena por el número de documento
         if (pageable.getSort().getOrderFor("dni") != null) {
@@ -111,10 +113,10 @@ public class UserServiceImpl implements IUserService {
 
         SearchUserSpecification spec = new SearchUserSpecification(null, dni, null, roleId, stateId);
 
-        if (role.equals(ROLE_ADMIN)) {
-            // Un administrador puede buscar sin restricciones
+        // Validar de acuerdo a los roles, si el usuario es ADMIN, puede buscar sin restricciones
+        if (roles.contains(ROLE_ADMIN)) {
             spec = new SearchUserSpecification(name, dni, hospitalName, roleId, stateId);
-        } else if (role.equals(ROLE_MANAGEMENT)) {
+        } else if (roles.contains(ROLE_MANAGEMENT)) {
             // Un usuario de gestión solo puede buscar usuarios de su hospital
             spec = new SearchUserSpecification(name, dni, user.getHospital().getName(), roleId, stateId);
         }
