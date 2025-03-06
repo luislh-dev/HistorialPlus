@@ -15,7 +15,6 @@ import com.historialplus.historialplus.internal.user.dto.response.UserResponseDt
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import com.historialplus.historialplus.internal.user.mapper.UserDtoMapper;
 import com.historialplus.historialplus.internal.user.repository.UserRepository;
-import com.historialplus.historialplus.internal.user.specification.SearchUserSpecification;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -95,33 +95,25 @@ public class UserServiceImpl implements IUserService {
 
         UserEntity user = repository.findByUsername(authentication.getName()).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
-        //  Si el ordenamiento es por DNI, se ordena por el número de documento
-        if (pageable.getSort().getOrderFor("dni") != null) {
-            Sort.Order order = pageable.getSort().getOrderFor("dni");
-            assert order != null;
-            Sort newSort = Sort.by(new Sort.Order(order.getDirection(), "person.documentNumber"));
-            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), newSort);
+        if (roles.contains(ROLE_MANAGEMENT) && !roles.contains(ROLE_ADMIN)) {
+            hospitalName = user.getHospital().getName();
         }
 
-        // Si el ordenamiento es hospitalName, se ordena por el nombre del hospital
-        if (pageable.getSort().getOrderFor("hospital") != null) {
-            Sort.Order order = pageable.getSort().getOrderFor("hospital");
-            assert order != null;
-            Sort newSort = Sort.by(new Sort.Order(order.getDirection(), "hospital.name"));
-            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), newSort);
+        Sort sort = pageable.getSort();
+        if (sort.getOrderFor("dni") != null) {
+            Sort.Order order = sort.getOrderFor("dni");
+            sort = Sort.by(new Sort.Order(Objects.requireNonNull(order).getDirection(), "u.person.documentNumber"));
+            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+        }
+        if (sort.getOrderFor("hospital") != null) {
+            Sort.Order order = sort.getOrderFor("hospital");
+            sort = Sort.by(new Sort.Order(Objects.requireNonNull(order).getDirection(), "u.hospital.name"));
+            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
         }
 
-        SearchUserSpecification spec = new SearchUserSpecification(null, dni, null, roleId, stateId);
+        Page<UserEntity> usersPage = repository.findByFilters(name, dni, hospitalName, roleId, stateId, pageable);
 
-        // Validar de acuerdo a los roles, si el usuario es ADMIN, puede buscar sin restricciones
-        if (roles.contains(ROLE_ADMIN)) {
-            spec = new SearchUserSpecification(name, dni, hospitalName, roleId, stateId);
-        } else if (roles.contains(ROLE_MANAGEMENT)) {
-            // Un usuario de gestión solo puede buscar usuarios de su hospital
-            spec = new SearchUserSpecification(name, dni, user.getHospital().getName(), roleId, stateId);
-        }
-
-        return repository.findAll(spec, pageable).map(UserDtoMapper::toListResponseDto);
+        return usersPage.map(UserDtoMapper::toListResponseDto);
     }
 
     @Override
