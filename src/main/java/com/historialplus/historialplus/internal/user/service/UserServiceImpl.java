@@ -17,6 +17,7 @@ import com.historialplus.historialplus.internal.user.mapper.UserDtoMapper;
 import com.historialplus.historialplus.internal.user.repository.UserRepository;
 import com.historialplus.historialplus.internal.user.specification.SearchUserSpecification;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +38,7 @@ import static com.historialplus.historialplus.common.constants.State.ACTIVE_ID;
 import static com.historialplus.historialplus.common.constants.State.DELETED_ID;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
 
     private final UserRepository repository;
@@ -44,14 +46,6 @@ public class UserServiceImpl implements IUserService {
     private final IAuthService authService;
     private final IPeopleService peopleService;
     private final PasswordEncoder passwordEncoder;
-
-    public UserServiceImpl(IStateService stateService, IPeopleService peopleService, PasswordEncoder passwordEncoder, IAuthService authService, UserRepository userRepository) {
-        this.repository = userRepository;
-        this.stateService = stateService;
-        this.peopleService = peopleService;
-        this.passwordEncoder = passwordEncoder;
-        this.authService = authService;
-    }
 
     @Override
     @Transactional(readOnly = true)
