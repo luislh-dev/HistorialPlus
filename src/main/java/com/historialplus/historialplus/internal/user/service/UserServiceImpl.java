@@ -14,6 +14,8 @@ import com.historialplus.historialplus.internal.user.dto.response.UserListRespon
 import com.historialplus.historialplus.internal.user.dto.response.UserResponseDto;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import com.historialplus.historialplus.internal.user.mapper.UserDtoMapper;
+import com.historialplus.historialplus.internal.user.mapper.UserListProjectionMapper;
+import com.historialplus.historialplus.internal.user.projection.UserListProjection;
 import com.historialplus.historialplus.internal.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -111,9 +113,9 @@ public class UserServiceImpl implements IUserService {
             pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
         }
 
-        Page<UserEntity> usersPage = repository.findByFilters(name, dni, hospitalName, roleId, stateId, pageable);
+        Page<UserListProjection> users = repository.findByFilters(name, dni, hospitalName, roleId, stateId, pageable);
 
-        return usersPage.map(UserDtoMapper::toListResponseDto);
+        return users.map(UserListProjectionMapper.INSTANCE::toUserListResponseDto);
     }
 
     @Override

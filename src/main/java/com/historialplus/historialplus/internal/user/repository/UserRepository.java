@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.internal.user.repository;
 
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
+import com.historialplus.historialplus.internal.user.projection.UserListProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,17 +31,26 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID>, JpaSpec
 
     Optional<UserEntity> findByPersonIdAndHospitalId(UUID personId, Integer hospitalId);
 
-    @Query("SELECT u FROM UserEntity u " +
+    @Query("SELECT u.id AS id, u.username AS username, u.email AS email, " +
+           "p.documentNumber AS dni, h.name AS hospital, s.name AS state, " +
+           "GROUP_CONCAT(r.name) AS roles " +
+           "FROM UserEntity u " +
+           "JOIN u.person p " +
+           "JOIN u.hospital h " +
+           "JOIN u.state s " +
+           "JOIN u.roleEntities r " +
            "WHERE (:name IS NULL OR LOWER(u.username) LIKE LOWER(CONCAT('%', :name, '%'))) " +
-           "AND (:dni IS NULL OR u.person.documentNumber = :dni) " +
-           "AND (:hospitalName IS NULL OR LOWER(u.hospital.name) LIKE LOWER(CONCAT('%', :hospitalName, '%'))) " +
-           "AND (:roleId IS NULL OR EXISTS (SELECT r FROM u.roleEntities r WHERE r.id = :roleId)) " +
-           "AND (:stateId IS NULL OR u.state.id = :stateId)")
-    Page<UserEntity> findByFilters(
+           "AND (:dni IS NULL OR p.documentNumber = :dni) " +
+           "AND (:hospitalName IS NULL OR LOWER(h.name) LIKE LOWER(CONCAT('%', :hospitalName, '%'))) " +
+           "AND (:roleId IS NULL OR r.id = :roleId) " +
+           "AND (:stateId IS NULL OR s.id = :stateId) " +
+           "GROUP BY u.id, u.username, u.email, p.documentNumber, h.name, s.name")
+    Page<UserListProjection> findByFilters(
         @Param("name") String name,
         @Param("dni") String dni,
         @Param("hospitalName") String hospitalName,
         @Param("roleId") Integer roleId,
         @Param("stateId") Integer stateId,
         Pageable pageable);
+    
 }

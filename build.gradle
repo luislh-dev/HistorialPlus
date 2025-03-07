@@ -56,6 +56,13 @@ dependencies {
 
     // Adobe SDK
     implementation 'com.adobe.documentservices:pdfservices-sdk:4.2.0'
+
+    // MapsStruct
+    implementation 'org.mapstruct:mapstruct:1.6.3'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+
+    // Integración entre Lombok y MapStruct
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 }
 
 tasks.named('test') {
