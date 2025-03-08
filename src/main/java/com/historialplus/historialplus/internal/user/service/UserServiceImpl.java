@@ -14,9 +14,11 @@ import com.historialplus.historialplus.internal.user.dto.response.UserListRespon
 import com.historialplus.historialplus.internal.user.dto.response.UserResponseDto;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import com.historialplus.historialplus.internal.user.mapper.UserDtoMapper;
+import com.historialplus.historialplus.internal.user.mapper.UserListProjectionMapper;
+import com.historialplus.historialplus.internal.user.projection.UserListProjection;
 import com.historialplus.historialplus.internal.user.repository.UserRepository;
-import com.historialplus.historialplus.internal.user.specification.SearchUserSpecification;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,6 +40,7 @@ import static com.historialplus.historialplus.common.constants.State.ACTIVE_ID;
 import static com.historialplus.historialplus.common.constants.State.DELETED_ID;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
 
     private final UserRepository repository;
@@ -44,14 +48,6 @@ public class UserServiceImpl implements IUserService {
     private final IAuthService authService;
     private final IPeopleService peopleService;
     private final PasswordEncoder passwordEncoder;
-
-    public UserServiceImpl(IStateService stateService, IPeopleService peopleService, PasswordEncoder passwordEncoder, IAuthService authService, UserRepository userRepository) {
-        this.repository = userRepository;
-        this.stateService = stateService;
-        this.peopleService = peopleService;
-        this.passwordEncoder = passwordEncoder;
-        this.authService = authService;
-    }
 
     @Override
     @Transactional(readOnly = true)
@@ -67,7 +63,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public UserResponseDto update(UUID id, UserUpdateDto userDto) {
-        // actualizacion parcial
+        // actualizar el usuario
         return repository.findById(id).map(user -> {
             if (userDto.getName() != null) {
                 user.setUsername(userDto.getName());
@@ -96,36 +92,30 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Page<UserListResponseDto> searchUsers(String name, String dni, String hospitalName, Integer roleId, Integer stateId, Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        List<String> roles = authentication.getAuthorities().stream().map(Object::toString).toList();
+
         UserEntity user = repository.findByUsername(authentication.getName()).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-        String role = user.getRoleEntities().stream().findFirst().orElseThrow(() -> new IllegalArgumentException("Rol" + " no encontrado")).getName();
 
-        //  Si el ordenamiento es por DNI, se ordena por el número de documento
-        if (pageable.getSort().getOrderFor("dni") != null) {
-            Sort.Order order = pageable.getSort().getOrderFor("dni");
-            assert order != null;
-            Sort newSort = Sort.by(new Sort.Order(order.getDirection(), "person.documentNumber"));
-            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), newSort);
+        if (roles.contains(ROLE_MANAGEMENT) && !roles.contains(ROLE_ADMIN)) {
+            hospitalName = user.getHospital().getName();
         }
 
-        // Si el hordenamiento es hospitalName, se ordena por el nombre del hospital
-        if (pageable.getSort().getOrderFor("hospital") != null) {
-            Sort.Order order = pageable.getSort().getOrderFor("hospital");
-            assert order != null;
-            Sort newSort = Sort.by(new Sort.Order(order.getDirection(), "hospital.name"));
-            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), newSort);
+        Sort sort = pageable.getSort();
+        if (sort.getOrderFor("dni") != null) {
+            Sort.Order order = sort.getOrderFor("dni");
+            sort = Sort.by(new Sort.Order(Objects.requireNonNull(order).getDirection(), "u.person.documentNumber"));
+            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+        }
+        if (sort.getOrderFor("hospital") != null) {
+            Sort.Order order = sort.getOrderFor("hospital");
+            sort = Sort.by(new Sort.Order(Objects.requireNonNull(order).getDirection(), "u.hospital.name"));
+            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
         }
 
-        SearchUserSpecification spec = new SearchUserSpecification(null, dni, null, roleId, stateId);
+        Page<UserListProjection> users = repository.findByFilters(name, dni, hospitalName, roleId, stateId, pageable);
 
-        if (role.equals(ROLE_ADMIN)) {
-            // Un administrador puede buscar sin restricciones
-            spec = new SearchUserSpecification(name, dni, hospitalName, roleId, stateId);
-        } else if (role.equals(ROLE_MANAGEMENT)) {
-            // Un usuario de gestión solo puede buscar usuarios de su hospital
-            spec = new SearchUserSpecification(name, dni, user.getHospital().getName(), roleId, stateId);
-        }
-
-        return repository.findAll(spec, pageable).map(UserDtoMapper::toListResponseDto);
+        return users.map(UserListProjectionMapper.INSTANCE::toUserListResponseDto);
     }
 
     @Override
@@ -137,7 +127,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     @AdminOnly
     public UserResponseDto createManagementUser(ManagementCreationDto userDto) {
-        // buscar el id de la persona por su dni
+        // buscar el ID de la persona por su DNI
         UUID personId = peopleService.findByDocumentNumber(userDto.getPersonDNI())
                 .orElseThrow(() -> new IllegalArgumentException("Persona no encontrada"))
                 .getId();
