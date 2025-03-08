@@ -3,6 +3,7 @@ package com.historialplus.historialplus.internal.role.service;
 import com.historialplus.historialplus.auth.AuthService.IAuthService;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;
 import com.historialplus.historialplus.internal.role.repository.RoleRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,15 +14,11 @@ import static com.historialplus.historialplus.common.constants.RoleConstants.ROL
 import static com.historialplus.historialplus.util.roles.RoleTransformer.transformRoles;
 
 @Service
+@AllArgsConstructor
 public class RoleServiceImpl implements IRoleService {
 
     private final IAuthService authService;
     private final RoleRepository roleRepository;
-
-    public RoleServiceImpl(RoleRepository roleRepository, IAuthService authService) {
-        this.roleRepository = roleRepository;
-        this.authService = authService;
-    }
 
     @Override
     public List<RoleEntity> findAll() {

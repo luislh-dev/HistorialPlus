@@ -7,6 +7,7 @@ import com.historialplus.historialplus.internal.record.entites.RecordEntity;
 import com.historialplus.historialplus.internal.record.mapper.RecordDtoMapper;
 import com.historialplus.historialplus.internal.record.repository.RecordRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,14 +16,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class RecordServiceImpl implements IRecordService {
     private final RecordRepository recordRepository;
     private final PeopleRepository peopleRepository;
-
-    public RecordServiceImpl(RecordRepository recordRepository, PeopleRepository peopleRepository) {
-        this.recordRepository = recordRepository;
-        this.peopleRepository = peopleRepository;
-    }
 
     @Override
     public List<RecordResponseDto> findAll() {

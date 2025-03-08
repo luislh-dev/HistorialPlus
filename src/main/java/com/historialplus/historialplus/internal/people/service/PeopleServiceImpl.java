@@ -16,6 +16,7 @@ import com.historialplus.historialplus.internal.people.projection.PeopleRecordPr
 import com.historialplus.historialplus.internal.people.projection.PersonaBasicProjection;
 import com.historialplus.historialplus.internal.people.repository.PeopleRepository;
 import com.historialplus.historialplus.internal.record.service.IRecordService;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,19 +29,13 @@ import static com.historialplus.historialplus.common.constants.DocumentTypeConst
 import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.DNI_ID;
 
 @Service
+@AllArgsConstructor
 public class PeopleServiceImpl implements IPeopleService {
 
     private final IReniecService reniecService;
     private final ICeService ceService;
     private final PeopleRepository repository;
     private final IRecordService recordService;
-
-    public PeopleServiceImpl(PeopleRepository peopleRepository, IReniecService reniecService, ICeService ceService, IRecordService recordService) {
-        this.repository = peopleRepository;
-        this.reniecService = reniecService;
-        this.ceService = ceService;
-        this.recordService = recordService;
-    }
 
     @Override
     @Transactional
