@@ -4,7 +4,7 @@ import com.historialplus.historialplus.internal.file.dto.response.FilesResponseD
 import com.historialplus.historialplus.internal.file.entites.FileEntity;
 import com.historialplus.historialplus.internal.file.mapper.FilesDtoMapper;
 import com.historialplus.historialplus.internal.file.repository.FileRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,14 +13,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class FileServiceImpl implements IFileService {
 
     private final FileRepository fileRepository;
-
-    @Autowired
-    public FileServiceImpl(FileRepository fileRepository) {
-        this.fileRepository = fileRepository;
-    }
 
     @Override
     public List<FilesResponseDto> findAll() {

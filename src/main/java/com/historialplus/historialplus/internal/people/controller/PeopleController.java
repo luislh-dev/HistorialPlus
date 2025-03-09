@@ -35,12 +35,9 @@ public class PeopleController {
 
     @GetMapping("/getPersonNameByDocument/{id}/{documentNumber}")
     public ResponseEntity<?> getPersonNameByDocument(@PathVariable Integer id, @PathVariable String documentNumber) {
-        var response = service.getPersonNameByDocument(id, documentNumber);
-
-        if (response.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(response);
+        return service.getPersonNameByDocument(id, documentNumber)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/findAllWithVisitsStats")

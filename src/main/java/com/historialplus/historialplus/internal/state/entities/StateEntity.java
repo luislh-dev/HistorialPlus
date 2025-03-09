@@ -1,13 +1,15 @@
 package com.historialplus.historialplus.internal.state.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "states")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class StateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

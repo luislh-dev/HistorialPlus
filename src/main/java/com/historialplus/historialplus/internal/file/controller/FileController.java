@@ -7,7 +7,7 @@ import com.historialplus.historialplus.internal.file.mapper.FilesDtoMapper;
 import com.historialplus.historialplus.internal.file.service.IFileService;
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
 import com.historialplus.historialplus.internal.recorddetail.service.IRecordDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,16 +16,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/files")
+@AllArgsConstructor
 public class FileController {
 
     private final IFileService fileService;
     private final IRecordDetailService recordDetailService;
-
-    @Autowired
-    public FileController(IFileService fileService, IRecordDetailService recordDetailService) {
-        this.fileService = fileService;
-        this.recordDetailService = recordDetailService;
-    }
 
     @GetMapping
     public ResponseEntity<List<FilesResponseDto>> getAllFiles() {
