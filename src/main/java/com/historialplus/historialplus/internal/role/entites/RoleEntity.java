@@ -1,21 +1,24 @@
 package com.historialplus.historialplus.internal.role.entites;
 
 
+import com.historialplus.historialplus.common.constants.RoleName;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
 @Entity
 @Table(name="roles")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private RoleName name;
 
-    public RoleEntity() {}
 }
