@@ -3,7 +3,7 @@ package com.historialplus.historialplus.external.dni.reniec.mapper;
 import com.historialplus.historialplus.external.dni.reniec.dto.ReniecResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 
-import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.DNI_NAME;
+import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.DNI;
 
 public class reniecMapper {
 
@@ -14,7 +14,7 @@ public class reniecMapper {
                 reniecResponseDto.getApellidoPaterno(),
                 reniecResponseDto.getApellidoMaterno(),
                 reniecResponseDto.getNumeroDocumento(),
-                DNI_NAME,
+                DNI.getDisplayName(),
                 null,
                 true,
                 "Reniec"
