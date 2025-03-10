@@ -1,7 +1,8 @@
 package com.historialplus.historialplus.internal.role.service;
 
-import com.historialplus.historialplus.auth.AuthService.IAuthService;
+import com.historialplus.historialplus.internal.role.dto.RoleDto;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;
+import com.historialplus.historialplus.internal.role.mapper.RoleMapper;
 import com.historialplus.historialplus.internal.role.repository.RoleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,33 +11,23 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.historialplus.historialplus.common.constants.RoleName.ROLE_ADMIN;
-
 @Service
 @AllArgsConstructor
 public class RoleServiceImpl implements IRoleService {
 
-    private final IAuthService authService;
     private final RoleRepository roleRepository;
 
     @Override
-    public List<RoleEntity> findAll() {
-        String role = authService.getAuthenticatedUserRole();
+    public List<RoleDto> findAll() {
+        List<RoleEntity> roles = roleRepository.findAll();
 
-        return authService.isAdmin(role)
-                ? roleRepository.findAll()
-                : getNonAdminRoles();
+        return roles.stream()
+            .map(RoleMapper::roleEntityToRoleDto)
+            .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<RoleEntity> findById(Integer id) {
-        return roleRepository.findById(id);
+    public Optional<RoleDto> findById(Integer id) {
+        return roleRepository.findById(id).map(RoleMapper::roleEntityToRoleDto);
     }
-
-    private List<RoleEntity> getNonAdminRoles() {
-        return roleRepository.findAll().stream()
-                .filter(roleEntity -> !ROLE_ADMIN.equals(roleEntity.getName()))
-                .collect(Collectors.toList());
-    }
-
 }
