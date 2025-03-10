@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.historialplus.historialplus.common.constants.RoleConstants.ROLE_ADMIN;
-import static com.historialplus.historialplus.util.roles.RoleTransformer.transformRoles;
+import static com.historialplus.historialplus.common.constants.RoleName.ROLE_ADMIN;
 
 @Service
 @AllArgsConstructor
@@ -25,8 +24,8 @@ public class RoleServiceImpl implements IRoleService {
         String role = authService.getAuthenticatedUserRole();
 
         return authService.isAdmin(role)
-                ? transformRoles(roleRepository.findAll())
-                : transformRoles(getNonAdminRoles());
+                ? roleRepository.findAll()
+                : getNonAdminRoles();
     }
 
     @Override
