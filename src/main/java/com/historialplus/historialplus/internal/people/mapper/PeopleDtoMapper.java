@@ -26,7 +26,7 @@ public class PeopleDtoMapper {
                 entity.getPhone(),
                 entity.getNationality(),
                 entity.getSexType().getName(),
-                entity.getTypeDocument().getName()
+                entity.getTypeDocument().getName().getDisplayName()
         );
     }
 
@@ -63,7 +63,7 @@ public class PeopleDtoMapper {
                 peopleEntity.getPaternalSurname(),
                 peopleEntity.getMaternalSurname(),
                 peopleEntity.getDocumentNumber(),
-                peopleEntity.getTypeDocument().getName(),
+                peopleEntity.getTypeDocument().getName().getDisplayName(),
                 peopleEntity.getPhone(),
                 false,
                 "RENIEC"
