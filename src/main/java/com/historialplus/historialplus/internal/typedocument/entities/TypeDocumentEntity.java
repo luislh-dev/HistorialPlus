@@ -1,10 +1,10 @@
 package com.historialplus.historialplus.internal.typedocument.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,14 +16,17 @@ import java.util.List;
 @Table(name = "type_document")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TypeDocumentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private DocumentTypeEnum name;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
