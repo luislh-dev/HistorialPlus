@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.people.service;
 
+import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
 import com.historialplus.historialplus.external.ce.mapper.CeMapper;
 import com.historialplus.historialplus.external.ce.service.ICeService;
@@ -25,8 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.CE_ID;
-import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.DNI_ID;
+import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.CE;
+import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.DNI;
 
 @Service
 @AllArgsConstructor
@@ -66,15 +67,20 @@ public class PeopleServiceImpl implements IPeopleService {
     }
 
     @Override
-    public Optional<MinimalPeopleResponseDto> getPersonNameByDocument(Integer id, String documentNumber) {
+    public Optional<MinimalPeopleResponseDto> getPersonNameByDocument(String documentType, String documentNumber) {
+
+        DocumentTypeEnum documentTypeEnum = DocumentTypeEnum.getDocumentTypeByName(documentType);
+
+        if (documentTypeEnum == null) { return Optional.empty(); }
+
         // verificamos si la persona ya existe en la base de datos
-        Optional<PeopleEntity> people = repository.findByDocumentNumberAndTypeDocument_Id(documentNumber, id);
+        Optional<PeopleEntity> people = repository.findByDocumentNumberAndTypeDocument_Name(documentNumber, documentTypeEnum);
         if (people.isPresent()) {
             return Optional.of(PeopleDtoMapper.toMinimalPeopleDto(people.get()));
         }
 
         // si no existe, consultamos a reniec
-        if (id.equals(DNI_ID)) {
+        if (documentTypeEnum.equals(DNI)) {
             try {
                 Optional<ReniecResponseDto> reniecResponse = reniecService.getPersonData(documentNumber);
                 return reniecResponse.map(reniecMapper::toMinimalPeopleDto);
@@ -84,7 +90,7 @@ public class PeopleServiceImpl implements IPeopleService {
         }
 
         // Validamos si el tipo es Carnet de Extranjería
-        if (id.equals(CE_ID)) {
+        if (documentTypeEnum.equals(CE)) {
 
             if (documentNumber.length() < 9) {
                 return Optional.empty();

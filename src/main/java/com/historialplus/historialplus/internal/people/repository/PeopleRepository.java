@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.people.repository;
 
+import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
 import com.historialplus.historialplus.internal.people.projection.PeopleRecordProjection;
 import com.historialplus.historialplus.internal.people.projection.PersonaBasicProjection;
@@ -18,7 +19,7 @@ import java.util.UUID;
 public interface PeopleRepository extends JpaRepository<PeopleEntity, UUID>, JpaSpecificationExecutor<PeopleEntity> {
     Optional<PeopleEntity> findByDocumentNumber(String documentNumber);
 
-    Optional<PeopleEntity> findByDocumentNumberAndTypeDocument_Id(String documentNumber, Integer typeDocumentId);
+    Optional<PeopleEntity> findByDocumentNumberAndTypeDocument_Name(String documentNumber, DocumentTypeEnum typeDocument_name);
 
     @Query("""
     SELECT new com.historialplus.historialplus.internal.people.projection.PeopleRecordProjection(

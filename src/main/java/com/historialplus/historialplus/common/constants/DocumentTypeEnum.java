@@ -12,4 +12,13 @@ public enum DocumentTypeEnum {
 	DocumentTypeEnum(String displayName) {
 		this.displayName = displayName;
 	}
+
+	public static DocumentTypeEnum getDocumentTypeByName(String documentType) {
+		for (DocumentTypeEnum documentTypeEnum : DocumentTypeEnum.values()) {
+			if (documentTypeEnum.name().equals(documentType)) {
+				return documentTypeEnum;
+			}
+		}
+		return null;
+	}
 }
