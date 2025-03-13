@@ -12,7 +12,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
-import static com.historialplus.historialplus.common.constants.RoleConstants.ROLE_ADMIN;
+import static com.historialplus.historialplus.common.constants.RoleName.ROLE_ADMIN;
 
 /**
  * Servicio para gestionar los intentos de inicio de sesión de los usuarios.
@@ -129,7 +129,7 @@ public class AuthServiceImpl implements IAuthService {
      */
     @Override
     public boolean isAdmin(String role) {
-        return ROLE_ADMIN.equals(role);
+        return ROLE_ADMIN.name().equals(role);
     }
 
     @Override

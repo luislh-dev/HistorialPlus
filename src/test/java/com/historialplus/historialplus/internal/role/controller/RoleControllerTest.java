@@ -12,13 +12,12 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
-import static com.historialplus.historialplus.common.constants.RoleConstants.*;
+import static com.historialplus.historialplus.common.constants.RoleName.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 @WebMvcTest(controllers = RoleController.class)
 class RoleControllerTest {
@@ -33,9 +32,9 @@ class RoleControllerTest {
 	@WithMockUser
 	void getAllRoles() throws Exception {
 		List<RoleDto> roles = List.of(
-				RoleDto.builder().id(1).name(ROLE_ADMIN).build(),
-				RoleDto.builder().id(2).name(ROLE_MANAGEMENT).build(),
-				RoleDto.builder().id(3).name(ROLE_DOCTOR).build()
+				RoleDto.builder().id(1).name(ROLE_ADMIN.name()).build(),
+				RoleDto.builder().id(2).name(ROLE_MANAGEMENT.name()).build(),
+				RoleDto.builder().id(3).name(ROLE_DOCTOR.name()).build()
 		);
 		given(this.roleService.findAll()).willReturn(roles);
 

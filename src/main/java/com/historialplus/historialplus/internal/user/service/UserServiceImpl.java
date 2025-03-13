@@ -35,7 +35,10 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.historialplus.historialplus.common.constants.RoleConstants.*;
+import static com.historialplus.historialplus.common.constants.RoleConstants.DOCTOR_ID;
+import static com.historialplus.historialplus.common.constants.RoleConstants.MANAGEMENT_ID;
+import static com.historialplus.historialplus.common.constants.RoleName.ROLE_ADMIN;
+import static com.historialplus.historialplus.common.constants.RoleName.ROLE_MANAGEMENT;
 import static com.historialplus.historialplus.common.constants.State.ACTIVE_ID;
 import static com.historialplus.historialplus.common.constants.State.DELETED_ID;
 
@@ -97,7 +100,7 @@ public class UserServiceImpl implements IUserService {
 
         UserEntity user = repository.findByUsername(authentication.getName()).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
-        if (roles.contains(ROLE_MANAGEMENT) && !roles.contains(ROLE_ADMIN)) {
+        if (roles.contains(ROLE_MANAGEMENT.name()) && !roles.contains(ROLE_ADMIN.name())) {
             hospitalName = user.getHospital().getName();
         }
 
