@@ -25,7 +25,7 @@ public class PeopleDtoMapper {
                 entity.getAddress(),
                 entity.getPhone(),
                 entity.getNationality(),
-                entity.getSexType().getName(),
+                entity.getSexType().getName().getDisplayName(),
                 entity.getTypeDocument().getName().getDisplayName()
         );
     }
