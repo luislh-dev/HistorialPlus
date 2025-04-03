@@ -19,7 +19,7 @@ public interface IPeopleService {
 
     Optional<MinimalPeopleResponseDto> getPersonName(String dni);
 
-    Optional<MinimalPeopleResponseDto> getPersonNameByDocument(Integer id, String documentNumber);
+    Optional<MinimalPeopleResponseDto> getPersonNameByDocument(String documentType, String documentNumber);
 
     Page<PeopleRecordPresenter> findAllWithVisitsStats(String documentNumber, String fullName, Pageable pageable);
 

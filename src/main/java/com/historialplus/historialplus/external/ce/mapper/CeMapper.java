@@ -3,7 +3,7 @@ package com.historialplus.historialplus.external.ce.mapper;
 import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 
-import static com.historialplus.historialplus.common.constants.DocumentTypeConstants.CE_NAME;
+import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.CE;
 
 public class CeMapper {
     // Convertir de CeResponseDto a MinimalPeopleResponseDto
@@ -13,7 +13,7 @@ public class CeMapper {
                 dto.getApellidoPaterno(),
                 dto.getApellidoMaterno(),
                 dto.getDocumentNumber(),
-                CE_NAME,
+                CE.getDisplayName(),
                 null,
                 true,
                 "Reniec"

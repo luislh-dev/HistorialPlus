@@ -12,7 +12,7 @@ public interface RecordDetailProjection {
 
     String getHospitalName();
 
-    Integer getSexTypeId();
+    String getSexTypeName();
 
     String getDoctorFullName();
 

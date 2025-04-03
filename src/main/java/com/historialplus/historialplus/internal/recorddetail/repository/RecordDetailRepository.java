@@ -22,7 +22,7 @@ public interface RecordDetailRepository extends JpaRepository<RecordDetailEntity
         SELECT rd.id as id, rd.reason as reason, rd.visitDate as visitDate,
                h.name as hospitalName,
                CONCAT(p.name, ' ', p.paternalSurname) as doctorFullName,
-               p.sexType.id as sexTypeId
+               p.sexType.name as sexTypeName
         FROM RecordDetailEntity rd
         JOIN HospitalEntity h ON rd.hospital.id = h.id
         JOIN UserEntity u ON rd.doctor.id = u.id
