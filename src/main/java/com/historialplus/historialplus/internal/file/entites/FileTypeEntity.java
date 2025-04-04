@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.file.entites;
 
+import com.historialplus.historialplus.common.constants.FileTypeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,24 +18,7 @@ public class FileTypeEntity {
 
     @Column(name = "name", nullable = false)
     @Enumerated(EnumType.STRING)
-    private FileType name;
-
-    @Getter
-    public enum FileType {
-        PRESCRIPTION("Recetas"),
-        MEDICAL_REPORT("Informes médicos"),
-        LAB_RESULT("Resultados de laboratorio"),
-        XRAY("Radiografías"),
-        SCAN("Otros tipos de imágenes médicas"),
-        OTHER("Otros documentos");
-
-        private final String displayName;
-
-        FileType(String displayName) {
-            this.displayName = displayName;
-        }
-
-    }
+    private FileTypeEnum name;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

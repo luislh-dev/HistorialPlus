@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.file.mapper;
 
-import com.historialplus.historialplus.internal.file.entites.FileTypeEntity;
+import com.historialplus.historialplus.common.constants.FileTypeEnum;
 import com.historialplus.historialplus.internal.file.presenter.FileDetailPresenter;
 import com.historialplus.historialplus.internal.file.projection.FileBasicProjection;
 
@@ -12,7 +12,7 @@ public class FilesPresenter {
         // Convertir el tipo de archivo a un nombre legible
         String typeName;
         try {
-            typeName = FileTypeEntity.FileType.valueOf(projection.getTypeName()).getDisplayName();
+            typeName = FileTypeEnum.valueOf(projection.getTypeName()).getDisplayName();
         } catch (IllegalArgumentException e) {
             typeName = projection.getTypeName();
         }
