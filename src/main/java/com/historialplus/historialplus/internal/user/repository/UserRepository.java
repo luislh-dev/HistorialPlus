@@ -22,9 +22,6 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID>, JpaSpec
     @NonNull
     Optional<UserEntity> findById(@NonNull UUID id);
 
-    @Override
-    void deleteById(@NonNull UUID id);
-
     boolean existsByUsername(String username);
 
     boolean existsByEmail(String email);
