@@ -1,7 +1,7 @@
-package com.historialplus.historialplus.internal.file.repository;
+package com.historialplus.historialplus.internal.filetype.repository;
 
-import com.historialplus.historialplus.internal.file.entites.FileTypeEntity;
-import com.historialplus.historialplus.internal.file.projection.FileTypeProjection;
+import com.historialplus.historialplus.internal.filetype.entities.FileTypeEntity;
+import com.historialplus.historialplus.internal.filetype.projection.FileTypeProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.internal.file.projection;
+package com.historialplus.historialplus.internal.filetype.projection;
 
 import com.historialplus.historialplus.common.constants.FileTypeEnum;
 

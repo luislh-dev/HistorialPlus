@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.file.entites;
 
+import com.historialplus.historialplus.internal.filetype.entities.FileTypeEntity;
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
 import jakarta.persistence.*;
 import lombok.Getter;

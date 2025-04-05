@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.internal.file.entites;
+package com.historialplus.historialplus.internal.filetype.entities;
 
 import com.historialplus.historialplus.common.constants.FileTypeEnum;
 import jakarta.persistence.*;

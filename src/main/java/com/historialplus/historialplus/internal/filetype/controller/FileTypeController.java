@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.internal.file.controller;
+package com.historialplus.historialplus.internal.filetype.controller;
 
-import com.historialplus.historialplus.internal.file.service.FileTypeService;
+import com.historialplus.historialplus.internal.filetype.service.IFileTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class FileTypeController {
 
-    private final FileTypeService fileTypeService;
+    private final IFileTypeService service;
 
     @GetMapping
     public ResponseEntity<?> getAllFileTypes() {
-        return ResponseEntity.ok(fileTypeService.getAll());
+        return ResponseEntity.ok(service.getAll());
     }
 
 }

@@ -3,7 +3,7 @@ package com.historialplus.historialplus.internal.file.mapper;
 import com.historialplus.historialplus.internal.file.dto.request.FilesCreateDto;
 import com.historialplus.historialplus.internal.file.dto.response.FilesResponseDto;
 import com.historialplus.historialplus.internal.file.entites.FileEntity;
-import com.historialplus.historialplus.internal.file.entites.FileTypeEntity;
+import com.historialplus.historialplus.internal.filetype.entities.FileTypeEntity;
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
 import org.springframework.stereotype.Component;
 

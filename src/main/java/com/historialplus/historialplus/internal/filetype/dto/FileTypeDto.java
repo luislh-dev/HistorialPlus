@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.internal.file.mapper;
+package com.historialplus.historialplus.internal.filetype.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +9,8 @@ public class FileTypeDto {
     private Integer id;
     private String name;
 
-    public FileTypeDto(Integer id, String displayName) {
+    public FileTypeDto(Integer id, String name) {
         this.id = id;
-        this.name = displayName;
+        this.name = name;
     }
 }
