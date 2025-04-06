@@ -5,8 +5,7 @@ import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetai
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,6 +16,9 @@ import java.util.List;
 @Table(name = "hospital")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class HospitalEntity {
 
     @Id

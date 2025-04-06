@@ -6,8 +6,7 @@ import com.historialplus.historialplus.internal.typedocument.entities.TypeDocume
 import com.historialplus.historialplus.internal.typesex.entities.SexTypeEntity;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,6 +20,9 @@ import java.util.UUID;
 @Table(name = "people")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PeopleEntity {
 
     @Id
@@ -73,5 +75,6 @@ public class PeopleEntity {
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @Builder.Default
     private List<UserEntity> users = new ArrayList<>();
 }

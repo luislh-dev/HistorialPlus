@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.internal.user.service;
 
 import com.historialplus.historialplus.auth.AuthService.IAuthService;
+import com.historialplus.historialplus.common.constants.StateEnum;
 import com.historialplus.historialplus.common.security.AdminOnly;
 import com.historialplus.historialplus.internal.people.service.IPeopleService;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;
@@ -39,7 +40,6 @@ import static com.historialplus.historialplus.common.constants.RoleConstants.DOC
 import static com.historialplus.historialplus.common.constants.RoleConstants.MANAGEMENT_ID;
 import static com.historialplus.historialplus.common.constants.RoleName.ROLE_ADMIN;
 import static com.historialplus.historialplus.common.constants.RoleName.ROLE_MANAGEMENT;
-import static com.historialplus.historialplus.common.constants.State.ACTIVE_ID;
 import static com.historialplus.historialplus.common.constants.State.DELETED_ID;
 
 @Service
@@ -140,7 +140,7 @@ public class UserServiceImpl implements IUserService {
         if (existingUser.isPresent()) {
             UserEntity user = existingUser.get();
 
-            if (user.getState().getId() != ACTIVE_ID) {
+            if (user.getState().getName() != StateEnum.ACTIVE) {
                 throw new IllegalArgumentException("El usuario existe pero no está activo en este hospital");
             }
 
@@ -199,7 +199,7 @@ public class UserServiceImpl implements IUserService {
         if (existingUser.isPresent()) {
             UserEntity user = existingUser.get();
 
-            if (user.getState().getId() != ACTIVE_ID) {
+            if (user.getState().getName() != StateEnum.ACTIVE) {
                 throw new IllegalArgumentException("El usuario existe pero no está activo en este hospital");
             }
 

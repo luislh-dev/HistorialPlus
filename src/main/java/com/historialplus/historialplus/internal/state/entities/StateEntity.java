@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.state.entities;
 
+import com.historialplus.historialplus.common.constants.StateEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,5 +17,6 @@ public class StateEntity {
     private int id;
 
     @Column(nullable = false)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private StateEnum name;
 }

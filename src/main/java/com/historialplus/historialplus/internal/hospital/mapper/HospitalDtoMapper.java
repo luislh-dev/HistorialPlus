@@ -17,7 +17,7 @@ public class HospitalDtoMapper {
                 hospitalEntity.getPhone(),
                 hospitalEntity.getEmail(),
                 hospitalEntity.getRuc(),
-                hospitalEntity.getState().getName()
+                hospitalEntity.getState().getName().getDisplayName()
         );
     }
 

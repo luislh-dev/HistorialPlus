@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.state.controller;
 
+import com.historialplus.historialplus.common.constants.StateEnum;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.state.service.IStateService;
 import org.junit.jupiter.api.Test;
@@ -33,9 +34,9 @@ public class StateControllerTest {
 	@WithMockUser
 	void testList() throws Exception {
 		List<StateEntity> states = new ArrayList<>();
-		states.add(StateEntity.builder().id(1).name("Activo").build());
-		states.add(StateEntity.builder().id(2).name("Inactivo").build());
-		states.add(StateEntity.builder().id(3).name("Eliminado").build());
+		states.add(StateEntity.builder().id(1).name(StateEnum.ACTIVE).build());
+		states.add(StateEntity.builder().id(2).name(StateEnum.INACTIVE).build());
+		states.add(StateEntity.builder().id(3).name(StateEnum.DELETED).build());
 
 		given(this.stateService.findAll()).willReturn(states);
 

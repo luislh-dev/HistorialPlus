@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.state.service;
 
+import com.historialplus.historialplus.common.constants.StateEnum;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.state.repository.StateRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +31,7 @@ class StateServiceImplTest {
 
 	@BeforeEach
 	void setUp() {
-		state = StateEntity.builder().id(1).name("Activo").build();
+		state = StateEntity.builder().id(1).name(StateEnum.ACTIVE).build();
 	}
 
 	@Test
@@ -40,7 +41,7 @@ class StateServiceImplTest {
 		StateEntity state = stateService.findById(this.state.getId()).orElse(null);
 
 		assertThat(state).isNotNull();
-		assertEquals("Activo", state.getName());
+		assertEquals(StateEnum.ACTIVE.getDisplayName(), state.getName().getDisplayName());
 	}
 
 	@Test
@@ -53,9 +54,28 @@ class StateServiceImplTest {
 	}
 
 	@Test
+	void findByName() {
+		given(stateRepository.findByName(StateEnum.ACTIVE)).willReturn(Optional.of(this.state));
+
+		StateEntity state = stateService.findByName(StateEnum.ACTIVE).orElse(null);
+
+		assertThat(state).isNotNull();
+		assertEquals(StateEnum.ACTIVE.getDisplayName(), state.getName().getDisplayName());
+	}
+
+	@Test
+	void findByNameNotFound() {
+		given(stateRepository.findByName(StateEnum.ACTIVE)).willReturn(Optional.empty());
+
+		StateEntity state = stateService.findByName(StateEnum.ACTIVE).orElse(null);
+
+		assertThat(state).isNull();
+	}
+
+	@Test
 	void findAll() {
-		StateEntity state2 = StateEntity.builder().id(2).name("Inactivo").build();
-		StateEntity state3 = StateEntity.builder().id(3).name("Eliminado").build();
+		StateEntity state2 = StateEntity.builder().id(2).name(StateEnum.INACTIVE).build();
+		StateEntity state3 = StateEntity.builder().id(3).name(StateEnum.DELETED).build();
 
 		given(stateRepository.findAll()).willReturn(List.of(this.state, state2, state3));
 

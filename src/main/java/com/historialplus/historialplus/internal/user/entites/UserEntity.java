@@ -6,12 +6,10 @@ import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +17,9 @@ import java.util.UUID;
 @Table(name = "users")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserEntity {
 
     @Id
@@ -39,9 +40,11 @@ public class UserEntity {
     private Timestamp lastLoginAt;
 
     @Column(name = "is_blocked", nullable = false)
+    @Builder.Default
     private boolean isBlocked = false;
 
     @Column(name = "failed_login_attempts", nullable = false)
+    @Builder.Default
     private int failedLoginAttempts = 0;
 
     @Column(name = "blocked_until")
@@ -75,10 +78,5 @@ public class UserEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "people_id")
     private PeopleEntity person;
-
-    public UserEntity() {
-        this.state = new StateEntity();
-        this.roleEntities = new ArrayList<>();
-    }
 
 }

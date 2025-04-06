@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.internal.hospital.repository;
 
-import com.historialplus.historialplus.internal.hospital.dto.response.HospitalResponseDto;
 import com.historialplus.historialplus.internal.hospital.entities.HospitalEntity;
 import com.historialplus.historialplus.internal.hospital.projection.HospitalNameProjection;
+import com.historialplus.historialplus.internal.hospital.projection.HospitalPageProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -19,9 +19,10 @@ public interface HospitalRepository extends JpaRepository<HospitalEntity, Intege
     boolean existsByPhone(String phone);
     boolean existsByRuc(String ruc);
 
-    @Query("SELECT new com.historialplus.historialplus.internal.hospital.dto.response.HospitalResponseDto(" +
-            "h.id, h.name, h.phone, h.email, h.ruc, h.state.name) " +
-            "FROM HospitalEntity h " +
-            "JOIN h.state s")
-    Page<HospitalResponseDto> findAllWithProjection(Specification<HospitalEntity> spec, Pageable pageable);
+    @Query("""
+        SELECT h.id AS id, h.name AS name, h.ruc AS ruc, h.email AS email, h.phone AS phone, s.name AS state
+        FROM HospitalEntity h
+        JOIN h.state s
+    """)
+    Page<HospitalPageProjection> findAllWithProjection(Specification<HospitalEntity> spec, Pageable pageable);
 }
