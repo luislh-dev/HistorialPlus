@@ -3,6 +3,7 @@ package com.historialplus.historialplus.internal.state.service;
 import com.historialplus.historialplus.common.constants.StateEnum;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.state.repository.StateRepository;
+import com.historialplus.historialplus.util.dataset.state.StateTestFixtures;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +32,7 @@ class StateServiceImplTest {
 
 	@BeforeEach
 	void setUp() {
-		state = StateEntity.builder().id(1).name(StateEnum.ACTIVE).build();
+		state = StateTestFixtures.STATE_ENTITY_ACTIVE;
 	}
 
 	@Test
@@ -74,10 +75,7 @@ class StateServiceImplTest {
 
 	@Test
 	void findAll() {
-		StateEntity state2 = StateEntity.builder().id(2).name(StateEnum.INACTIVE).build();
-		StateEntity state3 = StateEntity.builder().id(3).name(StateEnum.DELETED).build();
-
-		given(stateRepository.findAll()).willReturn(List.of(this.state, state2, state3));
+		given(stateRepository.findAll()).willReturn(StateTestFixtures.STATE_ENTITY_LIST);
 
 		List<StateEntity> states = stateService.findAll();
 

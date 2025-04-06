@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.internal.state.controller;
 
-import com.historialplus.historialplus.common.constants.StateEnum;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.state.service.IStateService;
+import com.historialplus.historialplus.util.dataset.state.StateTestFixtures;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -11,7 +11,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -33,10 +32,7 @@ public class StateControllerTest {
 	@Test
 	@WithMockUser
 	void testList() throws Exception {
-		List<StateEntity> states = new ArrayList<>();
-		states.add(StateEntity.builder().id(1).name(StateEnum.ACTIVE).build());
-		states.add(StateEntity.builder().id(2).name(StateEnum.INACTIVE).build());
-		states.add(StateEntity.builder().id(3).name(StateEnum.DELETED).build());
+		List<StateEntity> states = StateTestFixtures.STATE_ENTITY_LIST;
 
 		given(this.stateService.findAll()).willReturn(states);
 
