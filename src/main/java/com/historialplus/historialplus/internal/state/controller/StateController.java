@@ -1,6 +1,5 @@
 package com.historialplus.historialplus.internal.state.controller;
 
-import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.state.service.IStateService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,7 @@ public class StateController {
     }
 
     @GetMapping
-    public ResponseEntity<List<StateEntity>> list() {
+    public ResponseEntity<List<?>> list() {
         return ResponseEntity.ok(service.findAll());
     }
 

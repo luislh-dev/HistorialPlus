@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.internal.state.service;
 
 import com.historialplus.historialplus.common.constants.StateEnum;
+import com.historialplus.historialplus.internal.state.dto.StateDto;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.state.repository.StateRepository;
 import com.historialplus.historialplus.util.dataset.state.StateTestFixtures;
@@ -32,7 +33,7 @@ class StateServiceImplTest {
 
 	@BeforeEach
 	void setUp() {
-		state = StateTestFixtures.STATE_ENTITY_ACTIVE;
+		state = StateTestFixtures.active();
 	}
 
 	@Test
@@ -75,9 +76,9 @@ class StateServiceImplTest {
 
 	@Test
 	void findAll() {
-		given(stateRepository.findAll()).willReturn(StateTestFixtures.STATE_ENTITY_LIST);
+		given(stateRepository.findAll()).willReturn(StateTestFixtures.all());
 
-		List<StateEntity> states = stateService.findAll();
+		List<StateDto> states = stateService.findAll();
 
 		assertThat(states).isNotNull();
 		assertThat(states).hasSize(3);
