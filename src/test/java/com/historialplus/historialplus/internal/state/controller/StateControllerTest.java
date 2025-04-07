@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.internal.state.controller;
 
-import com.historialplus.historialplus.internal.state.entities.StateEntity;
+import com.historialplus.historialplus.common.constants.StateEnum;
+import com.historialplus.historialplus.internal.state.dto.StateDto;
 import com.historialplus.historialplus.internal.state.service.IStateService;
-import com.historialplus.historialplus.util.dataset.state.StateTestFixtures;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -32,7 +32,11 @@ public class StateControllerTest {
 	@Test
 	@WithMockUser
 	void testList() throws Exception {
-		List<StateEntity> states = StateTestFixtures.STATE_ENTITY_LIST;
+		List<StateDto> states = List.of(
+				StateDto.builder().name(StateEnum.ACTIVE.getDisplayName()).build(),
+				StateDto.builder().name(StateEnum.INACTIVE.getDisplayName()).build(),
+				StateDto.builder().name(StateEnum.DELETED.getDisplayName()).build()
+		);
 
 		given(this.stateService.findAll()).willReturn(states);
 

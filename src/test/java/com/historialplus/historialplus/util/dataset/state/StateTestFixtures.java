@@ -7,24 +7,29 @@ import java.util.List;
 
 public class StateTestFixtures {
 
-	public static final StateEntity STATE_ENTITY_ACTIVE = StateEntity.builder()
-			.id(1)
+	public static StateEntity active() {
+		return StateEntity.builder()
 			.name(StateEnum.ACTIVE)
 			.build();
+	}
 
-	public static final StateEntity STATE_ENTITY_INACTIVE = StateEntity.builder()
-			.id(2)
+	public static StateEntity inactive()  {
+		return StateEntity.builder()
 			.name(StateEnum.INACTIVE)
 			.build();
+	}
 
-	public static final StateEntity STATE_ENTITY_DELETED = StateEntity.builder()
-			.id(3)
+	public static StateEntity deleted() {
+		return StateEntity.builder()
 			.name(StateEnum.DELETED)
 			.build();
+	}
 
-	public static final List<StateEntity> STATE_ENTITY_LIST = List.of(
-		STATE_ENTITY_ACTIVE,
-		STATE_ENTITY_INACTIVE,
-		STATE_ENTITY_DELETED
-	);
+	public static List<StateEntity> all() {
+		return List.of(
+			active(),
+			inactive(),
+			deleted()
+		);
+	}
 }
