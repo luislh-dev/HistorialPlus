@@ -1,7 +1,6 @@
 package com.historialplus.historialplus.internal.hospital.mapper;
 
 import com.historialplus.historialplus.internal.hospital.dto.request.HospitalCreateDto;
-import com.historialplus.historialplus.internal.hospital.dto.response.HospitalFindByResponseDto;
 import com.historialplus.historialplus.internal.hospital.dto.response.HospitalResponseDto;
 import com.historialplus.historialplus.internal.hospital.entities.HospitalEntity;
 
@@ -31,14 +30,4 @@ public class HospitalDtoMapper {
         return hospital;
     }
 
-    public static HospitalFindByResponseDto toUserFindByResponseDto(HospitalEntity hospitalEntity) {
-        return new HospitalFindByResponseDto(
-                hospitalEntity.getName(),
-                hospitalEntity.getAddress(),
-                hospitalEntity.getPhone(),
-                hospitalEntity.getEmail(),
-                hospitalEntity.getRuc(),
-                hospitalEntity.getState().getId()
-        );
-    }
 }

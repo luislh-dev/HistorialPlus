@@ -34,7 +34,7 @@ public class HospitalServiceImpl implements IHospitalService {
 
     @Override
     public Optional<HospitalFindByResponseDto> findById(Integer id) {
-        return hospitalRepository.findById(id).map(HospitalDtoMapper::toUserFindByResponseDto);
+        return hospitalRepository.findProjectedById(id).map(mapper::hospitalDetailsProjectionToHospitalFindByResponseDto);
     }
 
     @Override

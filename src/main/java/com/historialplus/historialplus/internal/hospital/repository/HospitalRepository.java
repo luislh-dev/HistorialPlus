@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.internal.hospital.repository;
 
 import com.historialplus.historialplus.internal.hospital.entities.HospitalEntity;
+import com.historialplus.historialplus.internal.hospital.projection.HospitalDetailsProjection;
 import com.historialplus.historialplus.internal.hospital.projection.HospitalNameProjection;
 import com.historialplus.historialplus.internal.hospital.projection.HospitalPageProjection;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface HospitalRepository extends JpaRepository<HospitalEntity, Integer> {
@@ -34,4 +37,9 @@ public interface HospitalRepository extends JpaRepository<HospitalEntity, Intege
         @Param("id") Integer id,
         @Param("stateId") Integer stateId,
         Pageable pageable);
+
+    @Query("SELECT h.name AS name, h.address AS address, h.phone AS phone, h.email AS email, h.ruc AS ruc, h.state.id AS stateId " +
+           "FROM HospitalEntity h " +
+           "WHERE h.id = :id")
+    Optional<HospitalDetailsProjection> findProjectedById(Integer id);
 }
