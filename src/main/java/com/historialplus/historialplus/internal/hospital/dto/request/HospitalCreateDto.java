@@ -40,13 +40,4 @@ public class HospitalCreateDto {
     @NotNull(message = "Estado es requerido")
     @ValidStateId
     private Integer stateId;
-
-    public HospitalCreateDto(String name, String address, String phone, String email, String ruc, Integer stateId) {
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.ruc = ruc;
-        this.stateId = stateId;
-    }
 }

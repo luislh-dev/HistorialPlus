@@ -7,7 +7,6 @@ import com.historialplus.historialplus.internal.hospital.dto.response.HospitalFi
 import com.historialplus.historialplus.internal.hospital.dto.response.HospitalPageResponseDto;
 import com.historialplus.historialplus.internal.hospital.dto.response.HospitalResponseDto;
 import com.historialplus.historialplus.internal.hospital.entities.HospitalEntity;
-import com.historialplus.historialplus.internal.hospital.mapper.HospitalDtoMapper;
 import com.historialplus.historialplus.internal.hospital.mapper.HospitalMapper;
 import com.historialplus.historialplus.internal.hospital.projection.HospitalNameProjection;
 import com.historialplus.historialplus.internal.hospital.repository.HospitalRepository;
@@ -40,15 +39,7 @@ public class HospitalServiceImpl implements IHospitalService {
 
     @Override
     public HospitalCreateDto save(HospitalCreateDto hospitalDto) {
-        // Validar y obtener el estado
-        StateEntity state = stateService.findById(hospitalDto.getStateId())
-                .orElseThrow(() -> new RuntimeException("Estado no encontrado con ID: " + hospitalDto.getStateId()));
-
-        // Crear y guardar el hospital
-        HospitalEntity hospital = HospitalDtoMapper.toHospitalEntity(hospitalDto);
-        hospital.setState(state);
-        hospitalRepository.save(hospital);
-
+        hospitalRepository.save(mapper.hospitalCreateDtoToHospitalEntity(hospitalDto));
         return hospitalDto;
     }
 
@@ -84,7 +75,7 @@ public class HospitalServiceImpl implements IHospitalService {
                 stateEntity.setId(hospitalDto.getStateId());
                 hospital.setState(stateEntity);
             }
-            return HospitalDtoMapper.toHospitalResponseDto(hospitalRepository.save(hospital));
+            return mapper.hospitalEntityToHospitalResponseDto(hospitalRepository.save(hospital));
         }).orElseThrow(() -> new RuntimeException("Hospital no encontrado con ID: " + id));
     }
 

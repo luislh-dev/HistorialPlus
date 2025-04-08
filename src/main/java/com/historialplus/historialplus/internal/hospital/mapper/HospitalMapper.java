@@ -1,7 +1,10 @@
 package com.historialplus.historialplus.internal.hospital.mapper;
 
+import com.historialplus.historialplus.internal.hospital.dto.request.HospitalCreateDto;
 import com.historialplus.historialplus.internal.hospital.dto.response.HospitalFindByResponseDto;
 import com.historialplus.historialplus.internal.hospital.dto.response.HospitalPageResponseDto;
+import com.historialplus.historialplus.internal.hospital.dto.response.HospitalResponseDto;
+import com.historialplus.historialplus.internal.hospital.entities.HospitalEntity;
 import com.historialplus.historialplus.internal.hospital.projection.HospitalDetailsProjection;
 import com.historialplus.historialplus.internal.hospital.projection.HospitalPageProjection;
 import org.mapstruct.Mapper;
@@ -15,4 +18,9 @@ public interface HospitalMapper {
 	HospitalPageResponseDto hospitalPageProjectionToHospitalPageResponseDto(HospitalPageProjection hospitalPageProjection);
 
 	HospitalFindByResponseDto hospitalDetailsProjectionToHospitalFindByResponseDto(HospitalDetailsProjection projection);
+
+	HospitalResponseDto hospitalEntityToHospitalResponseDto(HospitalEntity hospitalEntity);
+
+	@Mapping(target = "state.id", source = "stateId")
+	HospitalEntity hospitalCreateDtoToHospitalEntity(HospitalCreateDto hospitalCreateDto);
 }
