@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.hospital.service;
 
+import com.historialplus.historialplus.common.constants.StateEnum;
 import com.historialplus.historialplus.internal.hospital.dto.request.HospitalCreateDto;
 import com.historialplus.historialplus.internal.hospital.dto.request.HospitalUpdateDto;
 import com.historialplus.historialplus.internal.hospital.dto.response.HospitalFindByResponseDto;
@@ -54,8 +55,8 @@ public class HospitalServiceImpl implements IHospitalService {
     @Override
     public void deleteById(Integer id) {
         HospitalEntity hospital = hospitalRepository.findById(id).orElseThrow(() -> new RuntimeException("Hospital no encontrado con ID: " + id));
-        // eliminar logicamente
-        hospital.setState(stateService.findById(2).orElseThrow(() -> new RuntimeException("Estado no encontrado con ID: 3")));
+
+        hospital.setState(stateService.findByName(StateEnum.DELETED).orElseThrow(() -> new RuntimeException("Estado no encontrado con ID: " + id)));
 
         hospitalRepository.save(hospital);
     }
