@@ -40,7 +40,6 @@ import static com.historialplus.historialplus.common.constants.RoleConstants.DOC
 import static com.historialplus.historialplus.common.constants.RoleConstants.MANAGEMENT_ID;
 import static com.historialplus.historialplus.common.constants.RoleName.ROLE_ADMIN;
 import static com.historialplus.historialplus.common.constants.RoleName.ROLE_MANAGEMENT;
-import static com.historialplus.historialplus.common.constants.State.DELETED_ID;
 
 @Service
 @RequiredArgsConstructor
@@ -241,8 +240,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public void deleteById(UUID id) {
-        // validar si el estado existe DELETED_ID
-        StateEntity state = stateService.findById(DELETED_ID).orElseThrow(() -> new IllegalArgumentException("Estado " + "no encontrado"));
+        StateEntity state = stateService.findByName(StateEnum.DELETED).orElseThrow(() -> new IllegalArgumentException("Estado no encontrado"));
         // recuperar el usuario
         UserEntity user = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no " + "encontrado"));
         // cambiar el estado del usuario a eliminado
