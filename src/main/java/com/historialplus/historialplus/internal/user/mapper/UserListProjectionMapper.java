@@ -15,6 +15,7 @@ public interface UserListProjectionMapper {
 	UserListProjectionMapper INSTANCE = getMapper(UserListProjectionMapper.class);
 
 	@Mapping(target = "roles", expression = "java(mapRoles(user.getRoles()))")
+	@Mapping(target = "state", source = "state.displayName")
 	UserListResponseDto toUserListResponseDto(UserListProjection user);
 
 	default List<String> mapRoles(String roles) {

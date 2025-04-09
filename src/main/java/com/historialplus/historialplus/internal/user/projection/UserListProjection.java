@@ -1,5 +1,7 @@
 package com.historialplus.historialplus.internal.user.projection;
 
+import com.historialplus.historialplus.common.constants.StateEnum;
+
 import java.util.UUID;
 
 public interface UserListProjection {
@@ -8,6 +10,6 @@ public interface UserListProjection {
 	String getEmail();
 	String getDni();
 	String getHospital();
-	String getState();
+	StateEnum getState();
 	String getRoles();
 }
