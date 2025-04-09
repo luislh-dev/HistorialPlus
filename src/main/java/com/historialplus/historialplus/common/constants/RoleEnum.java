@@ -3,7 +3,7 @@ package com.historialplus.historialplus.common.constants;
 import lombok.Getter;
 
 @Getter
-public enum RoleName {
+public enum RoleEnum {
 	ROLE_ADMIN("Administrador"),
 	ROLE_USER("Usuario"),
 	ROLE_DOCTOR("Doctor"),
@@ -12,7 +12,7 @@ public enum RoleName {
 
 	private final String displayName;
 
-	RoleName(final String displayName) {
+	RoleEnum(final String displayName) {
 		this.displayName = displayName;
 	}
 

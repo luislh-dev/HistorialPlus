@@ -7,7 +7,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import static com.historialplus.historialplus.common.constants.RoleName.ROLE_ADMIN;
+import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_ADMIN;
 
 @Aspect
 @Component

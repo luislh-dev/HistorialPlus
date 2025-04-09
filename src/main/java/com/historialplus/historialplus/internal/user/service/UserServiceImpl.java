@@ -38,8 +38,8 @@ import java.util.stream.Collectors;
 
 import static com.historialplus.historialplus.common.constants.RoleConstants.DOCTOR_ID;
 import static com.historialplus.historialplus.common.constants.RoleConstants.MANAGEMENT_ID;
-import static com.historialplus.historialplus.common.constants.RoleName.ROLE_ADMIN;
-import static com.historialplus.historialplus.common.constants.RoleName.ROLE_MANAGEMENT;
+import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_ADMIN;
+import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_MANAGEMENT;
 
 @Service
 @RequiredArgsConstructor

@@ -13,8 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static com.historialplus.historialplus.common.constants.RoleName.ROLE_ADMIN;
-import static com.historialplus.historialplus.common.constants.RoleName.ROLE_MANAGEMENT;
+import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_ADMIN;
+import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_MANAGEMENT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;

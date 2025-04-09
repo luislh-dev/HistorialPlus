@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.internal.role.entites;
 
 
-import com.historialplus.historialplus.common.constants.RoleName;
+import com.historialplus.historialplus.common.constants.RoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +19,6 @@ public class RoleEntity {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    private RoleName name;
+    private RoleEnum name;
 
 }

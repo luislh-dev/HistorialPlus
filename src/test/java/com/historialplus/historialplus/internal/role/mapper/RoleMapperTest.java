@@ -4,7 +4,7 @@ import com.historialplus.historialplus.internal.role.dto.RoleDto;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;
 import org.junit.jupiter.api.Test;
 
-import static com.historialplus.historialplus.common.constants.RoleName.ROLE_ADMIN;
+import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_ADMIN;
 import static com.historialplus.historialplus.internal.role.mapper.RoleMapper.roleEntityToRoleDto;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
