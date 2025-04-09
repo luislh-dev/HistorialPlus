@@ -48,7 +48,7 @@ public interface RecordDetailRepository extends JpaRepository<RecordDetailEntity
 		           u.person.name as doctorName,
 		           p.paternalSurname as doctorPaternalSurname,
 		           p.maternalSurname as doctorMaternalSurname,
-				   st.id as doctorSexTypeId,
+				   st.name as doctorSexTypeName,
 		           h.name as hospitalName,
 		           rd.visitDate as visitDate,
 		           rd.reason as reason,

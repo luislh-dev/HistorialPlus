@@ -15,7 +15,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
-import static com.historialplus.historialplus.common.constants.SexTypeConstants.MALE_ID;
 import static com.historialplus.historialplus.common.constants.SexTypeEnum.MALE;
 
 @Component
@@ -52,7 +51,7 @@ public class RecordDetailDtoMapper {
     // Convertir de RecordDetailExtenseProjection y una lista de FileBasicProjection a RecordDetailExtensePresenter
     public static RecordDetailExtenseViewModel toPresenter(RecordDetailExtenseProjection projection, List<FileBasicProjection> orDefault) {
 
-        String doctorPrefix = (Objects.equals(projection.getDoctorSexTypeId(), MALE_ID)) ? "Dr. " : "Dra. ";
+        String doctorPrefix = (Objects.equals(projection.getDoctorSexTypeName(), MALE)) ? "Dr. " : "Dra. ";
         String doctorFullName = doctorPrefix + projection.getDoctorName() + " " + projection.getDoctorPaternalSurname() + " " + projection.getDoctorMaternalSurname();
 
         String visitDate = (projection.getVisitDate() != null) ? projection.getVisitDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) : null;

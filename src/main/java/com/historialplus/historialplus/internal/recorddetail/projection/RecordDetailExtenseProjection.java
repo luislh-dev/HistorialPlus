@@ -1,5 +1,7 @@
 package com.historialplus.historialplus.internal.recorddetail.projection;
 
+import com.historialplus.historialplus.common.constants.SexTypeEnum;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,7 +14,7 @@ public interface RecordDetailExtenseProjection {
 
     String getDoctorMaternalSurname();
 
-    Integer getDoctorSexTypeId();
+    SexTypeEnum getDoctorSexTypeName();
 
     String getHospitalName();
 
