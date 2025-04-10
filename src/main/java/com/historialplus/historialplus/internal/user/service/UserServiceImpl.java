@@ -17,7 +17,6 @@ import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import com.historialplus.historialplus.internal.user.mapper.UserMapper;
 import com.historialplus.historialplus.internal.user.projection.UserListProjection;
 import com.historialplus.historialplus.internal.user.repository.UserRepository;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,17 +49,6 @@ public class UserServiceImpl implements IUserService {
     private final IPeopleService peopleService;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper mapper;
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<UserResponseDto> findAll() {
-        return repository.findAll().stream().map(mapper::userEntityToUserResponseDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public Optional<UserResponseDto> findById(@NonNull UUID id) {
-        return repository.findById(id).map(mapper::userEntityToUserResponseDto);
-    }
 
     @Override
     @Transactional
