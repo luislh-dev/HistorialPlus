@@ -14,8 +14,7 @@ import com.historialplus.historialplus.internal.user.dto.request.UserUpdateDto;
 import com.historialplus.historialplus.internal.user.dto.response.UserListResponseDto;
 import com.historialplus.historialplus.internal.user.dto.response.UserResponseDto;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
-import com.historialplus.historialplus.internal.user.mapper.UserDtoMapper;
-import com.historialplus.historialplus.internal.user.mapper.UserListProjectionMapper;
+import com.historialplus.historialplus.internal.user.mapper.UserMapper;
 import com.historialplus.historialplus.internal.user.projection.UserListProjection;
 import com.historialplus.historialplus.internal.user.repository.UserRepository;
 import lombok.NonNull;
@@ -50,16 +49,17 @@ public class UserServiceImpl implements IUserService {
     private final IAuthService authService;
     private final IPeopleService peopleService;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper mapper;
 
     @Override
     @Transactional(readOnly = true)
     public List<UserResponseDto> findAll() {
-        return repository.findAll().stream().map(UserDtoMapper::toResponseDto).collect(Collectors.toList());
+        return repository.findAll().stream().map(mapper::userEntityToUserResponseDto).collect(Collectors.toList());
     }
 
     @Override
     public Optional<UserResponseDto> findById(@NonNull UUID id) {
-        return repository.findById(id).map(UserDtoMapper::toResponseDto);
+        return repository.findById(id).map(mapper::userEntityToUserResponseDto);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class UserServiceImpl implements IUserService {
                 }).collect(Collectors.toList());
                 user.setRoleEntities(roleEntities);
             }
-            return UserDtoMapper.toResponseDto(repository.save(user));
+            return mapper.userEntityToUserResponseDto(repository.save(user));
         }).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
     }
 
@@ -117,7 +117,7 @@ public class UserServiceImpl implements IUserService {
 
         Page<UserListProjection> users = repository.findByFilters(name, dni, hospitalName, roleId, stateId, pageable);
 
-        return users.map(UserListProjectionMapper.INSTANCE::toUserListResponseDto);
+        return users.map(mapper::toUserListResponseDto);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class UserServiceImpl implements IUserService {
             RoleEntity managementRole = new RoleEntity();
             managementRole.setId(MANAGEMENT_ID);
             user.getRoleEntities().add(managementRole);
-            return UserDtoMapper.toResponseDto(repository.save(user));
+            return mapper.userEntityToUserResponseDto(repository.save(user));
         }
 
         // usar el Builder de UserCreationCommand para crear un nuevo usuario
@@ -169,7 +169,7 @@ public class UserServiceImpl implements IUserService {
         UserEntity userEntity = command.toUserEntity();
         userEntity = repository.save(userEntity);
 
-        return UserDtoMapper.toResponseDto(userEntity);
+        return mapper.userEntityToUserResponseDto(userEntity);
     }
 
     @Override
@@ -212,7 +212,7 @@ public class UserServiceImpl implements IUserService {
             RoleEntity doctorRole = new RoleEntity();
             doctorRole.setId(DOCTOR_ID);
             user.getRoleEntities().add(doctorRole);
-            return UserDtoMapper.toResponseDto(repository.save(user));
+            return mapper.userEntityToUserResponseDto(repository.save(user));
         }
 
         // Usar el Builder de UserCreationCommand para crear un nuevo usuario
@@ -228,7 +228,7 @@ public class UserServiceImpl implements IUserService {
         UserEntity userEntity = command.toUserEntity();
         userEntity = repository.save(userEntity);
 
-        return UserDtoMapper.toResponseDto(userEntity);
+        return mapper.userEntityToUserResponseDto(userEntity);
     }
 
     /**
