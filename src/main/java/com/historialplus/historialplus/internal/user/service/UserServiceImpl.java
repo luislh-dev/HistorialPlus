@@ -15,7 +15,6 @@ import com.historialplus.historialplus.internal.user.dto.response.UserListRespon
 import com.historialplus.historialplus.internal.user.dto.response.UserResponseDto;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import com.historialplus.historialplus.internal.user.mapper.UserMapper;
-import com.historialplus.historialplus.internal.user.projection.UserListProjection;
 import com.historialplus.historialplus.internal.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -85,9 +84,10 @@ public class UserServiceImpl implements IUserService {
 
         List<String> roles = authentication.getAuthorities().stream().map(Object::toString).toList();
 
-        UserEntity user = repository.findByUsername(authentication.getName()).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-
         if (roles.contains(ROLE_MANAGEMENT.name()) && !roles.contains(ROLE_ADMIN.name())) {
+            UserEntity user = repository.findByUsername(authentication.getName())
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
             hospitalName = user.getHospital().getName();
         }
 
@@ -103,9 +103,7 @@ public class UserServiceImpl implements IUserService {
             pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
         }
 
-        Page<UserListProjection> users = repository.findByFilters(name, dni, hospitalName, roleId, stateId, pageable);
-
-        return users.map(mapper::toUserListResponseDto);
+        return repository.findByFilters(name, dni, hospitalName, roleId, stateId, pageable).map(mapper::toUserListResponseDto);
     }
 
     @Override
