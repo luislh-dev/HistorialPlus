@@ -33,6 +33,7 @@ public interface UserMapper {
 
 	@Mapping(target = "name", source = "username")
 	@Mapping(target = "roleId", expression = "java(mapRoleIds(userEntity.getRoleEntities()))")
+	@Mapping(target = "stateId", source = "state.id")
 	UserResponseDto userEntityToUserResponseDto(UserEntity userEntity);
 
 	default List<Integer> mapRoleIds(List<RoleEntity> roleEntities) {

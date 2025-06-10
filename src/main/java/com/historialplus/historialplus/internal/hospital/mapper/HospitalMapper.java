@@ -19,8 +19,14 @@ public interface HospitalMapper {
 
 	HospitalFindByResponseDto hospitalDetailsProjectionToHospitalFindByResponseDto(HospitalDetailsProjection projection);
 
+	@Mapping(target = "stateName", source = "state.name.displayName")
 	HospitalResponseDto hospitalEntityToHospitalResponseDto(HospitalEntity hospitalEntity);
 
+	@Mapping(target = "id", ignore = true)
+	@Mapping(target = "createdAt", ignore = true)
+	@Mapping(target = "updatedAt", ignore = true)
+	@Mapping(target = "visits", ignore = true)
+	@Mapping(target = "users", ignore = true)
 	@Mapping(target = "state.id", source = "stateId")
 	HospitalEntity hospitalCreateDtoToHospitalEntity(HospitalCreateDto hospitalCreateDto);
 }

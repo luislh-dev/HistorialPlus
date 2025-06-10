@@ -104,7 +104,6 @@ public class PeopleServiceImpl implements IPeopleService {
             }
         }
 
-        // Si no es ninguno de los dos, retornamos un optional vacío
         return Optional.empty();
     }
 

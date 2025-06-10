@@ -32,9 +32,9 @@ class FileTypeControllerTest {
 	@WithMockUser
 	void getAllFileTypesTest() throws Exception {
 		List<FileTypeDto> fileTypeDtos = List.of(
-			new FileTypeDto(1, FileTypeEnum.XRAY.getDisplayName()),
-			new FileTypeDto(2, FileTypeEnum.MEDICAL_REPORT.getDisplayName()),
-			new FileTypeDto(3, FileTypeEnum.LAB_RESULT.getDisplayName())
+			FileTypeDto.builder().id(1).name(FileTypeEnum.XRAY.getDisplayName()).build(),
+			FileTypeDto.builder().id(2).name(FileTypeEnum.MEDICAL_REPORT.getDisplayName()).build(),
+			FileTypeDto.builder().id(3).name(FileTypeEnum.LAB_RESULT.getDisplayName()).build()
 		);
 		when(fileTypeService.getAll()).thenReturn(fileTypeDtos);
 

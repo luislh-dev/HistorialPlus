@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.people.mapper;
 
+import com.historialplus.historialplus.common.constants.PersonalDataSourceEnum;
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.PeopleResponseDto;
@@ -9,10 +10,8 @@ import com.historialplus.historialplus.internal.typesex.entities.SexTypeEntity;
 
 public class PeopleDtoMapper {
 
-    private PeopleDtoMapper() {
-    }
+    private PeopleDtoMapper() {}
 
-    // Mapper de PeopleEntity a PeopleResponseDto
     public static PeopleResponseDto toPeopleResponseDto(PeopleEntity entity) {
         return new PeopleResponseDto(
                 entity.getId(),
@@ -30,7 +29,6 @@ public class PeopleDtoMapper {
         );
     }
 
-    // Método para mapear de PeopleCreateDto a PeopleEntity
     public static PeopleEntity toPeopleEntity(PeopleCreateDto dto) {
         PeopleEntity entity = new PeopleEntity();
         entity.setName(dto.getName());
@@ -43,12 +41,10 @@ public class PeopleDtoMapper {
         entity.setPhone(dto.getPhone());
         entity.setNationality(dto.getNationality());
 
-        // agregar el tipo de sexo
         var sexType = new SexTypeEntity();
         sexType.setId(dto.getSexTypeId());
         entity.setSexType(sexType);
 
-        // Agregar el tipo de documento
         var typeDocument = new TypeDocumentEntity();
         typeDocument.setId(dto.getTypeDocumentId());
         entity.setTypeDocument(typeDocument);
@@ -56,17 +52,16 @@ public class PeopleDtoMapper {
         return entity;
     }
 
-    // convertir de tipo PeopleEntity a MinimalPeopleResponseDto
     public static MinimalPeopleResponseDto toMinimalPeopleDto(PeopleEntity peopleEntity) {
-        return new MinimalPeopleResponseDto(
-                peopleEntity.getName(),
-                peopleEntity.getPaternalSurname(),
-                peopleEntity.getMaternalSurname(),
-                peopleEntity.getDocumentNumber(),
-                peopleEntity.getTypeDocument().getName().getDisplayName(),
-                peopleEntity.getPhone(),
-                false,
-                "RENIEC"
-        );
+        MinimalPeopleResponseDto response = new MinimalPeopleResponseDto();
+        response.setName(peopleEntity.getName());
+        response.setFatherLastName(peopleEntity.getPaternalSurname());
+        response.setMotherLastName(peopleEntity.getMaternalSurname());
+        response.setDocumentNumber(peopleEntity.getDocumentNumber());
+        response.setDocumentType(peopleEntity.getTypeDocument().getName().getDisplayName());
+        response.setPhone(peopleEntity.getPhone());
+        response.setHasExternalSource(Boolean.FALSE);
+        response.setDataSource(PersonalDataSourceEnum.INTERNAL.getDisplayName());
+        return response;
     }
 }

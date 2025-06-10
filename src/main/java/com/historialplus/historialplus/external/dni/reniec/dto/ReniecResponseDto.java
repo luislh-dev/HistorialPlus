@@ -1,10 +1,8 @@
 package com.historialplus.historialplus.external.dni.reniec.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class ReniecResponseDto {
     private String nombres;
     private String apellidoPaterno;
