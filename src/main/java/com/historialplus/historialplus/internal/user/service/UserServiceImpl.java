@@ -2,9 +2,9 @@ package com.historialplus.historialplus.internal.user.service;
 
 import com.historialplus.historialplus.auth.AuthService.IAuthService;
 import com.historialplus.historialplus.common.constants.StateEnum;
-import com.historialplus.historialplus.common.security.AdminOnly;
 import com.historialplus.historialplus.internal.people.service.IPeopleService;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;
+import com.historialplus.historialplus.internal.role.service.IRoleService;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.state.service.IStateService;
 import com.historialplus.historialplus.internal.user.builder.UserCreationCommand;
@@ -33,10 +33,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.historialplus.historialplus.common.constants.RoleConstants.DOCTOR_ID;
-import static com.historialplus.historialplus.common.constants.RoleConstants.MANAGEMENT_ID;
-import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_ADMIN;
-import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_MANAGEMENT;
+import static com.historialplus.historialplus.common.constants.RoleEnum.*;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +44,7 @@ public class UserServiceImpl implements IUserService {
     private final IAuthService authService;
     private final IPeopleService peopleService;
     private final PasswordEncoder passwordEncoder;
+    private final IRoleService roleService;
     private final UserMapper mapper;
 
     @Override
@@ -113,7 +111,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    @AdminOnly
     public UserResponseDto createManagementUser(ManagementCreationDto userDto) {
         // buscar el ID de la persona por su DNI
         UUID personId = peopleService.findByDocumentNumber(userDto.getPersonDNI())
@@ -130,17 +127,20 @@ public class UserServiceImpl implements IUserService {
             }
 
             boolean hasManagementRole = user.getRoleEntities().stream()
-                    .anyMatch(role -> role.getId().equals(MANAGEMENT_ID));
+                    .anyMatch(role -> role.getName().equals(ROLE_MANAGEMENT));
 
             if (hasManagementRole) {
                 throw new IllegalArgumentException("La persona ya tiene un usuario de gestión en este hospital");
             }
 
-            RoleEntity managementRole = new RoleEntity();
-            managementRole.setId(MANAGEMENT_ID);
+            RoleEntity managementRole = roleService.findByName(ROLE_MANAGEMENT)
+                .orElseThrow(() -> new IllegalArgumentException("Rol de gestión no encontrado"));
             user.getRoleEntities().add(managementRole);
             return mapper.userEntityToUserResponseDto(repository.save(user));
         }
+
+        RoleEntity managementRole = roleService.findByName(ROLE_MANAGEMENT)
+            .orElseThrow(() -> new IllegalArgumentException("Rol de gestión no encontrado"));
 
         // usar el Builder de UserCreationCommand para crear un nuevo usuario
         UserCreationCommand command = new UserCreationCommand.Builder(
@@ -148,7 +148,7 @@ public class UserServiceImpl implements IUserService {
                 passwordEncoder.encode(userDto.getPassword()),
                 userDto.getName(),
                 personId,
-                MANAGEMENT_ID,
+                managementRole.getId(),
                 userDto.getStateId()
         ).hospitalId(userDto.getHospitalId()).build();
 
@@ -189,17 +189,20 @@ public class UserServiceImpl implements IUserService {
             }
 
             boolean hasDoctorRole = user.getRoleEntities().stream()
-                    .anyMatch(role -> role.getId().equals(DOCTOR_ID));
+                    .anyMatch(role -> role.getName().equals(ROLE_DOCTOR));
 
             if (hasDoctorRole) {
                 throw new IllegalArgumentException("La persona ya tiene un usuario doctor en este hospital");
             }
 
-            RoleEntity doctorRole = new RoleEntity();
-            doctorRole.setId(DOCTOR_ID);
+            RoleEntity doctorRole = roleService.findByName(ROLE_DOCTOR)
+                .orElseThrow(() -> new IllegalArgumentException("Rol de doctor no encontrado"));
             user.getRoleEntities().add(doctorRole);
             return mapper.userEntityToUserResponseDto(repository.save(user));
         }
+
+        RoleEntity doctorRole = roleService.findByName(ROLE_DOCTOR)
+            .orElseThrow(() -> new IllegalArgumentException("Rol de doctor no encontrado"));
 
         // Usar el Builder de UserCreationCommand para crear un nuevo usuario
         UserCreationCommand command = new UserCreationCommand.Builder(
@@ -207,7 +210,7 @@ public class UserServiceImpl implements IUserService {
                 passwordEncoder.encode(userDto.getPassword()),
                 userDto.getName(),
                 personId,
-                DOCTOR_ID,
+                doctorRole.getId(),
                 userDto.getStateId()
         ).hospitalId(hospitalId).build();
 

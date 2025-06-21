@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.role.service;
 
+import com.historialplus.historialplus.common.constants.RoleEnum;
 import com.historialplus.historialplus.internal.role.dto.RoleDto;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;
 import com.historialplus.historialplus.internal.role.mapper.RoleMapper;
@@ -29,5 +30,9 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public Optional<RoleDto> findById(Integer id) {
         return roleRepository.findById(id).map(RoleMapper::roleEntityToRoleDto);
+    }
+
+    @Override public Optional<RoleEntity> findByName(RoleEnum name) {
+        return roleRepository.findByName(name);
     }
 }
