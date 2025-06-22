@@ -222,7 +222,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * Elimina un usuario por su ID
-     * El estado del usuario se cambia a eliminado (ID: 3)
+     * El estado del usuario se cambia ha eliminado (DELETED)
      *
      * @param id ID del usuario a eliminar
      */

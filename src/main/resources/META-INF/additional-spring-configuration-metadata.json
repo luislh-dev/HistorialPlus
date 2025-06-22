@@ -65,4 +65,5 @@
       "type": "java.lang.String",
       "description": "Description for service.cloudflare.bucket.name."
     }
-  ] }
+  ]
+}
