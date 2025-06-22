@@ -36,22 +36,22 @@ public class UserController {
         return service.searchUsers(username, dni, hospitalName, roleId, stateId, pageable);
     }
 
-    @PostMapping("/createManagementUser")
+    @PostMapping("createManagementUser")
     public ResponseEntity<?> createManagementUser(@Valid @RequestBody ManagementCreationDto userDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createManagementUser(userDto));
     }
 
-    @PostMapping("/createDoctorUser")
+    @PostMapping("createDoctorUser")
     public ResponseEntity<?> createDoctorUser(@Valid @RequestBody DoctorCreationDto userDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createDoctorUser(userDto));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("{id}")
     public ResponseEntity<?> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateDto userDto) {
         return ResponseEntity.ok(service.update(id, userDto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();

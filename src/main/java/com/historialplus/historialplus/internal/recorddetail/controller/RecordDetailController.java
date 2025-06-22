@@ -35,14 +35,14 @@ public class RecordDetailController {
         return ResponseEntity.ok(recordDetails);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<RecordDetailResponseDto> getRecordDetailById(@PathVariable UUID id) {
         return recordDetailService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/record/{recordId}")
+    @GetMapping("record/{recordId}")
     public ResponseEntity<List<RecordDetailResponseDto>> getRecordDetailsByRecordId(@PathVariable UUID recordId) {
         List<RecordDetailResponseDto> recordDetails = recordDetailService.findByRecordId(recordId);
         return ResponseEntity.ok(recordDetails);
@@ -83,12 +83,6 @@ public class RecordDetailController {
         return ResponseEntity.ok(result);
     }
 
-    @PatchMapping("/{id}/state")
-    public ResponseEntity<Void> updateRecordDetailState(@PathVariable UUID id, @RequestParam Integer stateId) {
-        recordDetailService.updateState(id, stateId);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping("findAllByPeopleId/{peopleId}")
     public Page<?> findAllByPeopleId(
             @PathVariable UUID peopleId,
@@ -99,7 +93,7 @@ public class RecordDetailController {
         return recordDetailService.getRecordDetails(peopleId, hospitalName, startDate, endDate, pageable);
     }
 
-    @GetMapping("/FindById/{recordDetailId}")
+    @GetMapping("FindById/{recordDetailId}")
     public ResponseEntity<?> getRecordDetail(@PathVariable UUID recordDetailId) {
         return ResponseEntity.ok(recordDetailService.getRecordDetail(recordDetailId));
     }

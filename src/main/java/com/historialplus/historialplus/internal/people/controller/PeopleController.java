@@ -28,19 +28,19 @@ public class PeopleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(peopleCreateDto));
     }
 
-    @GetMapping("/getPersonName/{dni}")
+    @GetMapping("getPersonName/{dni}")
     public ResponseEntity<?> getPersonName(@PathVariable String dni) {
         return ResponseEntity.ok(service.getPersonName(dni));
     }
 
-    @GetMapping("/getPersonNameByDocument/{documentType}/{documentNumber}")
+    @GetMapping("getPersonNameByDocument/{documentType}/{documentNumber}")
     public ResponseEntity<?> getPersonNameByDocument(@PathVariable String documentType, @PathVariable String documentNumber) {
         return service.getPersonNameByDocument(documentType, documentNumber)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/findAllWithVisitsStats")
+    @GetMapping("findAllWithVisitsStats")
     public Page<?> findAllWithVisitsStats(
             @RequestParam(required = false) String documentNumber,
             @RequestParam(required = false) String fullName,
@@ -49,7 +49,7 @@ public class PeopleController {
         return service.findAllWithVisitsStats(documentNumber, fullName, pageable);
     }
 
-    @GetMapping("/findBasicById/{id}")
+    @GetMapping("findBasicById/{id}")
     public ResponseEntity<?> findBasicById(@PathVariable UUID id) {
         return service.findBasicById(id)
                 .map(ResponseEntity::ok)

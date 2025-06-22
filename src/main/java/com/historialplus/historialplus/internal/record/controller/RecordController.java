@@ -29,7 +29,7 @@ public class RecordController {
         return ResponseEntity.ok(records);
     }
 
-    @GetMapping("/{documentNumber}")
+    @GetMapping("{documentNumber}")
     public ResponseEntity<RecordResponseDto> getRecordByDocumentNumber(@PathVariable String documentNumber) {
         UUID personId = recordService.findPersonIdByDocumentNumber(documentNumber);
         return recordService.findById(personId)

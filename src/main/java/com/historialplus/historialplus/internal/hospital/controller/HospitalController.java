@@ -31,14 +31,14 @@ public class HospitalController {
         return service.findAll(name, ruc, id, stateId, pageable);
     }
 
-    @GetMapping("/findByName")
+    @GetMapping("findByName")
     public Page<?> findByName(
             @RequestParam(required = false) String name,
             Pageable pageable) {
         return service.findByName(name, pageable);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<?> getHospitalById(@PathVariable Integer id) {
         return service.findById(id)
                 .map(ResponseEntity::ok)
@@ -50,13 +50,13 @@ public class HospitalController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(hospitalDto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteHospital(@PathVariable Integer id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("{id}")
     public ResponseEntity<?> updateHospital(@PathVariable Integer id, @Valid @RequestBody HospitalUpdateDto hospitalDto) {
         return ResponseEntity.ok(service.update(id, hospitalDto));
     }

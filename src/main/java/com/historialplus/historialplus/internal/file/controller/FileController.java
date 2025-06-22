@@ -28,7 +28,7 @@ public class FileController {
         return ResponseEntity.ok(files);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<FilesResponseDto> getFileById(@PathVariable UUID id) {
         return fileService.findById(id)
                 .map(ResponseEntity::ok)
