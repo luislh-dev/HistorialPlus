@@ -1,3 +1,5 @@
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/luislh-dev/HistorialPlus)
+
 # HistorialPlus  📋
 
 HistorialPlus es una aplicación web diseñada para gestionar registros históricos. Este documento proporciona una guía
