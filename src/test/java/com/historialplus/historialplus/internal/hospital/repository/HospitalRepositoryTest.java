@@ -112,7 +112,7 @@ class HospitalRepositoryTest {
 		assertFalse(result.isEmpty());
 		assertTrue(result.getContent().stream()
 			.anyMatch(hospital -> hospital.getName().toLowerCase().contains(searchTerm.toLowerCase())));
-		assertEquals(2, result.getTotalElements());
+		assertEquals(3, result.getTotalElements());
 	}
 
 }

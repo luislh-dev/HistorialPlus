@@ -3,6 +3,7 @@ package com.historialplus.historialplus.internal.state.service;
 import com.historialplus.historialplus.common.constants.StateEnum;
 import com.historialplus.historialplus.internal.state.dto.StateDto;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
+import com.historialplus.historialplus.internal.state.mapper.StateMapper;
 import com.historialplus.historialplus.internal.state.repository.StateRepository;
 import com.historialplus.historialplus.util.dataset.state.StateTestFixtures;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +26,9 @@ class StateServiceImplTest {
 
 	@Mock
 	private StateRepository stateRepository;
+
+	@Mock
+	private StateMapper stateMapper;
 
 	@InjectMocks
 	private StateServiceImpl stateService;

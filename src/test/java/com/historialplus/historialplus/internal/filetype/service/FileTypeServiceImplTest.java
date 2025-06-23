@@ -31,7 +31,7 @@ class FileTypeServiceImplTest {
 	@Test
 	void getAllTest() {
 		FileTypeProjection projection = mock(FileTypeProjection.class);
-		FileTypeDto dto = FileTypeDto.builder().id(1).name(FileTypeEnum.PRESCRIPTION.getDisplayName()).build();
+		FileTypeDto dto = FileTypeDto.builder().id(1).name(FileTypeEnum.PRESCRIPTION.name()).build();
 
 		when(repository.findAllProjectedBy()).thenReturn(List.of(projection));
 		when(mapper.fileTypeProjectionToFileTypeDto(any())).thenReturn(dto);
