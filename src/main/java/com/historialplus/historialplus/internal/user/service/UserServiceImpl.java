@@ -33,7 +33,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.historialplus.historialplus.common.constants.RoleEnum.*;
+import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_ADMIN;
+import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_DOCTOR;
+import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_MANAGEMENT;
 
 @Service
 @RequiredArgsConstructor

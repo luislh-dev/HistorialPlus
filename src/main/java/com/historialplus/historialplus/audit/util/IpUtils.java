@@ -9,7 +9,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.historialplus.historialplus.common.constants.HttpHeadersCustom.*;
+import static com.historialplus.historialplus.common.constants.HttpHeadersCustom.CF_CONNECTING_IP;
+import static com.historialplus.historialplus.common.constants.HttpHeadersCustom.FORWARDED;
+import static com.historialplus.historialplus.common.constants.HttpHeadersCustom.FORWARDED_FOR;
+import static com.historialplus.historialplus.common.constants.HttpHeadersCustom.X_CLIENT_IP;
+import static com.historialplus.historialplus.common.constants.HttpHeadersCustom.X_FORWARDED;
+import static com.historialplus.historialplus.common.constants.HttpHeadersCustom.X_FORWARDED_FOR;
+import static com.historialplus.historialplus.common.constants.HttpHeadersCustom.X_REAL_IP;
+import static com.historialplus.historialplus.common.constants.HttpHeadersCustom.X_VERCEL_FORWARDED_FOR;
 
 @Slf4j
 @UtilityClass

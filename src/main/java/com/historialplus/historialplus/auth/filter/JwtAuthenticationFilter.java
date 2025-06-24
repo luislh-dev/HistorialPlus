@@ -23,7 +23,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.historialplus.historialplus.auth.constants.JwtConfig.*;
+import static com.historialplus.historialplus.auth.constants.JwtConfig.CONTENT_TYPE;
+import static com.historialplus.historialplus.auth.constants.JwtConfig.HEADER_AUTHORIZATION;
+import static com.historialplus.historialplus.auth.constants.JwtConfig.JWT_EXPIRATION_IN_MS;
+import static com.historialplus.historialplus.auth.constants.JwtConfig.PREFIX_TOKEN;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
