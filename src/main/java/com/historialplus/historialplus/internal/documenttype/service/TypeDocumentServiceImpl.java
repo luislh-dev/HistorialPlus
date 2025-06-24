@@ -1,7 +1,7 @@
-package com.historialplus.historialplus.internal.typedocument.service;
+package com.historialplus.historialplus.internal.documenttype.service;
 
-import com.historialplus.historialplus.internal.typedocument.projection.TypeDocumentProjection;
-import com.historialplus.historialplus.internal.typedocument.repository.TypeDocumentRepository;
+import com.historialplus.historialplus.internal.documenttype.projection.TypeDocumentProjection;
+import com.historialplus.historialplus.internal.documenttype.repository.TypeDocumentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

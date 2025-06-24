@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.internal.typedocument.projection;
+package com.historialplus.historialplus.internal.documenttype.projection;
 
 public interface TypeDocumentProjection {
     Integer getId();

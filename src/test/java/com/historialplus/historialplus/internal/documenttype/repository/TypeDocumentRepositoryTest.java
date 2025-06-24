@@ -1,7 +1,7 @@
-package com.historialplus.historialplus.internal.typedocument.repository;
+package com.historialplus.historialplus.internal.documenttype.repository;
 
-import com.historialplus.historialplus.internal.typedocument.entities.TypeDocumentEntity;
-import com.historialplus.historialplus.internal.typedocument.projection.TypeDocumentProjection;
+import com.historialplus.historialplus.internal.documenttype.entities.DocumentTypeEntity;
+import com.historialplus.historialplus.internal.documenttype.projection.TypeDocumentProjection;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -23,12 +23,12 @@ class TypeDocumentRepositoryTest {
 
 	@Test
 	void findAllByOrderByUpdatedAtDesc() {
-		TypeDocumentEntity entity = TypeDocumentEntity.builder()
+		DocumentTypeEntity entity = DocumentTypeEntity.builder()
 			.name(DNI)
 			.updatedAt(Timestamp.valueOf("2025-10-01 10:00:00"))
 			.build();
 
-		TypeDocumentEntity entity2 = TypeDocumentEntity.builder()
+		DocumentTypeEntity entity2 = DocumentTypeEntity.builder()
 			.name(CE)
 			.updatedAt(Timestamp.valueOf("2025-10-02 11:00:00"))
 			.build();

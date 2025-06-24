@@ -1,7 +1,7 @@
-package com.historialplus.historialplus.internal.typedocument.controller;
+package com.historialplus.historialplus.internal.documenttype.controller;
 
-import com.historialplus.historialplus.internal.typedocument.projection.TypeDocumentProjection;
-import com.historialplus.historialplus.internal.typedocument.service.ITypeDocumentService;
+import com.historialplus.historialplus.internal.documenttype.projection.TypeDocumentProjection;
+import com.historialplus.historialplus.internal.documenttype.service.ITypeDocumentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.internal.typedocument.entities;
+package com.historialplus.historialplus.internal.documenttype.entities;
 
 import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import jakarta.persistence.*;
@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TypeDocumentEntity {
+public class DocumentTypeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

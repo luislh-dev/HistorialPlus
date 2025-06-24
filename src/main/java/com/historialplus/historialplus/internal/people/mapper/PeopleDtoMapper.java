@@ -1,11 +1,11 @@
 package com.historialplus.historialplus.internal.people.mapper;
 
 import com.historialplus.historialplus.common.constants.PersonalDataSourceEnum;
+import com.historialplus.historialplus.internal.documenttype.entities.DocumentTypeEntity;
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.PeopleResponseDto;
 import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
-import com.historialplus.historialplus.internal.typedocument.entities.TypeDocumentEntity;
 import com.historialplus.historialplus.internal.typesex.entities.SexTypeEntity;
 
 public class PeopleDtoMapper {
@@ -38,7 +38,7 @@ public class PeopleDtoMapper {
         sexType.setId(dto.getSexTypeId());
         entity.setSexType(sexType);
 
-        var typeDocument = new TypeDocumentEntity();
+        var typeDocument = new DocumentTypeEntity();
         typeDocument.setId(dto.getTypeDocumentId());
         entity.setTypeDocument(typeDocument);
 

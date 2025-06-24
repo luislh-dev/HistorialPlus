@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.internal.typedocument.controller;
+package com.historialplus.historialplus.internal.documenttype.controller;
 
-import com.historialplus.historialplus.internal.typedocument.service.ITypeDocumentService;
+import com.historialplus.historialplus.internal.documenttype.service.ITypeDocumentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

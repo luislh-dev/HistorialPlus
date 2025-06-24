@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.internal.people.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.historialplus.historialplus.internal.documenttype.entities.DocumentTypeEntity;
 import com.historialplus.historialplus.internal.record.entites.RecordEntity;
-import com.historialplus.historialplus.internal.typedocument.entities.TypeDocumentEntity;
 import com.historialplus.historialplus.internal.typesex.entities.SexTypeEntity;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import jakarta.persistence.*;
@@ -68,7 +68,7 @@ public class PeopleEntity {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_document_id")
-    private TypeDocumentEntity typeDocument;
+    private DocumentTypeEntity typeDocument;
 
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     private RecordEntity record;
