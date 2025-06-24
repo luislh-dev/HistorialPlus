@@ -13,20 +13,13 @@ public class PeopleDtoMapper {
     private PeopleDtoMapper() {}
 
     public static PeopleResponseDto toPeopleResponseDto(PeopleEntity entity) {
-        return new PeopleResponseDto(
-                entity.getId(),
-                entity.getName(),
-                entity.getPaternalSurname(),
-                entity.getMaternalSurname(),
-                entity.getBirthdate(),
-                entity.getDocumentNumber(),
-                entity.getBloodType(),
-                entity.getAddress(),
-                entity.getPhone(),
-                entity.getNationality(),
-                entity.getSexType().getName().getDisplayName(),
-                entity.getTypeDocument().getName().getDisplayName()
-        );
+        return PeopleResponseDto.builder()
+            .id(entity.getId())
+            .name(entity.getName())
+            .paternalSurname(entity.getPaternalSurname())
+            .maternalSurname(entity.getMaternalSurname())
+            .birthdate(entity.getBirthdate())
+            .build();
     }
 
     public static PeopleEntity toPeopleEntity(PeopleCreateDto dto) {

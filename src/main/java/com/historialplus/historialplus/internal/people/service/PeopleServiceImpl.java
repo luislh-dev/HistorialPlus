@@ -43,7 +43,6 @@ public class PeopleServiceImpl implements IPeopleService {
     public PeopleResponseDto save(PeopleCreateDto peopleCreateDto) {
         var people = repository.save(PeopleDtoMapper.toPeopleEntity(peopleCreateDto));
 
-        // Guardar la persona en la tabla de records
         recordService.save(people);
 
         return PeopleDtoMapper.toPeopleResponseDto(people);
