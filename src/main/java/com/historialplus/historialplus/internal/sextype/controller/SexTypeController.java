@@ -1,6 +1,6 @@
-package com.historialplus.historialplus.internal.typesex.controller;
+package com.historialplus.historialplus.internal.sextype.controller;
 
-import com.historialplus.historialplus.internal.typesex.service.ISexTypeService;
+import com.historialplus.historialplus.internal.sextype.service.ISexTypeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -3,7 +3,7 @@ package com.historialplus.historialplus.internal.people.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.historialplus.historialplus.internal.documenttype.entities.DocumentTypeEntity;
 import com.historialplus.historialplus.internal.record.entites.RecordEntity;
-import com.historialplus.historialplus.internal.typesex.entities.SexTypeEntity;
+import com.historialplus.historialplus.internal.sextype.entities.SexTypeEntity;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,7 +1,7 @@
-package com.historialplus.historialplus.internal.typesex.controller;
+package com.historialplus.historialplus.internal.sextype.controller;
 
-import com.historialplus.historialplus.internal.typesex.dto.SexTypeResponseDto;
-import com.historialplus.historialplus.internal.typesex.service.ISexTypeService;
+import com.historialplus.historialplus.internal.sextype.dto.SexTypeResponseDto;
+import com.historialplus.historialplus.internal.sextype.service.ISexTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

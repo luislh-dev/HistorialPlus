@@ -1,9 +1,9 @@
-package com.historialplus.historialplus.internal.typesex.service;
+package com.historialplus.historialplus.internal.sextype.service;
 
-import com.historialplus.historialplus.internal.typesex.dto.SexTypeResponseDto;
-import com.historialplus.historialplus.internal.typesex.entities.SexTypeEntity;
-import com.historialplus.historialplus.internal.typesex.mapper.ISexTypeListMapper;
-import com.historialplus.historialplus.internal.typesex.repository.SexTypeRepository;
+import com.historialplus.historialplus.internal.sextype.dto.SexTypeResponseDto;
+import com.historialplus.historialplus.internal.sextype.entities.SexTypeEntity;
+import com.historialplus.historialplus.internal.sextype.mapper.ISexTypeListMapper;
+import com.historialplus.historialplus.internal.sextype.repository.SexTypeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,7 +1,7 @@
-package com.historialplus.historialplus.internal.typesex.mapper;
+package com.historialplus.historialplus.internal.sextype.mapper;
 
-import com.historialplus.historialplus.internal.typesex.dto.SexTypeResponseDto;
-import com.historialplus.historialplus.internal.typesex.entities.SexTypeEntity;
+import com.historialplus.historialplus.internal.sextype.dto.SexTypeResponseDto;
+import com.historialplus.historialplus.internal.sextype.entities.SexTypeEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.context.annotation.Primary;

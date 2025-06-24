@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.internal.typesex.entities;
+package com.historialplus.historialplus.internal.sextype.entities;
 
 import com.historialplus.historialplus.common.constants.SexTypeEnum;
 import jakarta.persistence.*;

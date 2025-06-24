@@ -6,7 +6,7 @@ import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateD
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.PeopleResponseDto;
 import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
-import com.historialplus.historialplus.internal.typesex.entities.SexTypeEntity;
+import com.historialplus.historialplus.internal.sextype.entities.SexTypeEntity;
 
 public class PeopleDtoMapper {
 

@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.internal.typesex.dto;
+package com.historialplus.historialplus.internal.sextype.dto;
 
 import lombok.*;
 
