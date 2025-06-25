@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.internal.people.controller;
 
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
-import com.historialplus.historialplus.internal.people.service.IPeopleService;
+import com.historialplus.historialplus.internal.people.service.PeopleService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +23,9 @@ import java.util.UUID;
 @Validated
 public class PeopleController {
 
-    private final IPeopleService service;
+    private final PeopleService service;
 
-    public PeopleController(IPeopleService service) {
+    public PeopleController(PeopleService service) {
         this.service = service;
     }
 

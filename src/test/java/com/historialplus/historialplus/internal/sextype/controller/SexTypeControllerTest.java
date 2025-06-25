@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.internal.sextype.controller;
 
 import com.historialplus.historialplus.internal.sextype.dto.SexTypeResponseDto;
-import com.historialplus.historialplus.internal.sextype.service.ISexTypeService;
+import com.historialplus.historialplus.internal.sextype.service.SexTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,7 +27,7 @@ class SexTypeControllerTest {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private ISexTypeService service;
+	private SexTypeService service;
 
 	@Test
 	@WithMockUser

@@ -1,12 +1,12 @@
 package com.historialplus.historialplus.internal.user.service;
 
-import com.historialplus.historialplus.auth.AuthService.IAuthService;
+import com.historialplus.historialplus.auth.AuthService.AuthService;
 import com.historialplus.historialplus.common.constants.StateEnum;
-import com.historialplus.historialplus.internal.people.service.IPeopleService;
+import com.historialplus.historialplus.internal.people.service.PeopleService;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;
-import com.historialplus.historialplus.internal.role.service.IRoleService;
+import com.historialplus.historialplus.internal.role.service.RoleService;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
-import com.historialplus.historialplus.internal.state.service.IStateService;
+import com.historialplus.historialplus.internal.state.service.StateService;
 import com.historialplus.historialplus.internal.user.builder.UserCreationCommand;
 import com.historialplus.historialplus.internal.user.dto.request.DoctorCreationDto;
 import com.historialplus.historialplus.internal.user.dto.request.ManagementCreationDto;
@@ -39,14 +39,14 @@ import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_MAN
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
-    private final IStateService stateService;
-    private final IAuthService authService;
-    private final IPeopleService peopleService;
+    private final StateService stateService;
+    private final AuthService authService;
+    private final PeopleService peopleService;
     private final PasswordEncoder passwordEncoder;
-    private final IRoleService roleService;
+    private final RoleService roleService;
     private final UserMapper mapper;
 
     @Override

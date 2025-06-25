@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.auth.AuthService;
 
-public interface IAuthService {
+public interface AuthService {
     void loginSucceeded(String username);
 
     void loginFailed(String username);

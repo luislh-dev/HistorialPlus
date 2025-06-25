@@ -11,7 +11,7 @@ import com.historialplus.historialplus.internal.hospital.mapper.HospitalMapper;
 import com.historialplus.historialplus.internal.hospital.projection.HospitalNameProjection;
 import com.historialplus.historialplus.internal.hospital.repository.HospitalRepository;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
-import com.historialplus.historialplus.internal.state.service.IStateService;
+import com.historialplus.historialplus.internal.state.service.StateService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,10 +21,10 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class HospitalServiceImpl implements IHospitalService {
+public class HospitalServiceImpl implements HospitalService {
 
     private final HospitalRepository hospitalRepository;
-    private final IStateService stateService;
+    private final StateService stateService;
     private final HospitalMapper mapper;
 
     @Override

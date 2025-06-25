@@ -4,6 +4,6 @@ import com.historialplus.historialplus.internal.documenttype.projection.TypeDocu
 
 import java.util.List;
 
-public interface ITypeDocumentService {
+public interface TypeDocumentService {
     List<TypeDocumentProjection> findAll();
 }

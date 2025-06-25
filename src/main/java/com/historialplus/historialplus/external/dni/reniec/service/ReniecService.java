@@ -4,7 +4,7 @@ import com.historialplus.historialplus.external.dni.reniec.dto.ReniecResponseDto
 
 import java.util.Optional;
 
-public interface IReniecService {
+public interface ReniecService {
     Optional<ReniecResponseDto> getPersonData(String dni);
 
 }

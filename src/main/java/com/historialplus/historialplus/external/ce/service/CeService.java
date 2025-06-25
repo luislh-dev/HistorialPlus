@@ -4,6 +4,6 @@ import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
 
 import java.util.Optional;
 
-public interface ICeService {
+public interface CeService {
     Optional<CeResponseDto> getCeData(String ceeNumber);
 }

@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.external.IMGCompress.service;
+package com.historialplus.historialplus.external.ImgCompress.service;
 
 import com.historialplus.historialplus.util.InMemoryMultipartFile;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.Collections;
  */
 @Service
 @RequiredArgsConstructor
-public class IMGCompressService implements IIMGCompressService {
+public class ImgCompressServiceImpl implements ImgCompressService {
 
     private final RestTemplate restTemplate;
 

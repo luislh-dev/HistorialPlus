@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuditLogServiceImpl implements IAuditLogService {
-	private static final Logger logger = LoggerFactory.getLogger(AuditLogServiceImpl.class);
+public class AuditLogServiceImpl implements AuditLogService {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuditLogServiceImpl.class);
 
 	private final AuditLogRepository repository;
 
@@ -25,7 +25,7 @@ public class AuditLogServiceImpl implements IAuditLogService {
 		try {
 			repository.save(logEntity);
 		} catch (Exception e) {
-			logger.warn("No se pudo guardar el log de auditoría: {}", e.getMessage());
+			LOGGER.warn("No se pudo guardar el log de auditoría: {}", e.getMessage());
 		}
 	}
 

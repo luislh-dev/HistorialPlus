@@ -7,7 +7,7 @@ import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import java.util.List;
 import java.util.Optional;
 
-public interface IStateService {
+public interface StateService {
     Optional<StateEntity> findById(Integer id);
     Optional<StateEntity> findByName(StateEnum name);
     List<StateDto> findAll();

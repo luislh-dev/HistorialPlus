@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.common.validators.state;
 
-import com.historialplus.historialplus.internal.state.service.IStateService;
+import com.historialplus.historialplus.internal.state.service.StateService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Validador personalizado para verificar si un ID de estado es válido.
  * <p>
  * Este validador comprueba si el ID de estado proporcionado existe en la base de datos
- * utilizando el servicio {@link IStateService}. Si el ID es nulo, se considera válido
+ * utilizando el servicio {@link StateService}. Si el ID es nulo, se considera válido
  * para permitir valores opcionales.
  *
  * <p>Recomendación: Utilizar la anotación {@code @NonNull} de Java en las propiedades o métodos
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class StateIdValidator implements ConstraintValidator<ValidStateId, Integer> {
 
     @Autowired
-    private IStateService stateService;
+    private StateService stateService;
 
     /**
      * Valida el ID de estado.

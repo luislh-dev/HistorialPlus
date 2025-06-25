@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-public interface IRecordDetailService {
+public interface RecordDetailService {
     List<RecordDetailResponseDto> findAll();
 
     Optional<RecordDetailResponseDto> findById(UUID id);

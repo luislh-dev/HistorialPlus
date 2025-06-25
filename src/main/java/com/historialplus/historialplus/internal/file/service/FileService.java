@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface IFileService {
+public interface FileService {
     List<FilesResponseDto> findAll();
     Optional<FilesResponseDto> findById(UUID id);
     FileEntity save(FileEntity fileEntity);

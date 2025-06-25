@@ -10,5 +10,5 @@ import org.springframework.context.annotation.Primary;
 @Mapper(componentModel = "spring")
 public interface StateMapper {
 	@Mapping(target = "name", source = "name.displayName")
-	StateDto StateEntityToStateDto(StateEntity stateEntity);
+	StateDto stateEntityToStateDto(StateEntity stateEntity);
 }

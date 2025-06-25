@@ -3,10 +3,10 @@ package com.historialplus.historialplus.internal.people.service;
 import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
 import com.historialplus.historialplus.external.ce.mapper.CeMapper;
-import com.historialplus.historialplus.external.ce.service.ICeService;
+import com.historialplus.historialplus.external.ce.service.CeService;
 import com.historialplus.historialplus.external.dni.reniec.dto.ReniecResponseDto;
-import com.historialplus.historialplus.external.dni.reniec.mapper.reniecMapper;
-import com.historialplus.historialplus.external.dni.reniec.service.IReniecService;
+import com.historialplus.historialplus.external.dni.reniec.mapper.ReniecMapper;
+import com.historialplus.historialplus.external.dni.reniec.service.ReniecService;
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.PeopleResponseDto;
@@ -16,7 +16,7 @@ import com.historialplus.historialplus.internal.people.presenters.PeopleRecordPr
 import com.historialplus.historialplus.internal.people.projection.PeopleRecordProjection;
 import com.historialplus.historialplus.internal.people.projection.PersonaBasicProjection;
 import com.historialplus.historialplus.internal.people.repository.PeopleRepository;
-import com.historialplus.historialplus.internal.record.service.IRecordService;
+import com.historialplus.historialplus.internal.record.service.RecordService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,12 +31,12 @@ import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.
 
 @Service
 @AllArgsConstructor
-public class PeopleServiceImpl implements IPeopleService {
+public class PeopleServiceImpl implements PeopleService {
 
-    private final IReniecService reniecService;
-    private final ICeService ceService;
+    private final ReniecService reniecService;
+    private final CeService ceService;
     private final PeopleRepository repository;
-    private final IRecordService recordService;
+    private final RecordService recordService;
 
     @Override
     @Transactional
@@ -61,7 +61,7 @@ public class PeopleServiceImpl implements IPeopleService {
         }
 
         Optional<ReniecResponseDto> reniecResponse = reniecService.getPersonData(dni);
-        return reniecResponse.map(reniecMapper::toMinimalPeopleDto);
+        return reniecResponse.map(ReniecMapper::toMinimalPeopleDto);
 
     }
 
@@ -82,7 +82,7 @@ public class PeopleServiceImpl implements IPeopleService {
         if (documentTypeEnum.equals(DNI)) {
             try {
                 Optional<ReniecResponseDto> reniecResponse = reniecService.getPersonData(documentNumber);
-                return reniecResponse.map(reniecMapper::toMinimalPeopleDto);
+                return reniecResponse.map(ReniecMapper::toMinimalPeopleDto);
             } catch (Exception e) {
                 return Optional.empty();
             }

@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.historialplus.historialplus.auth.AuthService.AuthService;
 import com.historialplus.historialplus.auth.AuthService.DTO.LoginRequestDTO;
-import com.historialplus.historialplus.auth.AuthService.IAuthService;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,10 +31,10 @@ import static com.historialplus.historialplus.auth.constants.JwtConfig.PREFIX_TO
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final SecretKey jwtSecretKey;
-    private final IAuthService authService;
+    private final AuthService authService;
     private String name;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, SecretKey jwtSecretKey, IAuthService authService) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, SecretKey jwtSecretKey, AuthService authService) {
         super.setAuthenticationManager(authenticationManager);
         this.jwtSecretKey = jwtSecretKey;
         this.authService = authService;

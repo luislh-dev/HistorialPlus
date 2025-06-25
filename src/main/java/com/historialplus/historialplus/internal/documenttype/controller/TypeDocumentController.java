@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.documenttype.controller;
 
-import com.historialplus.historialplus.internal.documenttype.service.ITypeDocumentService;
+import com.historialplus.historialplus.internal.documenttype.service.TypeDocumentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,9 +11,9 @@ import java.util.List;
 @RequestMapping("/api/documentType")
 public class TypeDocumentController {
 
-    private  final ITypeDocumentService service;
+    private  final TypeDocumentService service;
 
-    public TypeDocumentController(ITypeDocumentService service) {
+    public TypeDocumentController(TypeDocumentService service) {
         this.service = service;
     }
 

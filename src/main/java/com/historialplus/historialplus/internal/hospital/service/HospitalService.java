@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
-public interface IHospitalService {
+public interface HospitalService {
     Page<HospitalPageResponseDto> findAll(String name, String ruc, Integer id, Integer stateId, Pageable pageable);
     Optional<HospitalFindByResponseDto> findById(Integer id);
     HospitalCreateDto save(HospitalCreateDto hospitalDto);

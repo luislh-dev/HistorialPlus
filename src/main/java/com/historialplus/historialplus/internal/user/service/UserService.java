@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface IUserService {
+public interface UserService {
     void deleteById(UUID id);
 
     UserResponseDto update(UUID id, UserUpdateDto userDto);

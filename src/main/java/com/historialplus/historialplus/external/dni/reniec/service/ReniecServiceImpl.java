@@ -14,7 +14,7 @@ import java.util.Optional;
 import static org.springframework.http.HttpMethod.GET;
 
 @Service
-public class ReniecServiceImpl implements IReniecService {
+public class ReniecServiceImpl implements ReniecService {
 
     @Value("${reniec.api.url}")
     private String apiUrl;

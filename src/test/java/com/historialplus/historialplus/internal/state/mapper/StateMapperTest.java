@@ -13,10 +13,10 @@ class StateMapperTest {
 	private final StateMapper mapper = Mappers.getMapper(StateMapper.class);
 
 	@Test
-	void StateEntityToStateDto() {
+	void stateEntityToStateDto() {
 		StateEntity stateEntity = StateTestFixtures.active();
 
-		StateDto stateDto = mapper.StateEntityToStateDto(stateEntity);
+		StateDto stateDto = mapper.stateEntityToStateDto(stateEntity);
 
 		assertNotNull(stateDto);
 		assertEquals(stateEntity.getId(), stateDto.getId());

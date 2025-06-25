@@ -2,7 +2,7 @@ package com.historialplus.historialplus.internal.filetype.controller;
 
 import com.historialplus.historialplus.common.constants.FileTypeEnum;
 import com.historialplus.historialplus.internal.filetype.dto.FileTypeDto;
-import com.historialplus.historialplus.internal.filetype.service.IFileTypeService;
+import com.historialplus.historialplus.internal.filetype.service.FileTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -26,7 +26,7 @@ class FileTypeControllerTest {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private IFileTypeService fileTypeService;
+	private FileTypeService fileTypeService;
 
 	@Test
 	@WithMockUser

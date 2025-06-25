@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface IPeopleService {
+public interface PeopleService {
     PeopleResponseDto save(PeopleCreateDto peopleCreateDto);
 
     Optional<PeopleEntity> findByDocumentNumber(String documentNumber);

@@ -2,7 +2,7 @@ package com.historialplus.historialplus.internal.recorddetail.controller;
 
 import com.historialplus.historialplus.internal.recorddetail.dto.request.RecordDetailCreateRequestDTO;
 import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailResponseDto;
-import com.historialplus.historialplus.internal.recorddetail.service.IRecordDetailService;
+import com.historialplus.historialplus.internal.recorddetail.service.RecordDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,10 +27,10 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/api/record-details")
 public class RecordDetailController {
 
-    private final IRecordDetailService recordDetailService;
+    private final RecordDetailService recordDetailService;
 
     @Autowired
-    public RecordDetailController(IRecordDetailService recordDetailService) {
+    public RecordDetailController(RecordDetailService recordDetailService) {
         this.recordDetailService = recordDetailService;
     }
 
@@ -72,16 +72,16 @@ public class RecordDetailController {
         dto.setTreatment(treatment);
         dto.setVisitDate(LocalDateTime.parse(visitDate));
 
-        HashSet<RecordDetailCreateRequestDTO.FileDTO> fileDTOs = new HashSet<>();
+        HashSet<RecordDetailCreateRequestDTO.FileDTO> hashSet = new HashSet<>();
 
         for (int i = 0; i < files.length; i++) {
             RecordDetailCreateRequestDTO.FileDTO fileDTO = new RecordDetailCreateRequestDTO.FileDTO();
             fileDTO.setFile(files[i]);
             fileDTO.setFileTypeId(fileTypeIds[i]);
-            fileDTOs.add(fileDTO);
+            hashSet.add(fileDTO);
         }
 
-        dto.setFiles(fileDTOs);
+        dto.setFiles(hashSet);
 
         CompletableFuture<RecordDetailResponseDto> future = recordDetailService.save(dto);
         RecordDetailResponseDto result = future.get();

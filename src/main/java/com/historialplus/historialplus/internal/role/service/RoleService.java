@@ -7,7 +7,7 @@ import com.historialplus.historialplus.internal.role.entites.RoleEntity;
 import java.util.List;
 import java.util.Optional;
 
-public interface IRoleService {
+public interface RoleService {
     List<RoleDto> findAll();
     Optional<RoleDto> findById(Integer id);
     Optional<RoleEntity> findByName(RoleEnum name);

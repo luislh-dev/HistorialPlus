@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.state.controller;
 
-import com.historialplus.historialplus.internal.state.service.IStateService;
+import com.historialplus.historialplus.internal.state.service.StateService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +12,9 @@ import java.util.List;
 @RequestMapping("/api/state")
 public class StateController {
 
-    private final IStateService service;
+    private final StateService service;
 
-    public StateController(IStateService service) {
+    public StateController(StateService service) {
         this.service = service;
     }
 

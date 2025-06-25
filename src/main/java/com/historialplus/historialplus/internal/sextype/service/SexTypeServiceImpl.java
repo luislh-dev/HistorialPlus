@@ -1,19 +1,19 @@
 package com.historialplus.historialplus.internal.sextype.service;
 
 import com.historialplus.historialplus.internal.sextype.dto.SexTypeResponseDto;
-import com.historialplus.historialplus.internal.sextype.mapper.ISexTypeListMapper;
+import com.historialplus.historialplus.internal.sextype.mapper.SexTypeListMapper;
 import com.historialplus.historialplus.internal.sextype.repository.SexTypeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SexTypeServiceImpl implements ISexTypeService {
+public class SexTypeServiceImpl implements SexTypeService {
 
     private final SexTypeRepository repository;
-	private final ISexTypeListMapper mapper;
+	private final SexTypeListMapper mapper;
 
-	public SexTypeServiceImpl(SexTypeRepository repository, ISexTypeListMapper mapper) {
+	public SexTypeServiceImpl(SexTypeRepository repository, SexTypeListMapper mapper) {
 		this.repository = repository;
 		this.mapper = mapper;
 	}

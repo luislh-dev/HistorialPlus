@@ -4,9 +4,9 @@ import com.historialplus.historialplus.internal.file.dto.request.FilesCreateDto;
 import com.historialplus.historialplus.internal.file.dto.response.FilesResponseDto;
 import com.historialplus.historialplus.internal.file.entites.FileEntity;
 import com.historialplus.historialplus.internal.file.mapper.FilesDtoMapper;
-import com.historialplus.historialplus.internal.file.service.IFileService;
+import com.historialplus.historialplus.internal.file.service.FileService;
 import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
-import com.historialplus.historialplus.internal.recorddetail.service.IRecordDetailService;
+import com.historialplus.historialplus.internal.recorddetail.service.RecordDetailService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +25,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class FileController {
 
-    private final IFileService fileService;
-    private final IRecordDetailService recordDetailService;
+    private final FileService fileService;
+    private final RecordDetailService recordDetailService;
 
     @GetMapping
     public ResponseEntity<List<FilesResponseDto>> getAllFiles() {

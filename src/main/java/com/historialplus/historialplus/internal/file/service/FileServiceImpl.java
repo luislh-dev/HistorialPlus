@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class FileServiceImpl implements IFileService {
+public class FileServiceImpl implements FileService {
 
     private final FileRepository fileRepository;
 

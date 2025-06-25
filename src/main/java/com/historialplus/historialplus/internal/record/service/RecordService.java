@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface IRecordService {
+public interface RecordService {
     List<RecordResponseDto> findAll();
 
     Optional<RecordResponseDto> findById(UUID id);

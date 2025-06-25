@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Primary;
 
 @Primary
 @Mapper(componentModel = "spring")
-public interface ISexTypeListMapper {
+public interface SexTypeListMapper {
 
 	@Mapping(source = "name.displayName", target = "name")
 	SexTypeResponseDto sexTypeEntityToSexTypeResponseDto(SexTypeEntity entity);

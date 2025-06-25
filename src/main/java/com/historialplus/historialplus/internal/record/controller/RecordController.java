@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.internal.record.controller;
 
 import com.historialplus.historialplus.internal.record.dto.response.RecordResponseDto;
-import com.historialplus.historialplus.internal.record.service.IRecordService;
+import com.historialplus.historialplus.internal.record.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +16,10 @@ import java.util.UUID;
 @RequestMapping("/api/records")
 public class RecordController {
 
-    private final IRecordService recordService;
+    private final RecordService recordService;
 
     @Autowired
-    public RecordController(IRecordService recordService) {
+    public RecordController(RecordService recordService) {
         this.recordService = recordService;
     }
 

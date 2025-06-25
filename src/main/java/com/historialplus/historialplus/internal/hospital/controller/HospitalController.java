@@ -2,7 +2,7 @@ package com.historialplus.historialplus.internal.hospital.controller;
 
 import com.historialplus.historialplus.internal.hospital.dto.request.HospitalCreateDto;
 import com.historialplus.historialplus.internal.hospital.dto.request.HospitalUpdateDto;
-import com.historialplus.historialplus.internal.hospital.service.IHospitalService;
+import com.historialplus.historialplus.internal.hospital.service.HospitalService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/hospitals")
 @Validated
 public class HospitalController {
-    private final IHospitalService service;
+    private final HospitalService service;
 
-    public HospitalController(IHospitalService service) {
+    public HospitalController(HospitalService service) {
         this.service = service;
     }
 

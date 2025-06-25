@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class StateServiceImpl implements IStateService{
+public class StateServiceImpl implements StateService {
 
     private final StateRepository repository;
     private final StateMapper mapper;
@@ -30,6 +30,6 @@ public class StateServiceImpl implements IStateService{
 
     @Override
     public List<StateDto> findAll() {
-        return repository.findAll().stream().map(mapper::StateEntityToStateDto).collect(Collectors.toList());
+        return repository.findAll().stream().map(mapper::stateEntityToStateDto).collect(Collectors.toList());
     }
 }

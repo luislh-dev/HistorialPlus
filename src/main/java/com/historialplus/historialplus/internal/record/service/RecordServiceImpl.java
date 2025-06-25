@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class RecordServiceImpl implements IRecordService {
+public class RecordServiceImpl implements RecordService {
     private final RecordRepository recordRepository;
     private final PeopleRepository peopleRepository;
 

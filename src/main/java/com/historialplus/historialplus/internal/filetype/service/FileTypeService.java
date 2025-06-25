@@ -4,6 +4,6 @@ import com.historialplus.historialplus.internal.filetype.dto.FileTypeDto;
 
 import java.util.List;
 
-public interface IFileTypeService {
+public interface FileTypeService {
 	List<FileTypeDto> getAll();
 }

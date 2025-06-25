@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.common.validators.role;
 
-import com.historialplus.historialplus.internal.role.service.IRoleService;
+import com.historialplus.historialplus.internal.role.service.RoleService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class RoleIdValidator implements ConstraintValidator<ValidRoleId, Integer> {
 
     @Autowired
-    private IRoleService roleService;
+    private RoleService roleService;
 
     @Override
     public boolean isValid(Integer roleId, ConstraintValidatorContext context) {

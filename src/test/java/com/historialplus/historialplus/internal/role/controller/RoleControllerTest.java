@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.internal.role.controller;
 
 import com.historialplus.historialplus.internal.role.dto.RoleDto;
-import com.historialplus.historialplus.internal.role.service.IRoleService;
+import com.historialplus.historialplus.internal.role.service.RoleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -28,7 +28,7 @@ class RoleControllerTest {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private IRoleService roleService;
+	private RoleService roleService;
 
 	@Test
 	@WithMockUser

@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.external.IMGCompress.service;
+package com.historialplus.historialplus.external.ImgCompress.service;
 
 import org.springframework.core.io.InputStreamResource;
 

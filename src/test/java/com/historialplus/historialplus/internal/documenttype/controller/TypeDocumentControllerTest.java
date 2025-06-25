@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.internal.documenttype.controller;
 
 import com.historialplus.historialplus.internal.documenttype.projection.TypeDocumentProjection;
-import com.historialplus.historialplus.internal.documenttype.service.ITypeDocumentService;
+import com.historialplus.historialplus.internal.documenttype.service.TypeDocumentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -26,7 +26,7 @@ class TypeDocumentControllerTest {
 	private MockMvc mvc;
 
 	@MockBean
-	private ITypeDocumentService service;
+	private TypeDocumentService service;
 
 	@Test
 	@WithMockUser

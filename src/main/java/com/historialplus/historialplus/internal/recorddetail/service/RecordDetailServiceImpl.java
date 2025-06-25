@@ -1,9 +1,9 @@
 package com.historialplus.historialplus.internal.recorddetail.service;
 
-import com.historialplus.historialplus.auth.AuthService.IAuthService;
+import com.historialplus.historialplus.auth.AuthService.AuthService;
 import com.historialplus.historialplus.error.exceptions.NotFoundException;
 import com.historialplus.historialplus.external.compress.dto.CompressFileDto;
-import com.historialplus.historialplus.external.facade.CompressAndUploadService.ICompressAndUploadService;
+import com.historialplus.historialplus.external.facade.CompressAndUploadService.CompressAndUploadService;
 import com.historialplus.historialplus.internal.file.entites.FileEntity;
 import com.historialplus.historialplus.internal.file.projection.FileBasicProjection;
 import com.historialplus.historialplus.internal.file.repository.FileRepository;
@@ -22,7 +22,7 @@ import com.historialplus.historialplus.internal.recorddetail.repository.RecordDe
 import com.historialplus.historialplus.internal.recorddetail.viewmodel.RecordDetailExtenseViewModel;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 import com.historialplus.historialplus.internal.user.entites.UserEntity;
-import com.historialplus.historialplus.internal.user.service.IUserService;
+import com.historialplus.historialplus.internal.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -47,13 +47,13 @@ import static com.historialplus.historialplus.internal.recorddetail.mapper.Recor
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class RecordDetailServiceImpl implements IRecordDetailService {
+public class RecordDetailServiceImpl implements RecordDetailService {
 
     private final RecordDetailRepository recordDetailRepository;
     private final RecordRepository recordRepository;
-    private final IAuthService authService;
-    private final IUserService userService;
-    private final ICompressAndUploadService compressAndUploadService;
+    private final AuthService authService;
+    private final UserService userService;
+    private final CompressAndUploadService compressAndUploadService;
     private final FileRepository fileRepository;
 
     @Override

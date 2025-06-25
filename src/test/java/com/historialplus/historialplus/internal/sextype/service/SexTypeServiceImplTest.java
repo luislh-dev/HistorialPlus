@@ -2,7 +2,7 @@ package com.historialplus.historialplus.internal.sextype.service;
 
 import com.historialplus.historialplus.internal.sextype.dto.SexTypeResponseDto;
 import com.historialplus.historialplus.internal.sextype.entities.SexTypeEntity;
-import com.historialplus.historialplus.internal.sextype.mapper.ISexTypeListMapper;
+import com.historialplus.historialplus.internal.sextype.mapper.SexTypeListMapper;
 import com.historialplus.historialplus.internal.sextype.repository.SexTypeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ class SexTypeServiceImplTest {
 	private SexTypeRepository repository;
 
 	@Mock
-	private ISexTypeListMapper mapper;
+	private SexTypeListMapper mapper;
 
 	@InjectMocks
 	private SexTypeServiceImpl service;

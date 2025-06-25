@@ -4,6 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.concurrent.CompletableFuture;
 
-public interface ICompressFileService {
+public interface CompressFileService {
     CompletableFuture<MultipartFile> compress(MultipartFile file);
 }

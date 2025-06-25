@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ExtendWith(MockitoExtension.class)
 class SexTypeListMapperTest {
 
-	private final ISexTypeListMapper mapper = Mappers.getMapper(ISexTypeListMapper.class);
+	private final SexTypeListMapper mapper = Mappers.getMapper(SexTypeListMapper.class);
 
 	@Test
 	void sexTypeEntityToSexTypeResponseDto() {

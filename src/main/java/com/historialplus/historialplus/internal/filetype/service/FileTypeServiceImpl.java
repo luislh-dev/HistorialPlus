@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class FileTypeServiceImpl implements IFileTypeService {
+public class FileTypeServiceImpl implements FileTypeService {
 
     private final FileTypeRepository fileTypeRepository;
     private final FileTypeMapper mapper;

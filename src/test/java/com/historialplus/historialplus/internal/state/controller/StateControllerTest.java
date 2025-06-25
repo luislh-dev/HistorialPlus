@@ -2,7 +2,7 @@ package com.historialplus.historialplus.internal.state.controller;
 
 import com.historialplus.historialplus.common.constants.StateEnum;
 import com.historialplus.historialplus.internal.state.dto.StateDto;
-import com.historialplus.historialplus.internal.state.service.IStateService;
+import com.historialplus.historialplus.internal.state.service.StateService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,7 +27,7 @@ public class StateControllerTest {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private IStateService stateService;
+	private StateService stateService;
 
 	@Test
 	@WithMockUser

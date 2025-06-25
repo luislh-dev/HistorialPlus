@@ -25,7 +25,7 @@ import static com.historialplus.historialplus.config.FileConfig.ALLOWED_FILE_TYP
 import static com.historialplus.historialplus.config.FileConfig.MAX_FILE_SIZE;
 
 @Service
-public class CloudflareServiceImpl implements ICloudflareService {
+public class CloudflareServiceImpl implements CloudflareService {
 
 	@Value("${service.cloudflare.r2.url}")
 	private String serviceUrl;

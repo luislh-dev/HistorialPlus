@@ -17,7 +17,7 @@ import java.util.Optional;
 import static org.springframework.http.HttpMethod.GET;
 
 @Service
-public class CeServiceImpl implements ICeService {
+public class CeServiceImpl implements CeService {
 
     @Value("${cee.api.url}")
     private String apiUrl;

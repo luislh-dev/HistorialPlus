@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.audit.aspect;
 
-import com.historialplus.historialplus.audit.context.IRequestContextExtractor;
-import com.historialplus.historialplus.audit.service.IAuditLogService;
+import com.historialplus.historialplus.audit.context.RequestContextExtractor;
+import com.historialplus.historialplus.audit.service.AuditLogService;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class AuditLogAspect {
-	private final IAuditLogService auditLogService;
-	private final IRequestContextExtractor requestContextExtractor;
+	private final AuditLogService auditLogService;
+	private final RequestContextExtractor requestContextExtractor;
 
 	@AfterReturning(pointcut = "execution(* com.historialplus.historialplus.internal.*.controller..*(..))")
 	public void logAccess(JoinPoint joinPoint) {

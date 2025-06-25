@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class TypeDocumentServiceImpl implements ITypeDocumentService {
+public class TypeDocumentServiceImpl implements TypeDocumentService {
 
     private final TypeDocumentRepository repository;
 

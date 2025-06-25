@@ -20,7 +20,7 @@ import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_ADM
  * permitiendo bloquear la cuenta después de un número específico de intentos fallidos.
  */
 @Service
-public class AuthServiceImpl implements IAuthService {
+public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private static final int MAX_FAILED_ATTEMPTS = 3;

@@ -3,7 +3,7 @@ package com.historialplus.historialplus.internal.user.controller;
 import com.historialplus.historialplus.internal.user.dto.request.DoctorCreationDto;
 import com.historialplus.historialplus.internal.user.dto.request.ManagementCreationDto;
 import com.historialplus.historialplus.internal.user.dto.request.UserUpdateDto;
-import com.historialplus.historialplus.internal.user.service.IUserService;
+import com.historialplus.historialplus.internal.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,9 +27,9 @@ import java.util.UUID;
 @Validated
 public class UserController {
 
-    private final IUserService service;
+    private final UserService service;
 
-    public UserController(IUserService service) {
+    public UserController(UserService service) {
         this.service = service;
     }
 

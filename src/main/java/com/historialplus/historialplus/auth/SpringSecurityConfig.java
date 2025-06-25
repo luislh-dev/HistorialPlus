@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.auth;
 
-import com.historialplus.historialplus.auth.AuthService.IAuthService;
+import com.historialplus.historialplus.auth.AuthService.AuthService;
 import com.historialplus.historialplus.auth.filter.JwtAuthenticationFilter;
 import com.historialplus.historialplus.auth.filter.JwtValidationFilter;
 import io.jsonwebtoken.security.Keys;
@@ -50,7 +50,7 @@ public class SpringSecurityConfig {
     }
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager, SecretKey jwtSecretKey, IAuthService authService) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager, SecretKey jwtSecretKey, AuthService authService) throws Exception {
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtSecretKey, authService);
         jwtAuthenticationFilter.setFilterProcessesUrl("/api/login");
 
