@@ -4,6 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -101,10 +104,10 @@ public class IpUtils {
 			return false;
 		}
 
-		String ipv6Pattern = "^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$|" +
-							 "^([0-9a-fA-F]{1,4}:)*::([0-9a-fA-F]{1,4}:)*[0-9a-fA-F]{1,4}$|" +
-							 "^::1$|^::$";
-
-		return ip.matches(ipv6Pattern);
+		try {
+			return InetAddress.getByName(ip) instanceof Inet6Address;
+		} catch (UnknownHostException e) {
+			return false;
+		}
 	}
 }
