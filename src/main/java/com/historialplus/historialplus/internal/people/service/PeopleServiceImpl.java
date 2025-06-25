@@ -66,20 +66,18 @@ public class PeopleServiceImpl implements PeopleService {
     }
 
     @Override
-    public Optional<MinimalPeopleResponseDto> getPersonNameByDocument(String documentType, String documentNumber) {
+    public Optional<MinimalPeopleResponseDto> getPersonNameByDocument(DocumentTypeEnum documentType, String documentNumber) {
 
-        DocumentTypeEnum documentTypeEnum = DocumentTypeEnum.getDocumentTypeByName(documentType);
-
-        if (documentTypeEnum == null) { return Optional.empty(); }
+        if (documentType == null) { return Optional.empty(); }
 
         // verificamos si la persona ya existe en la base de datos
-        Optional<PeopleEntity> people = repository.findByDocumentNumberAndTypeDocument_Name(documentNumber, documentTypeEnum);
+        Optional<PeopleEntity> people = repository.findByDocumentNumberAndTypeDocument_Name(documentNumber, documentType);
         if (people.isPresent()) {
             return Optional.of(PeopleDtoMapper.toMinimalPeopleDto(people.get()));
         }
 
         // si no existe, consultamos a reniec
-        if (documentTypeEnum.equals(DNI)) {
+        if (documentType.equals(DNI)) {
             try {
                 Optional<ReniecResponseDto> reniecResponse = reniecService.getPersonData(documentNumber);
                 return reniecResponse.map(ReniecMapper::toMinimalPeopleDto);
@@ -89,7 +87,7 @@ public class PeopleServiceImpl implements PeopleService {
         }
 
         // Validamos si el tipo es Carnet de Extranjería
-        if (documentTypeEnum.equals(CE)) {
+        if (documentType.equals(CE)) {
 
             if (documentNumber.length() < 9) {
                 return Optional.empty();

@@ -1,5 +1,7 @@
 package com.historialplus.historialplus.internal.people.controller;
 
+import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
+import com.historialplus.historialplus.common.validators.document.DocumentValid;
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
 import com.historialplus.historialplus.internal.people.service.PeopleService;
 import jakarta.validation.Valid;
@@ -40,7 +42,7 @@ public class PeopleController {
     }
 
     @GetMapping("getPersonNameByDocument/{documentType}/{documentNumber}")
-    public ResponseEntity<?> getPersonNameByDocument(@PathVariable String documentType, @PathVariable String documentNumber) {
+    public ResponseEntity<?> getPersonNameByDocument(@PathVariable DocumentTypeEnum documentType, @PathVariable @DocumentValid String documentNumber) {
         return service.getPersonNameByDocument(documentType, documentNumber)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());

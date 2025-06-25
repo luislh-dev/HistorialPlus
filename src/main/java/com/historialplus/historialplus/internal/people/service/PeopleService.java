@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.people.service;
 
+import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.PeopleResponseDto;
@@ -19,7 +20,7 @@ public interface PeopleService {
 
     Optional<MinimalPeopleResponseDto> getPersonName(String dni);
 
-    Optional<MinimalPeopleResponseDto> getPersonNameByDocument(String documentType, String documentNumber);
+    Optional<MinimalPeopleResponseDto> getPersonNameByDocument(DocumentTypeEnum documentType, String documentNumber);
 
     Page<PeopleRecordPresenter> findAllWithVisitsStats(String documentNumber, String fullName, Pageable pageable);
 
