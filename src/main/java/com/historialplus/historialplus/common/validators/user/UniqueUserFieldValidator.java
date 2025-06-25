@@ -3,12 +3,12 @@ package com.historialplus.historialplus.common.validators.user;
 import com.historialplus.historialplus.internal.user.repository.UserRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class UniqueUserFieldValidator implements ConstraintValidator<UniqueUserField, String> {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     private UserFieldName fieldName;
 

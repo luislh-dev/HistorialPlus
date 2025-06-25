@@ -3,7 +3,7 @@ package com.historialplus.historialplus.common.validators.state;
 import com.historialplus.historialplus.internal.state.service.StateService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Validador personalizado para verificar si un ID de estado es válido.
@@ -16,10 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  * donde se deba garantizar que el valor no sea nulo, especialmente si la lógica o reglas de negocio
  * requieren una validación estricta.</p>
  */
+@RequiredArgsConstructor
 public class StateIdValidator implements ConstraintValidator<ValidStateId, Integer> {
 
-    @Autowired
-    private StateService stateService;
+    private final StateService stateService;
 
     /**
      * Valida el ID de estado.

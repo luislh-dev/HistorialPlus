@@ -3,7 +3,7 @@ package com.historialplus.historialplus.common.validators.user.exist.id;
 import com.historialplus.historialplus.internal.user.repository.UserRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
@@ -19,10 +19,10 @@ import java.util.UUID;
  * donde se deba garantizar que el valor no sea nulo, especialmente si la lógica o reglas de negocio
  * requieren una validación estricta.</p>
  */
+@RequiredArgsConstructor
 public class UserIdValidator implements ConstraintValidator<ValidUserId, UUID> {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     /**
      * Valida el ID de usuario.

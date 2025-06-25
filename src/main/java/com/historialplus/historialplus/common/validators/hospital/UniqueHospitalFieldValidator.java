@@ -3,12 +3,12 @@ package com.historialplus.historialplus.common.validators.hospital;
 import com.historialplus.historialplus.internal.hospital.repository.HospitalRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class UniqueHospitalFieldValidator implements ConstraintValidator<UniqueHospitalField, String> {
 
-    @Autowired
-    private HospitalRepository hospitalRepository;
+    private final HospitalRepository hospitalRepository;
 
     private String fieldName;
 

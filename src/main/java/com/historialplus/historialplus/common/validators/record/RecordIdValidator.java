@@ -3,13 +3,14 @@ package com.historialplus.historialplus.common.validators.record;
 import com.historialplus.historialplus.internal.record.service.RecordService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
+@RequiredArgsConstructor
 public class RecordIdValidator implements ConstraintValidator<ValidRecordId, UUID> {
-    @Autowired
-    private RecordService recordService;
+
+    private final RecordService recordService;
 
     @Override
     public boolean isValid(UUID recordId, ConstraintValidatorContext context) {
