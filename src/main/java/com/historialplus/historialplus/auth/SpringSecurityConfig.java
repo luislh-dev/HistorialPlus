@@ -3,6 +3,7 @@ package com.historialplus.historialplus.auth;
 import com.historialplus.historialplus.auth.filter.JwtAuthenticationFilter;
 import com.historialplus.historialplus.auth.filter.JwtValidationFilter;
 import com.historialplus.historialplus.auth.service.AuthService;
+import com.historialplus.historialplus.common.constants.RoleEnum;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -59,25 +60,25 @@ public class SpringSecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/api/users").hasAnyRole("MANAGEMENT", "ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/users/createManagementUser").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/users/createDoctorUser").hasRole("MANAGEMENT")
-                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/record-details").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/compress-image").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/pdf/compress").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/hospitals").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/hospitals").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/records").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/records/{documentNumber}").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/records").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/files").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/files/{id}").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/files").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/api/hospitals/{id}").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                    .requestMatchers(HttpMethod.GET, "/api/users").hasAnyRole(RoleEnum.MANAGEMENT(), RoleEnum.ADMIN())
+                    .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasRole(RoleEnum.USER())
+                    .requestMatchers(HttpMethod.POST, "/api/users").hasRole(RoleEnum.ADMIN())
+                    .requestMatchers(HttpMethod.POST, "/api/users/createManagementUser").hasRole(RoleEnum.ADMIN())
+                    .requestMatchers(HttpMethod.POST, "/api/users/createDoctorUser").hasRole(RoleEnum.MANAGEMENT())
+                    .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole(RoleEnum.ADMIN())
+                    .requestMatchers(HttpMethod.POST, "/api/record-details").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/compress-image").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/pdf/compress").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/hospitals").hasRole(RoleEnum.ADMIN())
+                    .requestMatchers(HttpMethod.GET, "/api/hospitals").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/records").hasRole(RoleEnum.ADMIN())
+                    .requestMatchers(HttpMethod.GET, "/api/records/{documentNumber}").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/records").hasRole(RoleEnum.ADMIN())
+                    .requestMatchers(HttpMethod.GET, "/api/files").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/files/{id}").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/files").permitAll()
+                    .requestMatchers(HttpMethod.DELETE, "/api/hospitals/{id}").hasRole(RoleEnum.ADMIN())
+                    .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class)
