@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Optional;
 
 import static org.springframework.http.HttpMethod.GET;
@@ -32,8 +34,14 @@ public class CeServiceImpl implements CeService {
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         try {
-            String url = apiUrl + "/" + ceeNumber + "?apikey=" + apiToken;
-            ResponseEntity<String> response = restTemplate.exchange(url, GET, entity, String.class);
+            URI uri = UriComponentsBuilder
+                .fromHttpUrl(apiUrl)
+                .queryParam("apikey", apiToken)
+                .build()
+                .encode()
+                .toUri();
+
+            ResponseEntity<String> response = restTemplate.exchange(uri, GET, entity, String.class);
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode root = objectMapper.readTree(response.getBody());
             JsonNode body = root.path("body");
