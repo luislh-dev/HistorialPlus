@@ -1,10 +1,7 @@
 package com.historialplus.historialplus.config;
 
-import org.springframework.context.annotation.Configuration;
-
 import java.util.List;
 
-@Configuration
 public class FileConfig {
 	private FileConfig() {}
 
