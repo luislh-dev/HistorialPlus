@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.user.service;
 
-import com.historialplus.historialplus.auth.AuthService.AuthService;
+import com.historialplus.historialplus.auth.service.AuthService;
 import com.historialplus.historialplus.common.constants.StateEnum;
 import com.historialplus.historialplus.internal.people.service.PeopleService;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;

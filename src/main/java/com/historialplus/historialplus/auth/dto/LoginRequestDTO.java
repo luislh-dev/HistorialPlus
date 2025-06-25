@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.auth.AuthService.DTO;
+package com.historialplus.historialplus.auth.dto;
 
 import lombok.Getter;
 import lombok.Setter;

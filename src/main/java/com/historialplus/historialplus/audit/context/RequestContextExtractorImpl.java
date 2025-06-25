@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.audit.context;
 
 import com.historialplus.historialplus.audit.util.IpUtils;
-import com.historialplus.historialplus.auth.AuthService.AuthService;
+import com.historialplus.historialplus.auth.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

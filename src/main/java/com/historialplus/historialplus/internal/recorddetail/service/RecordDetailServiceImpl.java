@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.recorddetail.service;
 
-import com.historialplus.historialplus.auth.AuthService.AuthService;
+import com.historialplus.historialplus.auth.service.AuthService;
 import com.historialplus.historialplus.error.exceptions.NotFoundException;
 import com.historialplus.historialplus.external.compress.dto.CompressFileDto;
 import com.historialplus.historialplus.external.facade.CompressAndUploadService.CompressAndUploadService;
