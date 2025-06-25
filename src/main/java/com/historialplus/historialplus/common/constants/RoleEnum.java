@@ -20,15 +20,15 @@ public enum RoleEnum {
 		this.roleName = roleName;
 	}
 
-	public static String ADMIN() {
+	public static String admin() {
 		return ROLE_ADMIN.getRoleName();
 	}
 
-	public static String USER() {
+	public static String user() {
 		return ROLE_USER.getRoleName();
 	}
 
-	public static String MANAGEMENT() {
+	public static String management() {
 		return ROLE_MANAGEMENT.getRoleName();
 	}
 

@@ -16,7 +16,7 @@ public class DocumentValidator implements ConstraintValidator<DocumentValid, Str
 			return false;
 		}
 
-		return isValidDNI(document) || isValidPasaporte(document) || isValidCEE(document);
+		return isValidDNI(document) || isValidPasaporte(document) || isValidCee(document);
 	}
 
 	private boolean isValidDNI(String document) {
@@ -27,7 +27,7 @@ public class DocumentValidator implements ConstraintValidator<DocumentValid, Str
 		return PASAPORTE_PATTERN.matcher(document).matches();
 	}
 
-	private boolean isValidCEE(String document) {
+	private boolean isValidCee(String document) {
 		return CEE_PATTERN.matcher(document).matches();
 	}
 }

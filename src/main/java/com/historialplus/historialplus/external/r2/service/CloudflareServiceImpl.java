@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.external.r2.service;
 
+import com.historialplus.historialplus.config.FileConfig;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.UUID;
-
-import static com.historialplus.historialplus.config.FileConfig.ALLOWED_FILE_TYPES;
-import static com.historialplus.historialplus.config.FileConfig.MAX_FILE_SIZE;
 
 @Service
 public class CloudflareServiceImpl implements CloudflareService {
@@ -85,11 +83,11 @@ public class CloudflareServiceImpl implements CloudflareService {
 			throw new IllegalArgumentException("El archivo está vacío o no se proporciona");
 		}
 
-		if (file.getSize() > MAX_FILE_SIZE) {
+		if (file.getSize() > FileConfig.MAX_FILE_SIZE) {
 			throw new IllegalArgumentException("El tamaño del archivo excede el límite máximo de 500 KB");
 		}
 
-		if (!ALLOWED_FILE_TYPES.contains(file.getContentType())) {
+		if (!FileConfig.ALLOWED_FILE_TYPES.contains(file.getContentType())) {
 			throw new IllegalArgumentException("No se permite ningún tipo de archivo. Solo se admiten JPEG, PNG y WebP.");
 		}
 
