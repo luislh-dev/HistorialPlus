@@ -21,7 +21,6 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static com.historialplus.historialplus.auth.constants.JwtConfig.CONTENT_TYPE;
 import static com.historialplus.historialplus.auth.constants.JwtConfig.HEADER_AUTHORIZATION;
@@ -75,7 +74,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         List<String> authorities = authResult.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+                .toList();
 
         // Crear el token JWT e incluir las autoridades como un claim llamado "roles"
         String token = Jwts.builder()
