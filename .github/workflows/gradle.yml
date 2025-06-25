@@ -7,37 +7,39 @@ jobs:
     name: 🧹 Style Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
-      - name: Setup JDK 21 + Gradle cache
-        uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup JDK 21 with Gradle cache
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
           cache: 'gradle'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
-        with:
-          cache-cleanup: on-success
+
       - run: chmod +x ./gradlew
+
       - name: Code Style Check
-        run: ./gradlew checkstyleMain
+        run: ./gradlew checkstyleMain --no-daemon
 
   build:
     name: 🛠️ Build & Test
-    runs-on: ubuntu-latest
     needs: checkstyle
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
-      - name: Setup JDK 21 + Gradle cache
-        uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup JDK 21 with Gradle cache
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
           cache: 'gradle'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
-        with:
-          cache-cleanup: on-success
+
       - run: chmod +x ./gradlew
+
       - name: Build & Test
-        run: ./gradlew build -D spring.profiles.active=test
+        run: ./gradlew build -D spring.profiles.active=test --no-daemon
