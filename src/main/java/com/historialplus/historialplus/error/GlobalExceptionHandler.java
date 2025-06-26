@@ -2,6 +2,8 @@ package com.historialplus.historialplus.error;
 
 import com.historialplus.historialplus.error.dto.ApiError;
 import com.historialplus.historialplus.error.dto.ApiErrorDetail;
+import com.historialplus.historialplus.error.exceptions.ConflictException;
+import com.historialplus.historialplus.error.exceptions.NotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -110,6 +112,33 @@ public class GlobalExceptionHandler {
             .build();
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(apiError);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ApiError> handleNotFoundException(NotFoundException ex) {
+        ApiError apiError = ApiError.builder()
+                .code("RESOURCE_NOT_FOUND")
+                .message(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .details(Collections.emptyList())
+                .build();
+        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ApiError> handleConflictException(ConflictException ex) {
+        ApiErrorDetail detail = ApiErrorDetail.builder()
+                .field("conflict")
+                .message(ex.getMessage())
+                .build();
+
+        ApiError apiError = ApiError.builder()
+                .code("RESOURCE_CONFLICT")
+                .message("Conflicto de recurso")
+                .timestamp(LocalDateTime.now())
+                .details(Collections.singletonList(detail))
+                .build();
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
     }
 }
 
