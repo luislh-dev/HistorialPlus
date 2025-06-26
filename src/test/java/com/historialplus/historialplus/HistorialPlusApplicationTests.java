@@ -26,6 +26,10 @@ class HistorialPlusApplicationTests {
     private AuditLogAspect auditLogAspect;
 
     @Test
-    void contextLoads() {}
+    void contextLoads() {
+        // Esta función está vacía intencionalmente.
+        // Su propósito es asegurar que el contexto de Spring Boot se cargue correctamente.
+        // Si el contexto no se carga, la prueba fallará automáticamente.
+    }
 
 }

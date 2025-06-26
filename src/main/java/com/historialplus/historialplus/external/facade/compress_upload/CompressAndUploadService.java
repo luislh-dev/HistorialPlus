@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.external.facade.CompressAndUploadService;
+package com.historialplus.historialplus.external.facade.compress_upload;
 
 import com.historialplus.historialplus.external.compress.dto.CompressFileDto;
 import org.springframework.web.multipart.MultipartFile;

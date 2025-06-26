@@ -23,7 +23,7 @@ public class HospitalCreateDto {
     private String address;
 
     @NotNull(message = "Teléfono es requerido")
-    @Pattern(regexp = "^9[0-9]{8}$", message = "Teléfono debe empezar con 9 y tener 9 dígitos")
+    @Pattern(regexp = "^9\\d{8}$", message = "Teléfono debe empezar con 9 y tener 9 dígitos")
     @UniqueHospitalField(fieldName = "phone", message = "El teléfono ya está en uso")
     private String phone;
 
@@ -33,7 +33,7 @@ public class HospitalCreateDto {
     private String email;
 
     @NotNull(message = "RUC es requerido")
-    @Pattern(regexp = "^[0-9]{11}$", message = "RUC debe tener 11 dígitos")
+    @Pattern(regexp = "^\\d{11}$", message = "RUC debe tener 11 dígitos")
     @UniqueHospitalField(fieldName = "ruc", message = "El RUC ya está en uso")
     private String ruc;
 

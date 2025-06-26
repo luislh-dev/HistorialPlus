@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class FileTypeServiceImpl implements FileTypeService {
         try {
             return fileTypeRepository.findAllProjectedBy().stream()
                 .map(mapper::fileTypeProjectionToFileTypeDto)
-                .collect(Collectors.toList());
+                .toList();
         } catch (Exception e){
             log.error("Error fetching file types", e);
             return List.of();

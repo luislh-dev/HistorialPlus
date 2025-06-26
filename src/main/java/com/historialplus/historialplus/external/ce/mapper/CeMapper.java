@@ -7,6 +7,8 @@ import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopl
 import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.CE;
 
 public class CeMapper {
+    private CeMapper() {}
+
     public static MinimalPeopleResponseDto toMinimalPeopleDto(CeResponseDto dto){
         MinimalPeopleResponseDto response = new MinimalPeopleResponseDto();
         response.setName(dto.getNames());

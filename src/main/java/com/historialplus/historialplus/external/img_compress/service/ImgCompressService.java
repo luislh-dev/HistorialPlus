@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.external.ImgCompress.service;
+package com.historialplus.historialplus.external.img_compress.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

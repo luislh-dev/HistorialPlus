@@ -2,6 +2,10 @@ package com.historialplus.historialplus.internal.hospital.controller;
 
 import com.historialplus.historialplus.internal.hospital.dto.request.HospitalCreateDto;
 import com.historialplus.historialplus.internal.hospital.dto.request.HospitalUpdateDto;
+import com.historialplus.historialplus.internal.hospital.dto.response.HospitalFindByResponseDto;
+import com.historialplus.historialplus.internal.hospital.dto.response.HospitalPageResponseDto;
+import com.historialplus.historialplus.internal.hospital.dto.response.HospitalResponseDto;
+import com.historialplus.historialplus.internal.hospital.projection.HospitalNameProjection;
 import com.historialplus.historialplus.internal.hospital.service.HospitalService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -30,7 +34,7 @@ public class HospitalController {
     }
 
     @GetMapping
-    public Page<?> list(
+    public Page<HospitalPageResponseDto> list(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String ruc,
             @RequestParam(required = false) Integer id,
@@ -40,21 +44,21 @@ public class HospitalController {
     }
 
     @GetMapping("findByName")
-    public Page<?> findByName(
+    public Page<HospitalNameProjection> findByName(
             @RequestParam(required = false) String name,
             Pageable pageable) {
         return service.findByName(name, pageable);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getHospitalById(@PathVariable Integer id) {
+    public ResponseEntity<HospitalFindByResponseDto> getHospitalById(@PathVariable Integer id) {
         return service.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<?> createHospital(@Valid @RequestBody HospitalCreateDto hospitalDto) {
+    public ResponseEntity<HospitalCreateDto> createHospital(@Valid @RequestBody HospitalCreateDto hospitalDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(hospitalDto));
     }
 
@@ -65,7 +69,7 @@ public class HospitalController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<?> updateHospital(@PathVariable Integer id, @Valid @RequestBody HospitalUpdateDto hospitalDto) {
+    public ResponseEntity<HospitalResponseDto> updateHospital(@PathVariable Integer id, @Valid @RequestBody HospitalUpdateDto hospitalDto) {
         return ResponseEntity.ok(service.update(id, hospitalDto));
     }
 

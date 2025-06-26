@@ -16,13 +16,13 @@ public class HospitalUpdateDto {
 
     private String address;
 
-    @Pattern(regexp = "^[0-9]{9}$", message = "Teléfono debe tener 9 dígitos")
+    @Pattern(regexp = "^\\d{9}$", message = "Teléfono debe tener 9 dígitos")
     private String phone;
 
     @Email(message = "Email no es válido")
     private String email;
 
-    @Pattern(regexp = "^[0-9]{11}$", message = "RUC debe tener 11 dígitos")
+    @Pattern(regexp = "^\\d{11}$", message = "RUC debe tener 11 dígitos")
     private String ruc;
 
     @ValidStateId

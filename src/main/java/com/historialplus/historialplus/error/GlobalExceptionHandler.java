@@ -20,7 +20,7 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleGlobalException(Exception ex, WebRequest ignoredRequest) {
+    public ResponseEntity<String> handleGlobalException(Exception ex, WebRequest ignoredRequest) {
         return ResponseEntity.internalServerError().body(ex.getMessage());
     }
 
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
             .getAllErrors()
             .stream()
             .map(e -> {
-                String field = e instanceof FieldError ? ((FieldError) e).getField() : e.getObjectName();
+                String field = (e instanceof FieldError fieldError) ? fieldError.getField() : e.getObjectName();
                 return ApiErrorDetail.builder()
                     .field(field)
                     .message(e.getDefaultMessage())

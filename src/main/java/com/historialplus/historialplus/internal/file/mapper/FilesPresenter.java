@@ -5,6 +5,7 @@ import com.historialplus.historialplus.internal.file.presenter.FileDetailPresent
 import com.historialplus.historialplus.internal.file.projection.FileBasicProjection;
 
 public class FilesPresenter {
+    private FilesPresenter() {}
 
     // Convertir de FileBasicProjection a FileDetailPresenter
     public static FileDetailPresenter toFileDetailPresenter(FileBasicProjection projection) {
@@ -18,11 +19,14 @@ public class FilesPresenter {
         }
 
         // Formatear el tamaño del archivo
-        String sizeFormatted = (projection.getSizeInBytes() > 1024 ?
-                (projection.getSizeInBytes() > 1024 * 1024 ?
-                        String.format("%.2f MB", projection.getSizeInBytes() / (1024.0 * 1024)) :
-                        String.format("%.2f KB", projection.getSizeInBytes() / 1024.0)) :
-                projection.getSizeInBytes() + " B");
+        String sizeFormatted;
+        if (projection.getSizeInBytes() > 1024 * 1024) {
+            sizeFormatted = String.format("%.2f MB", projection.getSizeInBytes() / (1024.0 * 1024));
+        } else if (projection.getSizeInBytes() > 1024) {
+            sizeFormatted = String.format("%.2f KB", projection.getSizeInBytes() / 1024.0);
+        } else {
+            sizeFormatted = projection.getSizeInBytes() + " B";
+        }
 
         return new FileDetailPresenter(
                 projection.getName(),

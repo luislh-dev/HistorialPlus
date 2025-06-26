@@ -3,7 +3,7 @@ package com.historialplus.historialplus.internal.recorddetail.service;
 import com.historialplus.historialplus.auth.service.AuthService;
 import com.historialplus.historialplus.error.exceptions.NotFoundException;
 import com.historialplus.historialplus.external.compress.dto.CompressFileDto;
-import com.historialplus.historialplus.external.facade.CompressAndUploadService.CompressAndUploadService;
+import com.historialplus.historialplus.external.facade.compress_upload.CompressAndUploadService;
 import com.historialplus.historialplus.internal.file.entites.FileEntity;
 import com.historialplus.historialplus.internal.file.projection.FileBasicProjection;
 import com.historialplus.historialplus.internal.file.repository.FileRepository;
