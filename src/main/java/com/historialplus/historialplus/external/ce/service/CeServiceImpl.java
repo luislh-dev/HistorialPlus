@@ -29,7 +29,7 @@ public class CeServiceImpl implements CeService {
     private String apiToken;
 
     @Override
-    public Optional<CeResponseDto> getCeData(String ceeNumber) throws RuntimeException {
+    public Optional<CeResponseDto> getCeData(String ceeNumber) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(headers);
