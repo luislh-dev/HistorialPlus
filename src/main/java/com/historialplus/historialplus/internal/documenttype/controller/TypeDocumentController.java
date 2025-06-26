@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.documenttype.controller;
 
+import com.historialplus.historialplus.internal.documenttype.projection.TypeDocumentProjection;
 import com.historialplus.historialplus.internal.documenttype.service.TypeDocumentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public class TypeDocumentController {
     }
 
     @GetMapping
-    public List<?> findAll() {
+    public List<TypeDocumentProjection> findAll() {
         return service.findAll();
     }
 

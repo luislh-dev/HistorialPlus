@@ -84,8 +84,9 @@ public class PeopleEntity {
     @JoinColumn(name = "type_document_id")
     private DocumentTypeEntity typeDocument;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-    private RecordEntity record;
+    private RecordEntity medicalRecord;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)

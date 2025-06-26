@@ -13,6 +13,7 @@ import java.util.List;
 import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.CE;
 import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.DNI;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -38,8 +39,8 @@ class TypeDocumentRepositoryTest {
 		List<TypeDocumentProjection> documents = repository.findAllByOrderByUpdatedAtDesc();
 
 		assertThat(documents).isNotNull();
-		assertThat(documents.size()).isEqualTo(2);
-		assertThat(documents.get(0).getName()).isEqualTo(entity2.getName().name());
-		assertThat(documents.get(1).getName()).isEqualTo(entity.getName().name());
+		assertEquals(2, documents.size());
+		assertEquals(entity2.getName().name(), documents.getFirst().getName());
+		assertEquals(entity.getName().name(), documents.getLast().getName());
 	}
 }

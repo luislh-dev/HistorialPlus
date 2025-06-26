@@ -7,6 +7,7 @@ import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopl
 import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.DNI;
 
 public class ReniecMapper {
+    private ReniecMapper() {}
 
     public static MinimalPeopleResponseDto toMinimalPeopleDto(ReniecResponseDto reniecResponseDto) {
         MinimalPeopleResponseDto response = new MinimalPeopleResponseDto();

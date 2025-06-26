@@ -18,6 +18,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 
@@ -33,20 +35,20 @@ class StateServiceImplTest {
 	@InjectMocks
 	private StateServiceImpl stateService;
 
-	private StateEntity state;
+	private StateEntity stateEntity;
 
 	@BeforeEach
 	void setUp() {
-		state = StateTestFixtures.active();
+		stateEntity = StateTestFixtures.active();
 	}
 
 	@Test
 	void findById() {
-		given(stateRepository.findById(anyInt())).willReturn(Optional.of(this.state));
+		given(stateRepository.findById(anyInt())).willReturn(Optional.of(this.stateEntity));
 
-		StateEntity state = stateService.findById(this.state.getId()).orElse(null);
+		StateEntity state = stateService.findById(this.stateEntity.getId()).orElse(null);
 
-		assertThat(state).isNotNull();
+		assertNotNull(state);
 		assertEquals(StateEnum.ACTIVE.getDisplayName(), state.getName().getDisplayName());
 	}
 
@@ -54,14 +56,14 @@ class StateServiceImplTest {
 	void findByIdNotFound() {
 		given(stateRepository.findById(anyInt())).willReturn(Optional.empty());
 
-		StateEntity state = stateService.findById(this.state.getId()).orElse(null);
+		StateEntity state = stateService.findById(this.stateEntity.getId()).orElse(null);
 
-		assertThat(state).isNull();
+		assertNull(state);
 	}
 
 	@Test
 	void findByName() {
-		given(stateRepository.findByName(StateEnum.ACTIVE)).willReturn(Optional.of(this.state));
+		given(stateRepository.findByName(StateEnum.ACTIVE)).willReturn(Optional.of(this.stateEntity));
 
 		StateEntity state = stateService.findByName(StateEnum.ACTIVE).orElse(null);
 
@@ -75,7 +77,7 @@ class StateServiceImplTest {
 
 		StateEntity state = stateService.findByName(StateEnum.ACTIVE).orElse(null);
 
-		assertThat(state).isNull();
+		assertNull(state);
 	}
 
 	@Test
@@ -84,7 +86,7 @@ class StateServiceImplTest {
 
 		List<StateDto> states = stateService.findAll();
 
-		assertThat(states).isNotNull();
-		assertThat(states).hasSize(3);
+		assertNotNull(states);
+		assertEquals(3, states.size());
 	}
 }

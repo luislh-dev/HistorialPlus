@@ -1,10 +1,13 @@
 package com.historialplus.historialplus.internal.role.controller;
 
+import com.historialplus.historialplus.internal.role.dto.RoleDto;
 import com.historialplus.historialplus.internal.role.service.RoleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/roles")
@@ -17,7 +20,7 @@ public class RoleController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllRoles() {
+    public ResponseEntity<List<RoleDto>> getAllRoles() {
         return ResponseEntity.ok(roleService.findAll());
     }
 

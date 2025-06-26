@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -30,6 +29,6 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public List<StateDto> findAll() {
-        return repository.findAll().stream().map(mapper::stateEntityToStateDto).collect(Collectors.toList());
+        return repository.findAll().stream().map(mapper::stateEntityToStateDto).toList();
     }
 }

@@ -3,6 +3,10 @@ package com.historialplus.historialplus.internal.people.controller;
 import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import com.historialplus.historialplus.common.validators.document.DocumentValid;
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
+import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
+import com.historialplus.historialplus.internal.people.dto.response.PeopleResponseDto;
+import com.historialplus.historialplus.internal.people.presenters.PeopleRecordPresenter;
+import com.historialplus.historialplus.internal.people.projection.PersonaBasicProjection;
 import com.historialplus.historialplus.internal.people.service.PeopleService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -32,24 +36,26 @@ public class PeopleController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody PeopleCreateDto peopleCreateDto) {
+    public ResponseEntity<PeopleResponseDto> save(@Valid @RequestBody PeopleCreateDto peopleCreateDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(peopleCreateDto));
     }
 
     @GetMapping("getPersonName/{dni}")
-    public ResponseEntity<?> getPersonName(@PathVariable String dni) {
-        return ResponseEntity.ok(service.getPersonName(dni));
+    public ResponseEntity<MinimalPeopleResponseDto> getPersonName(@PathVariable String dni) {
+        return service.getPersonName(dni)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("getPersonNameByDocument/{documentType}/{documentNumber}")
-    public ResponseEntity<?> getPersonNameByDocument(@PathVariable DocumentTypeEnum documentType, @PathVariable @DocumentValid String documentNumber) {
+    public ResponseEntity<MinimalPeopleResponseDto> getPersonNameByDocument(@PathVariable DocumentTypeEnum documentType, @PathVariable @DocumentValid String documentNumber) {
         return service.getPersonNameByDocument(documentType, documentNumber)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("findAllWithVisitsStats")
-    public Page<?> findAllWithVisitsStats(
+    public Page<PeopleRecordPresenter> findAllWithVisitsStats(
             @RequestParam(required = false) String documentNumber,
             @RequestParam(required = false) String fullName,
             Pageable pageable
@@ -58,7 +64,7 @@ public class PeopleController {
     }
 
     @GetMapping("findBasicById/{id}")
-    public ResponseEntity<?> findBasicById(@PathVariable UUID id) {
+    public ResponseEntity<PersonaBasicProjection> findBasicById(@PathVariable UUID id) {
         return service.findBasicById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

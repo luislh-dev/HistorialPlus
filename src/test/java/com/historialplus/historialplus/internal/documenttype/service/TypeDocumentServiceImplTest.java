@@ -10,7 +10,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -46,7 +47,7 @@ class TypeDocumentServiceImplTest {
 
 		List<TypeDocumentProjection> projections = service.findAll();
 
-		assertThat(projections).isNotNull();
-		assertThat(projections.size()).isEqualTo(2);
+		assertNotNull(projections);
+		assertEquals(2, projections.size());
 	}
 }

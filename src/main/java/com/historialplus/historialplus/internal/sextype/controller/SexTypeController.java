@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.sextype.controller;
 
+import com.historialplus.historialplus.internal.sextype.dto.SexTypeResponseDto;
 import com.historialplus.historialplus.internal.sextype.service.SexTypeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ public class SexTypeController {
     }
 
     @GetMapping
-    public List<?> findAll() {
+    public List<SexTypeResponseDto> findAll() {
         return service.findAll();
     }
 }

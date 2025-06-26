@@ -2,7 +2,9 @@ package com.historialplus.historialplus.internal.recorddetail.controller;
 
 import com.historialplus.historialplus.internal.recorddetail.dto.request.RecordDetailCreateRequestDTO;
 import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailResponseDto;
+import com.historialplus.historialplus.internal.recorddetail.presenters.RecordDetailPresenter;
 import com.historialplus.historialplus.internal.recorddetail.service.RecordDetailService;
+import com.historialplus.historialplus.internal.recorddetail.viewmodel.RecordDetailExtenseViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,7 +56,7 @@ public class RecordDetailController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> createRecordDetail(
+    public ResponseEntity<RecordDetailResponseDto> createRecordDetail(
             @RequestParam("personId") UUID personId,
             @RequestParam("stateId") Integer stateId,
             @RequestParam("reason") String reason,
@@ -89,7 +91,7 @@ public class RecordDetailController {
     }
 
     @GetMapping("findAllByPeopleId/{peopleId}")
-    public Page<?> findAllByPeopleId(
+    public Page<RecordDetailPresenter> findAllByPeopleId(
             @PathVariable UUID peopleId,
             @RequestParam(required = false) String hospitalName,
             @RequestParam(required = false) LocalDateTime startDate,
@@ -99,7 +101,7 @@ public class RecordDetailController {
     }
 
     @GetMapping("FindById/{recordDetailId}")
-    public ResponseEntity<?> getRecordDetail(@PathVariable UUID recordDetailId) {
+    public ResponseEntity<RecordDetailExtenseViewModel> getRecordDetail(@PathVariable UUID recordDetailId) {
         return ResponseEntity.ok(recordDetailService.getRecordDetail(recordDetailId));
     }
 }

@@ -31,7 +31,7 @@ public interface PeopleRepository extends JpaRepository<PeopleEntity, UUID>, Jpa
         MAX(h.name)
     )
     FROM PeopleEntity p
-    LEFT JOIN p.record r
+    LEFT JOIN p.medicalRecord r
     LEFT JOIN r.visits rd
     LEFT JOIN rd.hospital h
     WHERE (:documentNumber IS NULL OR p.documentNumber = :documentNumber)
