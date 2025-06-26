@@ -1,8 +1,10 @@
 package com.historialplus.historialplus.external.r2.service;
 
+import com.historialplus.historialplus.common.utils.SecureFileUtils;
 import com.historialplus.historialplus.config.FileConfig;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -78,8 +80,8 @@ public class CloudflareServiceImpl implements CloudflareService {
 	}
 
 	@Override
-	public String uploadObject(MultipartFile file) throws IOException {
-		if (file == null || file.isEmpty()) {
+	public String uploadObject(@NonNull MultipartFile file) throws IOException {
+		if (file.isEmpty()) {
 			throw new IllegalArgumentException("El archivo está vacío o no se proporciona");
 		}
 
@@ -93,9 +95,9 @@ public class CloudflareServiceImpl implements CloudflareService {
 
 		String objectKey = UUID.randomUUID().toString();
 
-		Path tempFile = null;
+		Path tempFile = SecureFileUtils.createSecureTempFileInDirectory("upload-", ".tmp");
+
 		try {
-			tempFile = Files.createTempFile("upload", null);
 			Files.write(tempFile, file.getBytes());
 
 			PutObjectRequest putObjectRequest = PutObjectRequest.builder()
@@ -109,9 +111,7 @@ public class CloudflareServiceImpl implements CloudflareService {
 
 			return objectKey;
 		} finally {
-			if (tempFile != null) {
-				Files.deleteIfExists(tempFile);
-			}
+			Files.deleteIfExists(tempFile);
 		}
 	}
 

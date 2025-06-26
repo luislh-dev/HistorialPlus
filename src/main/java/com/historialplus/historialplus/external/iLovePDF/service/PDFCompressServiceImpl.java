@@ -11,9 +11,11 @@ import com.adobe.pdfservices.operation.pdfjobs.jobs.CompressPDFJob;
 import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressPDFParams;
 import com.adobe.pdfservices.operation.pdfjobs.params.compresspdf.CompressionLevel;
 import com.adobe.pdfservices.operation.pdfjobs.result.CompressPDFResult;
+import com.historialplus.historialplus.common.utils.SecureFileUtils;
 import com.historialplus.historialplus.util.InMemoryMultipartFile;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,14 +35,12 @@ public class PDFCompressServiceImpl implements PDFCompressService {
     private String clientSecret;
 
     @Override
-    public MultipartFile compress(MultipartFile file) throws IOException, ServiceApiException {
+    public MultipartFile compress(@NonNull MultipartFile file) throws IOException, ServiceApiException {
         CompressionLevel compressionLevel = CompressionLevel.HIGH;
 
-        // Guardar el archivo en un archivo temporal
-        Path tempInputFile = Files.createTempFile("input-", ".pdf");
+        Path tempInputFile = SecureFileUtils.createSecureTempFileInDirectory("input-", ".pdf");
         file.transferTo(tempInputFile);
 
-        // Comprimir el archivo
         try (InputStream inputStream = Files.newInputStream(tempInputFile)) {
             ServicePrincipalCredentials credentials = new ServicePrincipalCredentials(clientId, clientSecret);
             PDFServices pdfServices = new PDFServices(credentials);
