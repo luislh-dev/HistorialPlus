@@ -10,8 +10,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-import java.util.List;
-
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface AllergyMapper {
@@ -47,14 +45,13 @@ public interface AllergyMapper {
             fullName.append(people.getName());
         }
         if (people.getPaternalSurname() != null) {
-            if (fullName.length() > 0) fullName.append(" ");
+            if (!fullName.isEmpty()) fullName.append(" ");
             fullName.append(people.getPaternalSurname());
         }
         if (people.getMaternalSurname() != null) {
-            if (fullName.length() > 0) fullName.append(" ");
+            if (!fullName.isEmpty()) fullName.append(" ");
             fullName.append(people.getMaternalSurname());
         }
         return fullName.toString().trim();
     }
-    List<AllergyResponseDto> toResponseDtoList(List<AllergyEntity> entities);
 }
