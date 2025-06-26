@@ -22,7 +22,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class AllergyServiceImpl implements AllergyService{
+public class AllergyServiceImpl implements AllergyService {
     private final AllergyRepository allergyRepository;
     private final AllergyMapper allergyMapper;
     private final PeopleRepository peopleRepository;
@@ -51,7 +51,7 @@ public class AllergyServiceImpl implements AllergyService{
     @Transactional
     public AllergyResponseDto updateAllergy(Integer allergyId, AllergyUpdateDto dto) {
         AllergyEntity existingAllergy = allergyRepository.findById(allergyId)
-                .orElseThrow(() -> new NotFoundException("Alergia no encontrada con ID: " + allergyId));
+                .orElseThrow(() -> allergyNotFound(allergyId));
 
         allergyMapper.updateEntityFromDto(dto, existingAllergy);
         AllergyEntity updatedAllergy = allergyRepository.save(existingAllergy);
@@ -63,7 +63,7 @@ public class AllergyServiceImpl implements AllergyService{
     @Transactional(readOnly = true)
     public AllergyDetailsProjection findAllergyById(Integer allergyId) {
         return allergyRepository.findByAllergyId(allergyId, AllergyDetailsProjection.class)
-                .orElseThrow(() -> new NotFoundException("Alergia no encontrada con ID: " + allergyId));
+                .orElseThrow(() -> allergyNotFound(allergyId));
     }
 
     @Override
@@ -75,7 +75,6 @@ public class AllergyServiceImpl implements AllergyService{
     @Override
     @Transactional(readOnly = true)
     public Page<AllergyPageProjection> findAllergiesByPeopleId(UUID peopleId, Pageable pageable) {
-        // Verificación adicional para asegurar que la persona existe antes de realizar la consulta.
         if (!peopleRepository.existsById(peopleId)) {
             throw new NotFoundException("Persona no encontrada con ID: " + peopleId);
         }
@@ -86,7 +85,7 @@ public class AllergyServiceImpl implements AllergyService{
     @Transactional
     public void deleteAllergy(Integer allergyId) {
         if (!allergyRepository.existsById(allergyId)) {
-            throw new NotFoundException("Alergia no encontrada con ID: " + allergyId);
+            throw allergyNotFound(allergyId);
         }
         allergyRepository.deleteById(allergyId);
     }
@@ -95,11 +94,15 @@ public class AllergyServiceImpl implements AllergyService{
     @Transactional
     public AllergyResponseDto toggleAllergyStatus(Integer allergyId, Boolean isActive) {
         AllergyEntity existingAllergy = allergyRepository.findById(allergyId)
-                .orElseThrow(() -> new NotFoundException("Alergia no encontrada con ID: " + allergyId));
+                .orElseThrow(() -> allergyNotFound(allergyId));
 
         existingAllergy.setIsActive(isActive);
 
         AllergyEntity updatedAllergy = allergyRepository.save(existingAllergy);
         return allergyMapper.toResponseDto(updatedAllergy);
+    }
+
+    private NotFoundException allergyNotFound(Integer allergyId) {
+        return new NotFoundException("Alergia no encontrada con ID: " + allergyId);
     }
 }
