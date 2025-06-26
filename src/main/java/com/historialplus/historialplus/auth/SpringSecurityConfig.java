@@ -29,6 +29,11 @@ import java.util.List;
 @Configuration
 public class SpringSecurityConfig {
 
+    private static final String ALLERGIES_ENDPOINT = "/api/allergies";
+    private static final String ALLERGY_BY_ID_ENDPOINT = "/api/allergies/{id}";
+    private static final String ALLERGIES_BY_PEOPLE_ENDPOINT = "/api/allergies/by-people/{peopleId}";
+    private static final String ALLERGY_STATUS_ENDPOINT = "/api/allergies/{id}/status";
+
     @Value("${jwt.secret}")
     private String jwtSecret;
 
@@ -78,13 +83,13 @@ public class SpringSecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/files/{id}").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/files").permitAll()
                     .requestMatchers(HttpMethod.DELETE, "/api/hospitals/{id}").hasRole(RoleEnum.admin())
-                    .requestMatchers(HttpMethod.POST, "/api/allergies").permitAll()
-                    .requestMatchers(HttpMethod.PUT, "/api/allergies/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/allergies/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/allergies").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/allergies/by-people/{peopleId}").permitAll()
-                    .requestMatchers(HttpMethod.DELETE, "/api/allergies/{id}").permitAll()
-                    .requestMatchers(HttpMethod.PATCH, "/api/allergies/{id}/status").permitAll()
+                    .requestMatchers(HttpMethod.POST, ALLERGIES_ENDPOINT).permitAll()
+                    .requestMatchers(HttpMethod.GET, ALLERGIES_ENDPOINT).permitAll()
+                    .requestMatchers(HttpMethod.GET, ALLERGIES_BY_PEOPLE_ENDPOINT).permitAll()
+                    .requestMatchers(HttpMethod.GET, ALLERGY_BY_ID_ENDPOINT).permitAll()
+                    .requestMatchers(HttpMethod.PUT, ALLERGY_BY_ID_ENDPOINT).permitAll()
+                    .requestMatchers(HttpMethod.DELETE, ALLERGY_BY_ID_ENDPOINT).permitAll()
+                    .requestMatchers(HttpMethod.PATCH, ALLERGY_STATUS_ENDPOINT).permitAll()
                     .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
