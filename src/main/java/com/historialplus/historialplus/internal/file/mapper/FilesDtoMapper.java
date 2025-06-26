@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilesDtoMapper {
+    private FilesDtoMapper() {}
+    
     public static FileEntity toEntity(FilesCreateDto fileDto, RecordDetailEntity parentDetail) {
         FileEntity fileEntity = new FileEntity();
         fileEntity.setName(fileDto.getName());

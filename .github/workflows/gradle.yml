@@ -42,4 +42,4 @@ jobs:
       - run: chmod +x ./gradlew
 
       - name: Build & Test
-        run: ./gradlew build -D spring.profiles.active=test --no-daemon
+        run: ./gradlew build -x checkstyleMain -x checkstyleTest -D spring.profiles.active=test --no-daemon

@@ -1,5 +1,6 @@
-package com.historialplus.historialplus.external.facade.CompressAndUploadService;
+package com.historialplus.historialplus.external.facade.compress_upload;
 
+import com.historialplus.historialplus.error.exceptions.ExternalServiceException;
 import com.historialplus.historialplus.external.compress.dto.CompressFileDto;
 import com.historialplus.historialplus.external.compress.service.CompressFileService;
 import com.historialplus.historialplus.external.r2.service.CloudflareService;
@@ -29,8 +30,7 @@ public class CompressAndUploadServiceImpl implements CompressAndUploadService {
                         CompressFileDto dto = createCompressFileDto(compressedFile, objectKey);
                         return CompletableFuture.completedFuture(dto);
                     } catch (Exception e) {
-                        LOGGER.error("Error al subir el archivo comprimido a Cloudflare: {}", compressedFile.getOriginalFilename(), e);
-                        throw new RuntimeException("Error al subir el archivo comprimido a Cloudflare", e);
+                        throw new ExternalServiceException("Error al subir el archivo comprimido a Cloudflare", e);
                     }
                 });
     }

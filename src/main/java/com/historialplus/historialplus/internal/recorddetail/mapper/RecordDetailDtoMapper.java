@@ -19,11 +19,13 @@ import static com.historialplus.historialplus.common.constants.SexTypeEnum.MALE;
 
 @Component
 public class RecordDetailDtoMapper {
+    private RecordDetailDtoMapper() {}
+
     public static RecordDetailResponseDto toResponseDto(RecordDetailEntity detailEntity) {
         return new RecordDetailResponseDto(
                 detailEntity.getId(),
                 detailEntity.getReason(),
-                detailEntity.getRecord().getId(),
+                detailEntity.getMedicalRecord().getId(),
                 detailEntity.getState().getId()
         );
     }

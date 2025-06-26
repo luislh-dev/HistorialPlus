@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.external.iLovePDF.service;
+package com.historialplus.historialplus.external.ilove_pdf.service;
 
 import com.adobe.pdfservices.operation.PDFServices;
 import com.adobe.pdfservices.operation.PDFServicesMediaType;

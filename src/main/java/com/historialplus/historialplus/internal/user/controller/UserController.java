@@ -3,6 +3,8 @@ package com.historialplus.historialplus.internal.user.controller;
 import com.historialplus.historialplus.internal.user.dto.request.DoctorCreationDto;
 import com.historialplus.historialplus.internal.user.dto.request.ManagementCreationDto;
 import com.historialplus.historialplus.internal.user.dto.request.UserUpdateDto;
+import com.historialplus.historialplus.internal.user.dto.response.UserListResponseDto;
+import com.historialplus.historialplus.internal.user.dto.response.UserResponseDto;
 import com.historialplus.historialplus.internal.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -34,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping()
-    public Page<?> search(
+    public Page<UserListResponseDto> search(
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String dni,
             @RequestParam(required = false) String hospitalName,
@@ -45,22 +47,22 @@ public class UserController {
     }
 
     @PostMapping("createManagementUser")
-    public ResponseEntity<?> createManagementUser(@Valid @RequestBody ManagementCreationDto userDto) {
+    public ResponseEntity<UserResponseDto> createManagementUser(@Valid @RequestBody ManagementCreationDto userDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createManagementUser(userDto));
     }
 
     @PostMapping("createDoctorUser")
-    public ResponseEntity<?> createDoctorUser(@Valid @RequestBody DoctorCreationDto userDto) {
+    public ResponseEntity<UserResponseDto> createDoctorUser(@Valid @RequestBody DoctorCreationDto userDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createDoctorUser(userDto));
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<?> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateDto userDto) {
+    public ResponseEntity<UserResponseDto> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateDto userDto) {
         return ResponseEntity.ok(service.update(id, userDto));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> delete(@PathVariable UUID id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }

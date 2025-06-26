@@ -2,6 +2,7 @@ package com.historialplus.historialplus.external.r2.service;
 
 import com.historialplus.historialplus.common.utils.SecureFileUtils;
 import com.historialplus.historialplus.config.FileConfig;
+import com.historialplus.historialplus.error.exceptions.ExternalServiceException;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
@@ -41,9 +42,6 @@ public class CloudflareServiceImpl implements CloudflareService {
 
 	private S3Client s3Client;
 	private S3Presigner s3Presigner;
-
-	public CloudflareServiceImpl() {
-	}
 
 	@PostConstruct
 	private void init() {
@@ -116,7 +114,7 @@ public class CloudflareServiceImpl implements CloudflareService {
 	}
 
 	@Override
-	public String generatePresignedUrl(String objectKey) {
+	public String generatePresignedUrl(String objectKey) throws ExternalServiceException {
 		try {
 			GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
 				.signatureDuration(Duration.ofMinutes(240)) // 4 horas
@@ -129,7 +127,7 @@ public class CloudflareServiceImpl implements CloudflareService {
 			PresignedGetObjectRequest presignedRequest = s3Presigner.presignGetObject(presignRequest);
 			return presignedRequest.url().toString();
 		} catch (Exception e) {
-			throw new RuntimeException("Error generando URL prefirmada: " + e.getMessage(), e);
+			throw new ExternalServiceException("Error generando URL prefirmada: " + e.getMessage(), e);
 		}
 	}
 }

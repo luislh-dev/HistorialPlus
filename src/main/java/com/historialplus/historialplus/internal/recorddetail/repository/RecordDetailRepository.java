@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Repository
 public interface RecordDetailRepository extends JpaRepository<RecordDetailEntity, UUID> {
-    List<RecordDetailEntity> findByRecordId(UUID recordId);
+    List<RecordDetailEntity> findByMedicalRecordId(UUID recordId);
 
     @Query(value = """
         SELECT rd.id as id, rd.reason as reason, rd.visitDate as visitDate,
@@ -27,7 +27,7 @@ public interface RecordDetailRepository extends JpaRepository<RecordDetailEntity
         JOIN HospitalEntity h ON rd.hospital.id = h.id
         JOIN UserEntity u ON rd.doctor.id = u.id
         JOIN PeopleEntity p ON u.person.id = p.id
-        WHERE rd.record.id IN (
+        WHERE rd.medicalRecord.id IN (
             SELECT r.id FROM RecordEntity r WHERE r.person.id = :peopleId
         )
         AND (:hospitalName IS NULL OR h.name LIKE CONCAT('%', :hospitalName, '%'))
@@ -44,22 +44,22 @@ public interface RecordDetailRepository extends JpaRepository<RecordDetailEntity
     );
 
 	@Query(value = """
-		    SELECT rd.id as id,
-		           u.person.name as doctorName,
-		           p.paternalSurname as doctorPaternalSurname,
-		           p.maternalSurname as doctorMaternalSurname,
-				   st.name as doctorSexTypeName,
-		           h.name as hospitalName,
-		           rd.visitDate as visitDate,
-		           rd.reason as reason,
-				   rd.diagnosis as diagnostic,
-				   rd.treatment as treatment
-		    FROM RecordDetailEntity rd
-			JOIN HospitalEntity h ON rd.hospital.id = h.id
-			JOIN UserEntity u ON rd.doctor.id = u.id
-			JOIN PeopleEntity p ON u.person.id = p.id
-			JOIN SexTypeEntity st ON p.sexType.id = st.id
-			WHERE rd.id = :recordDetailId
-		""")
+        SELECT rd.id as id,
+               u.person.name as doctorName,
+               p.paternalSurname as doctorPaternalSurname,
+               p.maternalSurname as doctorMaternalSurname,
+               st.name as doctorSexTypeName,
+               h.name as hospitalName,
+               rd.visitDate as visitDate,
+               rd.reason as reason,
+               rd.diagnosis as diagnostic,
+               rd.treatment as treatment
+        FROM RecordDetailEntity rd
+        JOIN HospitalEntity h ON rd.hospital.id = h.id
+        JOIN UserEntity u ON rd.doctor.id = u.id
+        JOIN PeopleEntity p ON u.person.id = p.id
+        JOIN SexTypeEntity st ON p.sexType.id = st.id
+        WHERE rd.id = :recordDetailId
+    """)
 	RecordDetailExtenseProjection findExtenseDetailById(@Param("recordDetailId") UUID recordDetailId);
 }

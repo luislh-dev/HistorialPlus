@@ -55,8 +55,8 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             // Obtener los roles desde el claim "roles"
             List<?> rolesList = claims.get("authorities", List.class);
             List<String> roles = rolesList.stream()
-                    .filter(role -> role instanceof String)
-                    .map(role -> (String) role)
+                    .filter(String.class::isInstance)
+                    .map(String.class::cast)
                     .toList();
 
             // Convertir los roles en una colección de GrantedAuthority

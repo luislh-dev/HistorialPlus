@@ -26,7 +26,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "record")
+@Table(name = "medical_record")
 public class RecordEntity {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -38,7 +38,7 @@ public class RecordEntity {
     private PeopleEntity person;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "medicalRecord", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<RecordDetailEntity> visits = new HashSet<>();
 
     @CreationTimestamp

@@ -15,7 +15,8 @@ import java.util.Optional;
 
 import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_ADMIN;
 import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_MANAGEMENT;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 
@@ -42,10 +43,10 @@ class RoleServiceImplTest {
 
 		List<RoleDto> roles = roleService.findAll();
 
-		assertThat(roles).isNotNull();
-		assertThat(roles.size()).isEqualTo(2);
-		assertThat(roles.getFirst().getName()).isEqualTo(ROLE_ADMIN.getDisplayName());
-		assertThat(roles.getLast().getName()).isEqualTo(ROLE_MANAGEMENT.getDisplayName());
+		assertNotNull(roles);
+		assertEquals(2, roles.size());
+		assertEquals(ROLE_ADMIN.getDisplayName(), roles.getFirst().getName());
+		assertEquals(ROLE_MANAGEMENT.getDisplayName(), roles.getLast().getName());
 	}
 
 	@Test
@@ -54,9 +55,9 @@ class RoleServiceImplTest {
 
 		RoleDto dto = this.roleService.findById(this.role.getId()).orElse(null);
 
-		assertThat(dto).isNotNull();
-		assertThat(dto.getId()).isEqualTo(this.role.getId());
-		assertThat(dto.getName()).isEqualTo(ROLE_ADMIN.getDisplayName());
+		assertNotNull(dto);
+		assertEquals(role.getId(), dto.getId());
+		assertEquals(ROLE_ADMIN.getDisplayName(), dto.getName());
 	}
 
 }

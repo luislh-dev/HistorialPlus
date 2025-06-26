@@ -1,7 +1,8 @@
 package com.historialplus.historialplus.external.compress.service;
 
-import com.historialplus.historialplus.external.ImgCompress.service.ImgCompressService;
-import com.historialplus.historialplus.external.iLovePDF.service.PDFCompressService;
+import com.historialplus.historialplus.error.exceptions.ExternalServiceException;
+import com.historialplus.historialplus.external.ilove_pdf.service.PDFCompressService;
+import com.historialplus.historialplus.external.img_compress.service.ImgCompressService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,8 +44,7 @@ public class CompressFileImpl implements CompressFileService {
                 throw new IllegalArgumentException(errorMsg);
             }
         } catch (Exception e) {
-            LOGGER.error("Error al comprimir el archivo: {}", file.getOriginalFilename(), e);
-            throw new RuntimeException("Error al procesar el archivo", e);
+            throw new ExternalServiceException("Error al procesar el archivo", e);
         }
     }
 
@@ -53,8 +53,7 @@ public class CompressFileImpl implements CompressFileService {
             try {
                 return imgCompressService.compressImage(file);
             } catch (IOException e) {
-                LOGGER.error("Error al comprimir la imagen: {}", file.getOriginalFilename(), e);
-                throw new RuntimeException("Error al procesar el archivo", e);
+                throw new ExternalServiceException("Error al procesar el archivo", e);
             }
         });
     }
@@ -64,8 +63,7 @@ public class CompressFileImpl implements CompressFileService {
             try {
                 return pdfCompressService.compress(file);
             } catch (Exception e) {
-                LOGGER.error("Error al comprimir el PDF: {}", file.getOriginalFilename(), e);
-                throw new RuntimeException("Error al procesar el archivo", e);
+                throw new ExternalServiceException("Error al procesar el archivo", e);
             }
         });
     }

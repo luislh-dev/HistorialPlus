@@ -3,7 +3,7 @@ package com.historialplus.historialplus.internal.recorddetail.service;
 import com.historialplus.historialplus.auth.service.AuthService;
 import com.historialplus.historialplus.error.exceptions.NotFoundException;
 import com.historialplus.historialplus.external.compress.dto.CompressFileDto;
-import com.historialplus.historialplus.external.facade.CompressAndUploadService.CompressAndUploadService;
+import com.historialplus.historialplus.external.facade.compress_upload.CompressAndUploadService;
 import com.historialplus.historialplus.internal.file.entites.FileEntity;
 import com.historialplus.historialplus.internal.file.projection.FileBasicProjection;
 import com.historialplus.historialplus.internal.file.repository.FileRepository;
@@ -60,7 +60,7 @@ public class RecordDetailServiceImpl implements RecordDetailService {
     public List<RecordDetailResponseDto> findAll() {
         return recordDetailRepository.findAll().stream()
                 .map(RecordDetailDtoMapper::toResponseDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -71,9 +71,9 @@ public class RecordDetailServiceImpl implements RecordDetailService {
 
     @Override
     public List<RecordDetailResponseDto> findByRecordId(UUID recordId) {
-        return recordDetailRepository.findByRecordId(recordId).stream()
+        return recordDetailRepository.findByMedicalRecordId(recordId).stream()
                 .map(RecordDetailDtoMapper::toResponseDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -101,10 +101,10 @@ public class RecordDetailServiceImpl implements RecordDetailService {
             HospitalEntity hospital = doctor.getHospital();
 
             //Recuperar el historial del paciente, por su id
-            RecordEntity record = recordRepository.findByPersonId(dto.getPersonId())
+            RecordEntity medicalRecord = recordRepository.findByPersonId(dto.getPersonId())
                     .orElseThrow(() -> new NotFoundException("Historial no encontrado para la persona con id: " + dto.getPersonId()));
 
-            RecordDetailEntity detail = createRecordDetail(dto, doctor, hospital, record);
+            RecordDetailEntity detail = createRecordDetail(dto, doctor, hospital, medicalRecord);
             Set<FileEntity> files = processFiles(dto.getFiles(), detail);
             detail.setFiles(files);
 
@@ -147,7 +147,7 @@ public class RecordDetailServiceImpl implements RecordDetailService {
     public RecordDetailExtenseViewModel getRecordDetail(UUID recordDetailId) {
         RecordDetailExtenseProjection projection = recordDetailRepository.findExtenseDetailById(recordDetailId);
 
-        // Recuperar los archivos por el id del detalle, pero usando el metodo findFilesByRecordDetailIds
+        // Recuperar los archivos por él, id del detalle, pero usando el metodo findFilesByRecordDetailIds
         List<FileBasicProjection> files = fileRepository.findFilesByRecordDetailIds(List.of(recordDetailId));
 
         // Como solo se recupera un solo detalle, se puede obtener el primer elemento de la lista de archivos
@@ -158,10 +158,10 @@ public class RecordDetailServiceImpl implements RecordDetailService {
             RecordDetailCreateRequestDTO dto,
             UserEntity doctor,
             HospitalEntity hospital,
-            RecordEntity record
+            RecordEntity medicalRecord
     ) {
         RecordDetailEntity detail = new RecordDetailEntity();
-        detail.setRecord(record);
+        detail.setMedicalRecord(medicalRecord);
         detail.setHospital(hospital);
         detail.setDoctor(doctor);
         detail.setVisitDate(dto.getVisitDate());

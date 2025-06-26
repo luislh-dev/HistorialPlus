@@ -39,7 +39,7 @@ public class RecordDetailEntity {
 
     @ManyToOne
     @JoinColumn(name = "record_id", nullable = false)
-    private RecordEntity record;
+    private RecordEntity medicalRecord;
 
     @ManyToOne
     @JoinColumn(name = "hospital_id", nullable = false)

@@ -3,6 +3,7 @@ package com.historialplus.historialplus.external.ce.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.historialplus.historialplus.error.exceptions.ExternalServiceException;
 import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -53,7 +54,7 @@ public class CeServiceImpl implements CeService {
             }
             throw e;
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Error parsing JSON response", e);
+			throw new ExternalServiceException("Error processing CEE data response", e);
         }
-    }
+	}
 }

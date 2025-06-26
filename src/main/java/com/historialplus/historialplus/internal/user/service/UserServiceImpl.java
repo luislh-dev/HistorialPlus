@@ -2,6 +2,7 @@ package com.historialplus.historialplus.internal.user.service;
 
 import com.historialplus.historialplus.auth.service.AuthService;
 import com.historialplus.historialplus.common.constants.StateEnum;
+import com.historialplus.historialplus.error.exceptions.NotFoundException;
 import com.historialplus.historialplus.internal.people.service.PeopleService;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;
 import com.historialplus.historialplus.internal.role.service.RoleService;
@@ -31,7 +32,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_ADMIN;
 import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_DOCTOR;
@@ -41,6 +41,8 @@ import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_MAN
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private static final String USER_NOT_FOUND = "Usuario no encontrado";
+    
     private final UserRepository repository;
     private final StateService stateService;
     private final AuthService authService;
@@ -52,7 +54,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserResponseDto update(UUID id, UserUpdateDto userDto) {
-        // actualizar el usuario
+
         return repository.findById(id).map(user -> {
             if (userDto.getName() != null) {
                 user.setUsername(userDto.getName());
@@ -71,11 +73,11 @@ public class UserServiceImpl implements UserService {
                     RoleEntity roleEntity = new RoleEntity();
                     roleEntity.setId(roleId);
                     return roleEntity;
-                }).collect(Collectors.toList());
+                }).toList();
                 user.setRoleEntities(roleEntities);
             }
             return mapper.userEntityToUserResponseDto(repository.save(user));
-        }).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        }).orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
     }
 
     @Override
@@ -86,7 +88,7 @@ public class UserServiceImpl implements UserService {
 
         if (roles.contains(ROLE_MANAGEMENT.name()) && !roles.contains(ROLE_ADMIN.name())) {
             UserEntity user = repository.findByUsername(authentication.getName())
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
             hospitalName = user.getHospital().getName();
         }
@@ -168,7 +170,7 @@ public class UserServiceImpl implements UserService {
 
         // Recuperar el ID del hospital del usuario autenticado
         Integer hospitalId = repository.findByUsername(usernameAuth)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"))
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND))
                 .getHospital().getId();
 
         // Verificar si hay hospitalId

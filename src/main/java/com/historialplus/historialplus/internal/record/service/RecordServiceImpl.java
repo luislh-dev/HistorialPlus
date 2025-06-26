@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -25,7 +24,7 @@ public class RecordServiceImpl implements RecordService {
     public List<RecordResponseDto> findAll() {
         return recordRepository.findAll().stream()
                 .map(RecordDtoMapper::toResponseDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
 
 public class DocumentValidator implements ConstraintValidator<DocumentValid, String> {
 
-	private static final Pattern DNI_PATTERN = Pattern.compile("^[0-9]{8}[A-Za-z]?$");
+	private static final Pattern DNI_PATTERN = Pattern.compile("^\\d{8}[A-Za-z]?$");
 	private static final Pattern PASAPORTE_PATTERN = Pattern.compile("^[A-Za-z0-9]{6,12}$");
-	private static final Pattern CEE_PATTERN = Pattern.compile("^[A-Za-z]{2}[0-9]{6,8}$");
+	private static final Pattern CEE_PATTERN = Pattern.compile("^[A-Za-z]{2}\\d{6,8}$");
 
 	@Override public boolean isValid(String document, ConstraintValidatorContext context) {
 		if (document == null || document.isEmpty()) {

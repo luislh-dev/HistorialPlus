@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.external.ImgCompress.service;
+package com.historialplus.historialplus.external.img_compress.service;
 
 import com.historialplus.historialplus.util.InMemoryMultipartFile;
 import lombok.RequiredArgsConstructor;
