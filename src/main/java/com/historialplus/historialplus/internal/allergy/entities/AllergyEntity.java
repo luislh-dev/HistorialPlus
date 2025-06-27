@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.allergy.entities;
 
+import com.historialplus.historialplus.common.constants.SeverityLevel;
 import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -68,21 +69,4 @@ public class AllergyEntity {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    public enum SeverityLevel {
-        MILD("Leve"),
-        MODERATE("Moderada"),
-        SEVERE("Severa"),
-        LIFE_THREATENING("Amenaza la vida");
-
-        private final String displayName;
-
-        SeverityLevel(String displayName) {
-            this.displayName = displayName;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
-    }
 }
