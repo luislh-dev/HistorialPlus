@@ -3,6 +3,9 @@ package com.historialplus.historialplus.auth.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.historialplus.historialplus.auth.dto.LoginRequestDTO;
 import com.historialplus.historialplus.auth.service.AuthService;
+import com.historialplus.historialplus.common.enums.TimeZoneEnum;
+import com.historialplus.historialplus.error.dto.ApiError;
+import com.historialplus.historialplus.error.dto.ApiErrorDetail;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +21,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,33 +36,33 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final SecretKey jwtSecretKey;
     private final AuthService authService;
-    private String name;
+    private final ObjectMapper objectMapper;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, SecretKey jwtSecretKey, AuthService authService) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, SecretKey jwtSecretKey, AuthService authService, ObjectMapper objectMapper) {
         super.setAuthenticationManager(authenticationManager);
         this.jwtSecretKey = jwtSecretKey;
         this.authService = authService;
+        this.objectMapper = objectMapper;
     }
 
     @SneakyThrows
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException {
+        throws AuthenticationException {
 
-        LoginRequestDTO loginRequestDTO = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDTO.class);
+        LoginRequestDTO loginRequestDTO = objectMapper.readValue(request.getInputStream(), LoginRequestDTO.class);
+        String username = loginRequestDTO.getName();
 
-        // Guardar el nombre de usuario solo para el caso de que la autenticación sea errónea
-        name = loginRequestDTO.getName();
+        request.setAttribute(SPRING_SECURITY_FORM_USERNAME_KEY, username);
 
-        // Verifica si el usuario está bloqueado antes de autenticar
-        if (authService.isBlocked(name)) {
+        if (authService.isBlocked(username)) {
             writeResponse(response, HttpServletResponse.SC_UNAUTHORIZED,
-                    Map.of("message", "La cuenta está temporalmente bloqueada. Intente nuevamente más tarde."));
-            return null; // Detiene la autenticación
+                Map.of("message", "La cuenta está temporalmente bloqueada. Intente nuevamente más tarde."));
+            return null;
         }
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginRequestDTO.getName(), loginRequestDTO.getPassword());
+            new UsernamePasswordAuthenticationToken(username, loginRequestDTO.getPassword());
         return this.getAuthenticationManager().authenticate(authenticationToken);
     }
 
@@ -87,25 +92,34 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.addHeader(HEADER_AUTHORIZATION, PREFIX_TOKEN + token);
 
-        writeResponse(response, HttpServletResponse.SC_OK, Map.of("username", username, "token", token));
-        this.name = null;
+        writeResponse(response, HttpServletResponse.SC_OK, Map.of(SPRING_SECURITY_FORM_USERNAME_KEY, username, "token", token));
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException {
+        String username = (String) request.getAttribute(SPRING_SECURITY_FORM_USERNAME_KEY);
+        authService.loginFailed(username);
 
-        authService.loginFailed(name);
+        ApiError apiError = ApiError.builder()
+            .code("AUTHENTICATION_FAILED")
+            .message("Usuario o Contraseña incorrectos")
+            .timestamp(LocalDateTime.now().atZone(ZoneId.of(TimeZoneEnum.LIMA.getZoneId())).toLocalDateTime())
+            .details(List.of(
+                ApiErrorDetail.builder()
+                    .field(SPRING_SECURITY_FORM_USERNAME_KEY)
+                    .message(failed.getMessage())
+                    .build()
+            ))
+            .build();
 
-        writeResponse(response, HttpServletResponse.SC_UNAUTHORIZED,
-            Map.of("message", "Usuario o Contraseña incorrectos", "error", failed.getMessage()));
-        this.name = null;
+        writeResponse(response, HttpServletResponse.SC_UNAUTHORIZED, apiError);
     }
 
-    private void writeResponse(HttpServletResponse response, int status, Map<String, Object> body) throws IOException {
+    private void writeResponse(HttpServletResponse response, int status, Object body) throws IOException {
         response.setStatus(status);
         response.setContentType(CONTENT_TYPE);
-        response.getWriter().write(new ObjectMapper().writeValueAsString(body));
+        response.getWriter().write(objectMapper.writeValueAsString(body));
         response.getWriter().flush();
         response.getWriter().close();
     }
