@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.allergy.dto.request;
 
-import com.historialplus.historialplus.internal.allergy.entities.AllergyEntity;
+import com.historialplus.historialplus.common.constants.SeverityLevel;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ public class AllergyBaseDto {
     @Size(max = 1000, message = "La reacción no puede exceder 1000 caracteres")
     private String reaction;
 
-    private AllergyEntity.SeverityLevel severity;
+    private SeverityLevel severity;
 
     @Size(max = 50, message = "La fuente no puede exceder 50 caracteres")
     private String source;

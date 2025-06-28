@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.allergy.dto.response;
 
-import com.historialplus.historialplus.internal.allergy.entities.AllergyEntity;
+import com.historialplus.historialplus.common.constants.SeverityLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +20,7 @@ public class AllergyResponseDto {
     private String peopleFullName;
     private String allergenSubstance;
     private String reaction;
-    private AllergyEntity.SeverityLevel severity;
+    private SeverityLevel severity;
     private String severityDisplayName;
     private String source;
     private LocalDate recordedDate;
