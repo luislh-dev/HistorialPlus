@@ -15,7 +15,7 @@ public class R2Controller {
     private final CloudflareService cloudflareService;
 
     @GetMapping("/presigned-url")
-    public String generatePresignedUrl(@RequestParam String objectKey) throws Exception {
+    public String generatePresignedUrl(@RequestParam String objectKey) {
         return cloudflareService.generatePresignedUrl(objectKey);
     }
 }

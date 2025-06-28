@@ -2,14 +2,17 @@ package com.historialplus.historialplus.external.r2.service;
 
 import com.historialplus.historialplus.common.utils.SecureFileUtils;
 import com.historialplus.historialplus.config.FileConfig;
-import com.historialplus.historialplus.error.exceptions.ExternalServiceException;
+import com.historialplus.historialplus.error.exceptions.PresignedUrlGenerationException;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.core.exception.SdkException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -25,6 +28,7 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class CloudflareServiceImpl implements CloudflareService {
 
@@ -99,13 +103,13 @@ public class CloudflareServiceImpl implements CloudflareService {
 			Files.write(tempFile, file.getBytes());
 
 			PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-				.bucket(bucketName)
-				.key(objectKey)
-				.contentType(file.getContentType())
-				.build();
+					.bucket(bucketName)
+					.key(objectKey)
+					.contentType(file.getContentType())
+					.build();
 
 			s3Client.putObject(putObjectRequest,
-				RequestBody.fromFile(tempFile));
+					RequestBody.fromFile(tempFile));
 
 			return objectKey;
 		} finally {
@@ -114,20 +118,24 @@ public class CloudflareServiceImpl implements CloudflareService {
 	}
 
 	@Override
-	public String generatePresignedUrl(String objectKey) throws ExternalServiceException {
+	public String generatePresignedUrl(String objectKey) {
+		if (!StringUtils.hasText(objectKey)) {
+			throw new IllegalArgumentException("El 'objectKey' para generar la URL no puede ser nulo o vacío.");
+		}
+
 		try {
 			GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
-				.signatureDuration(Duration.ofMinutes(240)) // 4 horas
-				.getObjectRequest(builder -> builder
-					.bucket(bucketName)
-					.key(objectKey)
-					.build())
-				.build();
+					.signatureDuration(Duration.ofMinutes(240)) // 4 horas
+					.getObjectRequest(builder -> builder
+							.bucket(bucketName)
+							.key(objectKey)
+							.build())
+					.build();
 
 			PresignedGetObjectRequest presignedRequest = s3Presigner.presignGetObject(presignRequest);
 			return presignedRequest.url().toString();
-		} catch (Exception e) {
-			throw new ExternalServiceException("Error generando URL prefirmada: " + e.getMessage(), e);
+		} catch (SdkException e) {
+			throw new PresignedUrlGenerationException("Error al generar la URL prefirmada para el objeto: " + objectKey, e);
 		}
 	}
 }
