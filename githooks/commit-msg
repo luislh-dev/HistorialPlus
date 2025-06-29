@@ -1,0 +1,26 @@
+#!/bin/sh
+
+ARCHIVO_MSG="$1"
+MENSAJE=$(cat "$ARCHIVO_MSG")
+
+REGEX="^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([a-z-]+\))?: .+"
+
+if ! echo "$MENSAJE" | grep -Eq "$REGEX"; then
+  echo "❌ Formato de commit inválido. Debe seguir:"
+  echo "  tipo(ámbito-opcional): descripción (máx 50 chars)"
+  echo "  Tipos válidos: feat, fix, docs, style, refactor, test, chore, build, ci, perf, revert"
+  echo "  Ejemplos válidos:"
+  echo "    feat: agregar login con Google"
+  echo "    feat(auth): agregar login con Google"
+  echo "    refactor(user): optimizar consulta de usuarios"
+  exit 1
+fi
+
+DESCRIPTION=$(echo "$MENSAJE" | sed -E 's/^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([a-z-]+\))?: //')
+
+if [ "${#DESCRIPTION}" -gt 50 ]; then
+  echo "❌ La descripción del commit supera los 50 caracteres (${#DESCRIPTION})"
+  exit 1
+fi
+
+exit 0

@@ -44,7 +44,14 @@ El proyecto incluye hooks de Git para asegurar la calidad del código. **Se conf
    - `checkstyleMain` en todo el proyecto.
    - Todos los tests (`./gradlew test`).
    - Verifica que el proyecto compile correctamente (`./gradlew compileJava`).
-
+3. **commit-msg**: Válida el formato del mensaje de commit.  
+   El mensaje debe seguir la convención:  
+   `tipo(ámbito-opcional): descripción (máx 50 chars)`  
+   Tipos válidos: feat, fix, docs, style, refactor, test, chore, build, ci, perf, revert  
+   Ejemplos válidos:
+   - `feat: agregar login con Google`
+   - `feat(auth): agregar login con Google`
+   - `refactor(user): optimizar consulta de usuarios`
 
 > [!TIP]
 > No necesitas instalar los hooks manualmente. Simplemente, ejecuta el proyecto o cualquier tarea de Gradle y los hooks se instalarán o actualizarán automáticamente en `.git/hooks`.
@@ -54,3 +61,4 @@ El proyecto incluye hooks de Git para asegurar la calidad del código. **Se conf
 ```bash
 git config core.hooksPath githooks
 chmod +x githooks/*
+```
