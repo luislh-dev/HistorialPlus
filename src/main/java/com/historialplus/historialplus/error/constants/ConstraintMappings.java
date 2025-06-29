@@ -19,7 +19,7 @@ public class ConstraintMappings {
 		Map.entry("UK_sex_type_name", ApiErrorDetail.builder().field("name").message("El nombre del tipo de sexo ya está en uso").build()),
 		Map.entry("UK_states_name", ApiErrorDetail.builder().field("name").message("El nombre del estado ya está en uso").build()),
 		Map.entry("UK_type_document_name", ApiErrorDetail.builder().field("name").message("El nombre del tipo de documento ya está en uso").build()),
-		Map.entry("UKa9dydk3dj4qb8cvmjijqnrg5t", ApiErrorDetail.builder().field("userRole").message("La combinación de usuario y rol ya está en uso").build()),
+		Map.entry("UK_user_role_unique", ApiErrorDetail.builder().field("userRole").message("La combinación de usuario y rol ya está en uso").build()),
 		Map.entry("UK_users_email", ApiErrorDetail.builder().field("email").message("El correo electrónico del usuario ya está en uso").build()),
 		Map.entry("UK_users_name", ApiErrorDetail.builder().field("name").message("El nombre del usuario ya está en uso").build())
 	);
