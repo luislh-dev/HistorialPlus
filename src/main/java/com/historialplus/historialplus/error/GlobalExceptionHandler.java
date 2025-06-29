@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static com.historialplus.historialplus.error.constants.ConstraintMappings.getConstraintMappings;
+import static com.historialplus.historialplus.error.constants.ConstraintMappings.GET_CONSTRAINT_MAPPINGS;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
             .message("Error de integridad de datos")
             .build();
 
-        for (Map.Entry<String, ApiErrorDetail> entry : getConstraintMappings.entrySet()) {
+        for (Map.Entry<String, ApiErrorDetail> entry : GET_CONSTRAINT_MAPPINGS.entrySet()) {
             if (message.contains(entry.getKey())) {
                 errorDetail = entry.getValue();
                 break;

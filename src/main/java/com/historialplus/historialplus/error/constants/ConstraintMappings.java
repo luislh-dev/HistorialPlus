@@ -7,7 +7,7 @@ import java.util.Map;
 public class ConstraintMappings {
 	private ConstraintMappings() {}
 
-	public static final Map<String, ApiErrorDetail> getConstraintMappings = Map.ofEntries(
+	public static final Map<String, ApiErrorDetail> GET_CONSTRAINT_MAPPINGS = Map.ofEntries(
 		Map.entry("UK_file_type_name", ApiErrorDetail.builder().field("name").message("El nombre del tipo de archivo ya está en uso").build()),
 		Map.entry("UK_hospital_email", ApiErrorDetail.builder().field("email").message("El correo electrónico del hospital ya está en uso").build()),
 		Map.entry("UK_hospital_name", ApiErrorDetail.builder().field("name").message("El nombre del hospital ya está en uso").build()),
