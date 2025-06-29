@@ -1,1 +1,60 @@
+import java.security.MessageDigest
+
 rootProject.name = 'HistorialPlus'
+
+def hooksInstalled = false
+def hooksUpdated = false
+
+def fileSha256 = { file ->
+    MessageDigest md = MessageDigest.getInstance("SHA-256")
+    file.withInputStream { is ->
+        byte[] buffer = new byte[8192]
+        int read
+        while ((read = is.read(buffer)) != -1) {
+            md.update(buffer, 0, read)
+        }
+    }
+    return md.digest().encodeHex().toString()
+}
+
+def installGitHooks = {
+    def hooksDir = new File(settingsDir, 'githooks')
+    def gitHooksDir = new File(settingsDir, '.git/hooks')
+
+    if (!hooksDir.exists()) {
+        println "⚠️  No se encontró la carpeta githooks"
+        return
+    }
+
+    hooksDir.eachFile { file ->
+        def targetFile = new File(gitHooksDir, file.name)
+        if (!targetFile.exists()) {
+            targetFile.bytes = file.bytes
+            targetFile.setExecutable(true)
+            println "✓ Hook instalado por primera vez: ${file.name}"
+            hooksInstalled = true
+        } else if (fileSha256(file) != fileSha256(targetFile)) {
+            targetFile.bytes = file.bytes
+            targetFile.setExecutable(true)
+            println "🔄 Hook actualizado: ${file.name}"
+            hooksUpdated = true
+        }
+    }
+}
+
+if (!System.getenv('CI')) {
+    if (!new File(settingsDir, '.git').exists()) {
+        println "⚠️  No es un repositorio Git, omitiendo instalación de hooks"
+    } else {
+        installGitHooks()
+        if (hooksInstalled) {
+            println "✅ Git hooks instalados por primera vez"
+        }
+        if (hooksUpdated) {
+            println "✅ Git hooks actualizados"
+        }
+        if (!hooksInstalled && !hooksUpdated) {
+            println "ℹ️  Todos los hooks ya estaban actualizados"
+        }
+    }
+}

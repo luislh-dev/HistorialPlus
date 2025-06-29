@@ -34,3 +34,31 @@ Asegúrate de tener los siguientes requisitos:
    
   > [!IMPORTANT]  
   > Asegúrate de que el contenido del archivo `.env` este completo, y con las credenciales correctas.
+
+## Configuración de Git Hooks
+
+El proyecto incluye hooks de Git para asegurar la calidad del código. **Se configuran automáticamente al ejecutar o construir el proyecto con Gradle** (por ejemplo, usando la opción de "Run" en tu IDE o ejecutando `./gradlew build` en la terminal).
+
+1. **pre-commit**: Ejecuta `checkstyleMain`
+2. **pre-push**: Antes de hacer push, ejecuta:
+   - `checkstyleMain` en todo el proyecto.
+   - Todos los tests (`./gradlew test`).
+   - Verifica que el proyecto compile correctamente (`./gradlew compileJava`).
+3. **commit-msg**: Válida el formato del mensaje de commit.  
+   El mensaje debe seguir la convención:  
+   `tipo(ámbito-opcional): descripción (máx 50 chars)`  
+   Tipos válidos: feat, fix, docs, style, refactor, test, chore, build, ci, perf, revert  
+   Ejemplos válidos:
+   - `feat: agregar login con Google`
+   - `feat(auth): agregar login con Google`
+   - `refactor(user): optimizar consulta de usuarios`
+
+> [!TIP]
+> No necesitas instalar los hooks manualmente. Simplemente, ejecuta el proyecto o cualquier tarea de Gradle y los hooks se instalarán o actualizarán automáticamente en `.git/hooks`.
+
+### Configuración manual (solo si es necesaria)
+
+```bash
+git config core.hooksPath githooks
+chmod +x githooks/*
+```
