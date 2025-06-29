@@ -17,6 +17,9 @@ import org.springframework.web.context.request.WebRequest;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import static com.historialplus.historialplus.error.constants.ConstraintMappings.getConstraintMappings;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -60,48 +63,11 @@ public class GlobalExceptionHandler {
             .message("Error de integridad de datos")
             .build();
 
-        if (message.contains("UK_file_type_name")) {
-            errorDetail.setField("name");
-            errorDetail.setMessage("El nombre del tipo de archivo ya está en uso");
-        } else if (message.contains("UK_hospital_email")) {
-            errorDetail.setField("email");
-            errorDetail.setMessage("El correo electrónico del hospital ya está en uso");
-        } else if (message.contains("UK_hospital_name")) {
-            errorDetail.setField("name");
-            errorDetail.setMessage("El nombre del hospital ya está en uso");
-        } else if (message.contains("UK_hospital_phone")) {
-            errorDetail.setField("phone");
-            errorDetail.setMessage("El teléfono del hospital ya está en uso");
-        } else if (message.contains("UK_hospital_ruc")) {
-            errorDetail.setField("ruc");
-            errorDetail.setMessage("El RUC del hospital ya está en uso");
-        } else if (message.contains("UK_people_address")) {
-            errorDetail.setField("address");
-            errorDetail.setMessage("La dirección ya está en uso");
-        } else if (message.contains("UK_people_document_number")) {
-            errorDetail.setField("documentNumber");
-            errorDetail.setMessage("El número de documento ya está en uso");
-        } else if (message.contains("UK_roles_name")) {
-            errorDetail.setField("name");
-            errorDetail.setMessage("El nombre del rol ya está en uso");
-        } else if (message.contains("UK_sex_type_name")) {
-            errorDetail.setField("name");
-            errorDetail.setMessage("El nombre del tipo de sexo ya está en uso");
-        } else if (message.contains("UK_states_name")) {
-            errorDetail.setField("name");
-            errorDetail.setMessage("El nombre del estado ya está en uso");
-        } else if (message.contains("UK_type_document_name")) {
-            errorDetail.setField("name");
-            errorDetail.setMessage("El nombre del tipo de documento ya está en uso");
-        } else if (message.contains("UKa9dydk3dj4qb8cvmjijqnrg5t")) {
-            errorDetail.setField("userRole");
-            errorDetail.setMessage("La combinación de usuario y rol ya está en uso");
-        } else if (message.contains("UK_users_email")) {
-            errorDetail.setField("email");
-            errorDetail.setMessage("El correo electrónico del usuario ya está en uso");
-        } else if (message.contains("UK_users_name")) {
-            errorDetail.setField("name");
-            errorDetail.setMessage("El nombre del usuario ya está en uso");
+        for (Map.Entry<String, ApiErrorDetail> entry : getConstraintMappings.entrySet()) {
+            if (message.contains(entry.getKey())) {
+                errorDetail = entry.getValue();
+                break;
+            }
         }
 
         ApiError apiError = ApiError.builder()
