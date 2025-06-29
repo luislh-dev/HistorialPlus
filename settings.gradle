@@ -1,7 +1,21 @@
+import java.security.MessageDigest
+
 rootProject.name = 'HistorialPlus'
 
 def hooksInstalled = false
 def hooksUpdated = false
+
+def fileSha256 = { file ->
+    MessageDigest md = MessageDigest.getInstance("SHA-256")
+    file.withInputStream { is ->
+        byte[] buffer = new byte[8192]
+        int read
+        while ((read = is.read(buffer)) != -1) {
+            md.update(buffer, 0, read)
+        }
+    }
+    return md.digest().encodeHex().toString()
+}
 
 def installGitHooks = {
     def hooksDir = new File(settingsDir, 'githooks')
@@ -19,7 +33,7 @@ def installGitHooks = {
             targetFile.setExecutable(true)
             println "✓ Hook instalado por primera vez: ${file.name}"
             hooksInstalled = true
-        } else if (file.text != targetFile.text) {
+        } else if (fileSha256(file) != fileSha256(targetFile)) {
             targetFile.bytes = file.bytes
             targetFile.setExecutable(true)
             println "🔄 Hook actualizado: ${file.name}"
