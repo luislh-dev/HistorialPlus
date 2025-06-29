@@ -1,0 +1,36 @@
+#!/bin/sh
+
+echo "🚀 Ejecutando verificaciones solo en archivos que se enviarán..."
+
+# Obtener los archivos modificados en los commits que se están enviando
+FILES_TO_CHECK="$(git diff --name-only "origin/$(git rev-parse --abbrev-ref HEAD)..HEAD" -- '*.java')"
+
+if [ -z "$FILES_TO_CHECK" ]; then
+    echo "✅ No hay archivos Java para verificar en este push"
+    exit 0
+fi
+
+echo "🔍 Archivos que se enviarán y se verificarán:"
+echo "$FILES_TO_CHECK"
+
+echo "🧹 Ejecutando checkstyle..."
+if ! ./gradlew checkstyleMain -P checkstyle.includes="$FILES_TO_CHECK"; then
+  echo "❌ Checkstyle falló en archivos que se están enviando"
+  echo "💡 Ejecuta: ./gradlew checkstyleMain para ver detalles"
+  exit 1
+fi
+
+echo "🧪 Ejecutando tests..."
+if ! ./gradlew test; then
+  echo "❌ Algunos tests fallaron"
+  exit 1
+fi
+
+echo "🛠️ Verificando compilación..."
+if ! ./gradlew compileJava; then
+    echo "❌ Error de compilación"
+    exit 1
+fi
+
+echo "✅ Todas las verificaciones pasaron. Realizando push..."
+exit 0

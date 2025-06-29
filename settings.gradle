@@ -1,1 +1,46 @@
 rootProject.name = 'HistorialPlus'
+
+def hooksInstalled = false
+def hooksUpdated = false
+
+def installGitHooks = {
+    def hooksDir = new File(settingsDir, 'githooks')
+    def gitHooksDir = new File(settingsDir, '.git/hooks')
+
+    if (!hooksDir.exists()) {
+        println "⚠️  No se encontró la carpeta githooks"
+        return
+    }
+
+    hooksDir.eachFile { file ->
+        def targetFile = new File(gitHooksDir, file.name)
+        if (!targetFile.exists()) {
+            targetFile.bytes = file.bytes
+            targetFile.setExecutable(true)
+            println "✓ Hook instalado por primera vez: ${file.name}"
+            hooksInstalled = true
+        } else if (file.text != targetFile.text) {
+            targetFile.bytes = file.bytes
+            targetFile.setExecutable(true)
+            println "🔄 Hook actualizado: ${file.name}"
+            hooksUpdated = true
+        }
+    }
+}
+
+if (!System.getenv('CI')) {
+    if (!new File(settingsDir, '.git').exists()) {
+        println "⚠️  No es un repositorio Git, omitiendo instalación de hooks"
+    } else {
+        installGitHooks()
+        if (hooksInstalled) {
+            println "✅ Git hooks instalados por primera vez"
+        }
+        if (hooksUpdated) {
+            println "✅ Git hooks actualizados"
+        }
+        if (!hooksInstalled && !hooksUpdated) {
+            println "ℹ️  Todos los hooks ya estaban actualizados"
+        }
+    }
+}
