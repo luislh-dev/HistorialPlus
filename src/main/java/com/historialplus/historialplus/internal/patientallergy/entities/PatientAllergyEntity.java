@@ -1,7 +1,8 @@
-package com.historialplus.historialplus.internal.allergy.entities;
+package com.historialplus.historialplus.internal.patientallergy.entities;
 
-import com.historialplus.historialplus.common.constants.SeverityLevel;
-import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
+import com.historialplus.historialplus.common.constants.Severity;
+import com.historialplus.historialplus.internal.allergycatalog.entities.AllergyCatalogEntity;
+import com.historialplus.historialplus.internal.record.entites.RecordEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,45 +23,41 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "allergies")
-@Entity
 @Builder
-public class AllergyEntity {
+@Entity
+@Table(name = "medical_record_allergies")
+public class PatientAllergyEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "allergy_id")
-    private Integer allergyId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", columnDefinition = "BINARY(16)")
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "people_id", referencedColumnName = "id", nullable = false)
-    private PeopleEntity people;
+    @JoinColumn(name = "record_id", nullable = false)
+    private RecordEntity medicalRecord;
 
-    @Column(name = "allergen_substance", nullable = false, length = 100)
-    private String allergenSubstance;
-
-    @Column(name = "reaction", columnDefinition = "TEXT")
-    private String reaction;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "allergy_id", referencedColumnName = "id", nullable = false)
+    private AllergyCatalogEntity allergy;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "severity", length = 20)
-    private SeverityLevel severity;
+    @Column(length = 20)
+    private Severity severity;
 
-    @Column(name = "source", length = 50)
-    private String source;
+    @Column(name = "reaction_description", columnDefinition = "TEXT")
+    private String reactionDescription;
 
-    @Column(name = "recorded_date")
-    private LocalDate recordedDate;
+    @Column(name = "diagnosis_date")
+    private LocalDate diagnosisDate;
 
     @Column(name = "is_active")
     @Builder.Default
     private Boolean isActive = true;
-
-    @Column(name = "notes", columnDefinition = "TEXT")
-    private String notes;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
