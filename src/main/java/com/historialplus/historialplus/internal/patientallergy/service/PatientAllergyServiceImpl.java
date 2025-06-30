@@ -31,18 +31,18 @@ public class PatientAllergyServiceImpl implements PatientAllergyService {
     @Override
     @Transactional
     public PatientAllergyResponseDto assignToRecord(AssignPatientAllergyDto dto) {
-        RecordEntity record = recordRepository.findById(dto.getRecordId())
+        RecordEntity medicalRecord = recordRepository.findById(dto.getRecordId())
                 .orElseThrow(() -> new NotFoundException("Historial médico no encontrado con ID: " + dto.getRecordId()));
 
         AllergyCatalogEntity allergy = allergyCatalogRepository.findById(dto.getAllergyCatalogId())
                 .orElseThrow(() -> new NotFoundException("Alergia no encontrada en el catálogo con ID: " + dto.getAllergyCatalogId()));
 
-        if (patientAllergyRepository.existsByMedicalRecord_IdAndAllergy_Id(record.getId(), allergy.getId())) {
+        if (patientAllergyRepository.existsByMedicalRecord_IdAndAllergy_Id(medicalRecord.getId(), allergy.getId())) {
             throw new ConflictException("El paciente ya tiene esta alergia asignada.");
         }
 
         PatientAllergyEntity newAssignedAllergy = PatientAllergyEntity.builder()
-                .medicalRecord(record)
+                .medicalRecord(medicalRecord)
                 .allergy(allergy)
                 .severity(dto.getSeverity())
                 .reactionDescription(dto.getReactionDescription())
