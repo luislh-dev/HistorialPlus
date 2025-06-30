@@ -54,7 +54,7 @@ public class AllergyCatalogServiceImpl implements AllergyCatalogService{
     public AllergyCatalogDto findById(UUID id) {
         return allergyCatalogRepository.findById(id)
                 .map(allergyCatalogMapper::toDto)
-                .orElseThrow(() -> new NotFoundException("Alergia no encontrada en el catálogo con ID: " + id));
+                .orElseThrow(() -> allergyNotFoundException(id));
     }
 
     @Override
@@ -68,7 +68,7 @@ public class AllergyCatalogServiceImpl implements AllergyCatalogService{
     @Transactional
     public AllergyCatalogDto update(UUID id, AllergyCatalogRequestDto dto) {
         AllergyCatalogEntity existingEntity = allergyCatalogRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Alergia no encontrada en el catálogo con ID: " + id));
+                .orElseThrow(() -> allergyNotFoundException(id));
 
         if (allergyCatalogRepository.existsByNameIgnoreCaseAndIdNot(dto.getName(), id)) {
             throw new ConflictException("Ya existe otra alergia en el catálogo con el nombre: " + dto.getName());
@@ -83,7 +83,7 @@ public class AllergyCatalogServiceImpl implements AllergyCatalogService{
     @Transactional
     public AllergyCatalogDto deactivate(UUID id) {
         AllergyCatalogEntity entity = allergyCatalogRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Alergia no encontrada en el catálogo con ID: " + id));
+                .orElseThrow(() -> allergyNotFoundException(id));
 
         entity.setIsActive(false);
         AllergyCatalogEntity savedEntity = allergyCatalogRepository.save(entity);
@@ -94,10 +94,14 @@ public class AllergyCatalogServiceImpl implements AllergyCatalogService{
     @Transactional
     public AllergyCatalogDto reactivate(UUID id) {
         AllergyCatalogEntity entity = allergyCatalogRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Alergia no encontrada en el catálogo con ID: " + id));
+                .orElseThrow(() -> allergyNotFoundException(id));
 
         entity.setIsActive(true);
         AllergyCatalogEntity savedEntity = allergyCatalogRepository.save(entity);
         return allergyCatalogMapper.toDto(savedEntity);
+    }
+
+    private NotFoundException allergyNotFoundException(UUID id) {
+        return new NotFoundException("Alergia no encontrada en el catálogo con ID: " + id);
     }
 }
