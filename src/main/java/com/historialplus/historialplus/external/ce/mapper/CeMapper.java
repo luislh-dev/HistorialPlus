@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.external.ce.mapper;
 
 import com.historialplus.historialplus.common.constants.PersonalDataSourceEnum;
+import com.historialplus.historialplus.external.ce.dto.CeExternalResponseDTO;
 import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 
@@ -11,13 +12,23 @@ public class CeMapper {
 
     public static MinimalPeopleResponseDto toMinimalPeopleDto(CeResponseDto dto){
         MinimalPeopleResponseDto response = new MinimalPeopleResponseDto();
-        response.setName(dto.getNames());
-        response.setFatherLastName(dto.getApellidoPaterno());
-        response.setMotherLastName(dto.getApellidoMaterno());
+        response.setName(dto.getName());
+        response.setFatherLastName(dto.getMaternalSurname());
+        response.setMotherLastName(dto.getPaternalSurname());
         response.setDocumentNumber(dto.getDocumentNumber());
         response.setDocumentType(CE.getDisplayName());
         response.setHasExternalSource(Boolean.TRUE);
         response.setDataSource(PersonalDataSourceEnum.RENIEC.getDisplayName());
         return response;
     }
+
+    public static CeResponseDto toCeResponseDto(CeExternalResponseDTO dto){
+        return CeResponseDto.builder()
+            .name(dto.getName())
+            .maternalSurname(dto.getMaternalSurname())
+            .paternalSurname(dto.getPaternalSurname())
+            .documentNumber(dto.getDocumentNumber())
+            .build();
+    }
+
 }
