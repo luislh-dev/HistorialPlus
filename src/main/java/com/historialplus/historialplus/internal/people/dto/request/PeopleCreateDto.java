@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.people.dto.request;
 
+import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -46,5 +47,5 @@ public class PeopleCreateDto {
     private Integer sexTypeId;
 
     @NotNull(message = "El tipo de documento es obligatorio")
-    private Integer typeDocumentId;
+    private DocumentTypeEnum typeDocumentId;
 }

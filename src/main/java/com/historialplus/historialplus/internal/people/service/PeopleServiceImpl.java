@@ -18,6 +18,8 @@ import com.historialplus.historialplus.internal.people.projection.PersonaBasicPr
 import com.historialplus.historialplus.internal.people.repository.PeopleRepository;
 import com.historialplus.historialplus.internal.record.service.RecordService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,8 @@ import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.
 @Service
 @AllArgsConstructor
 public class PeopleServiceImpl implements PeopleService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PeopleServiceImpl.class);
 
     private final ReniecService reniecService;
     private final CeService ceService;
@@ -70,15 +74,15 @@ public class PeopleServiceImpl implements PeopleService {
 
         if (documentType == null) { return Optional.empty(); }
 
-        // verificamos si la persona ya existe en la base de datos
-        Optional<PeopleEntity> people = repository.findByDocumentNumberAndTypeDocument_Name(documentNumber, documentType);
+        Optional<PeopleEntity> people = repository.findByDocumentNumberAndTypeDocument_Id(documentNumber, documentType);
         if (people.isPresent()) {
+            LOGGER.info("getPersonNameByDocument internal system");
             return Optional.of(PeopleDtoMapper.toMinimalPeopleDto(people.get()));
         }
 
-        // si no existe, consultamos a reniec
         if (documentType.equals(DNI)) {
             try {
+                LOGGER.info("getPersonNameByDocument reniecService");
                 Optional<ReniecResponseDto> reniecResponse = reniecService.getPersonData(documentNumber);
                 return reniecResponse.map(ReniecMapper::toMinimalPeopleDto);
             } catch (Exception e) {
@@ -86,7 +90,6 @@ public class PeopleServiceImpl implements PeopleService {
             }
         }
 
-        // Validamos si el tipo es Carnet de Extranjería
         if (documentType.equals(CE)) {
 
             if (documentNumber.length() < 9) {
@@ -94,7 +97,12 @@ public class PeopleServiceImpl implements PeopleService {
             }
 
             try {
+                LOGGER.info("getPersonNameByDocument ceService");
                 Optional<CeResponseDto> ceResponse = ceService.getCeData(documentNumber);
+                if (ceResponse.isEmpty()) {
+                    return Optional.empty();
+                }
+
                 return ceResponse.map(CeMapper::toMinimalPeopleDto);
             } catch (Exception e) {
                 return Optional.empty();

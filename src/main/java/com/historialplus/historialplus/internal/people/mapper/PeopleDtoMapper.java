@@ -51,7 +51,7 @@ public class PeopleDtoMapper {
         response.setFatherLastName(peopleEntity.getPaternalSurname());
         response.setMotherLastName(peopleEntity.getMaternalSurname());
         response.setDocumentNumber(peopleEntity.getDocumentNumber());
-        response.setDocumentType(peopleEntity.getTypeDocument().getName().getDisplayName());
+        response.setDocumentType(peopleEntity.getTypeDocument().getName());
         response.setPhone(peopleEntity.getPhone());
         response.setHasExternalSource(Boolean.FALSE);
         response.setDataSource(PersonalDataSourceEnum.INTERNAL.getDisplayName());

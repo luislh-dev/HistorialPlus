@@ -19,7 +19,7 @@ import java.util.UUID;
 public interface PeopleRepository extends JpaRepository<PeopleEntity, UUID>, JpaSpecificationExecutor<PeopleEntity> {
     Optional<PeopleEntity> findByDocumentNumber(String documentNumber);
 
-    Optional<PeopleEntity> findByDocumentNumberAndTypeDocument_Name(String documentNumber, DocumentTypeEnum typeDocumentName);
+    Optional<PeopleEntity> findByDocumentNumberAndTypeDocument_Id(String documentNumber, DocumentTypeEnum typeDocumentName);
 
     @Query("""
     SELECT new com.historialplus.historialplus.internal.people.projection.PeopleRecordProjection(
