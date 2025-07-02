@@ -25,12 +25,14 @@ class TypeDocumentRepositoryTest {
 	@Test
 	void findAllByOrderByUpdatedAtDesc() {
 		DocumentTypeEntity entity = DocumentTypeEntity.builder()
-			.name(DNI)
+			.id(DNI)
+			.name(DNI.getDisplayName())
 			.updatedAt(Timestamp.valueOf("2025-10-01 10:00:00"))
 			.build();
 
 		DocumentTypeEntity entity2 = DocumentTypeEntity.builder()
-			.name(CE)
+			.id(CE)
+			.name(CE.getDisplayName())
 			.updatedAt(Timestamp.valueOf("2025-10-02 11:00:00"))
 			.build();
 		repository.save(entity);
@@ -40,7 +42,7 @@ class TypeDocumentRepositoryTest {
 
 		assertThat(documents).isNotNull();
 		assertEquals(2, documents.size());
-		assertEquals(entity2.getName().name(), documents.getFirst().getName());
-		assertEquals(entity.getName().name(), documents.getLast().getName());
+		assertEquals(entity2.getName(), documents.getFirst().getName());
+		assertEquals(entity.getName(), documents.getLast().getName());
 	}
 }
