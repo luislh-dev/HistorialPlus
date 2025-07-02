@@ -36,7 +36,6 @@ public class CeServiceImpl implements CeService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiToken);
         HttpEntity<String> entity = new HttpEntity<>(headers);
-
         try {
             URI uri = UriComponentsBuilder
                 .fromHttpUrl(apiUrl)
@@ -49,6 +48,9 @@ public class CeServiceImpl implements CeService {
             JsonNode root = objectMapper.readTree(response.getBody());
             JsonNode data = root.path("data");
             CeExternalResponseDTO ceeResponseDto = objectMapper.treeToValue(data, CeExternalResponseDTO.class);
+            if (ceeResponseDto == null || ceeResponseDto.getDocumentNumber() == null) {
+                return Optional.empty();
+            }
             return Optional.ofNullable(CeMapper.toCeResponseDto(ceeResponseDto));
         } catch (HttpClientErrorException e) {
             if ((e.getStatusCode().is4xxClientError() && e.getResponseBodyAsString().contains("not found")) || e.getStatusCode().value() == 422 || e.getStatusCode().value() == 400) {
