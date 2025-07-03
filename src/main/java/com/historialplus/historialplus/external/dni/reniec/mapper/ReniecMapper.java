@@ -15,7 +15,7 @@ public class ReniecMapper {
         response.setFatherLastName(reniecResponseDto.getApellidoPaterno());
         response.setMotherLastName(reniecResponseDto.getApellidoMaterno());
         response.setDocumentNumber(reniecResponseDto.getNumeroDocumento());
-        response.setDocumentType(DNI.getDisplayName());
+        response.setDocumentType(DNI);
         response.setHasExternalSource(Boolean.TRUE);
         response.setDataSource(PersonalDataSourceEnum.RENIEC.getDisplayName());
         return response;

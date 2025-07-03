@@ -16,7 +16,7 @@ public class CeMapper {
         response.setFatherLastName(dto.getMaternalSurname());
         response.setMotherLastName(dto.getPaternalSurname());
         response.setDocumentNumber(dto.getDocumentNumber());
-        response.setDocumentType(CE.getDisplayName());
+        response.setDocumentType(CE);
         response.setHasExternalSource(Boolean.TRUE);
         response.setDataSource(PersonalDataSourceEnum.RENIEC.getDisplayName());
         return response;
