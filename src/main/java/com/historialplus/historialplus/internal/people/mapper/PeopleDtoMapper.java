@@ -46,15 +46,14 @@ public class PeopleDtoMapper {
     }
 
     public static MinimalPeopleResponseDto toMinimalPeopleDto(PeopleEntity peopleEntity) {
-        MinimalPeopleResponseDto response = new MinimalPeopleResponseDto();
-        response.setName(peopleEntity.getName());
-        response.setFatherLastName(peopleEntity.getPaternalSurname());
-        response.setMotherLastName(peopleEntity.getMaternalSurname());
-        response.setDocumentNumber(peopleEntity.getDocumentNumber());
-        response.setDocumentType(peopleEntity.getTypeDocument().getId());
-        response.setPhone(peopleEntity.getPhone());
-        response.setHasExternalSource(Boolean.FALSE);
-        response.setDataSource(PersonalDataSourceEnum.INTERNAL.getDisplayName());
-        return response;
+        return MinimalPeopleResponseDto.builder()
+            .documentNumber(peopleEntity.getDocumentNumber())
+            .documentType(peopleEntity.getTypeDocument().getId())
+            .motherLastName(peopleEntity.getMaternalSurname())
+            .fatherLastName(peopleEntity.getPaternalSurname())
+            .phone(peopleEntity.getPhone())
+            .hasExternalSource(Boolean.FALSE)
+            .dataSource(PersonalDataSourceEnum.INTERNAL.getDisplayName())
+            .build();
     }
 }

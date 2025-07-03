@@ -11,15 +11,16 @@ public class CeMapper {
     private CeMapper() {}
 
     public static MinimalPeopleResponseDto toMinimalPeopleDto(CeResponseDto dto){
-        MinimalPeopleResponseDto response = new MinimalPeopleResponseDto();
-        response.setName(dto.getName());
-        response.setFatherLastName(dto.getMaternalSurname());
-        response.setMotherLastName(dto.getPaternalSurname());
-        response.setDocumentNumber(dto.getDocumentNumber());
-        response.setDocumentType(CE);
-        response.setHasExternalSource(Boolean.TRUE);
-        response.setDataSource(PersonalDataSourceEnum.RENIEC.getDisplayName());
-        return response;
+        return MinimalPeopleResponseDto.builder()
+            .name(dto.getName())
+            .fatherLastName(dto.getPaternalSurname())
+            .motherLastName(dto.getMaternalSurname())
+            .documentNumber(dto.getDocumentNumber())
+            .documentType(CE)
+            .hasExternalSource(Boolean.TRUE)
+            .dataSource(PersonalDataSourceEnum.MIGRATION.getDisplayName())
+            .hasExternalSource(Boolean.TRUE)
+            .build();
     }
 
     public static CeResponseDto toCeResponseDto(CeExternalResponseDTO dto){

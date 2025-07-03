@@ -10,14 +10,14 @@ public class ReniecMapper {
     private ReniecMapper() {}
 
     public static MinimalPeopleResponseDto toMinimalPeopleDto(ReniecResponseDto reniecResponseDto) {
-        MinimalPeopleResponseDto response = new MinimalPeopleResponseDto();
-        response.setName(reniecResponseDto.getNombres());
-        response.setFatherLastName(reniecResponseDto.getApellidoPaterno());
-        response.setMotherLastName(reniecResponseDto.getApellidoMaterno());
-        response.setDocumentNumber(reniecResponseDto.getNumeroDocumento());
-        response.setDocumentType(DNI);
-        response.setHasExternalSource(Boolean.TRUE);
-        response.setDataSource(PersonalDataSourceEnum.RENIEC.getDisplayName());
-        return response;
+        return MinimalPeopleResponseDto.builder()
+            .documentNumber(reniecResponseDto.getNumeroDocumento())
+            .documentType(DNI)
+            .name(reniecResponseDto.getNombres())
+            .fatherLastName(reniecResponseDto.getApellidoPaterno())
+            .motherLastName(reniecResponseDto.getApellidoMaterno())
+            .hasExternalSource(Boolean.TRUE)
+            .dataSource(PersonalDataSourceEnum.RENIEC.getDisplayName())
+            .build();
     }
 }
