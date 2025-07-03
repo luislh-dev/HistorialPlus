@@ -47,6 +47,7 @@ public class PeopleDtoMapper {
 
     public static MinimalPeopleResponseDto toMinimalPeopleDto(PeopleEntity peopleEntity) {
         return MinimalPeopleResponseDto.builder()
+            .name(peopleEntity.getName())
             .documentNumber(peopleEntity.getDocumentNumber())
             .documentType(peopleEntity.getTypeDocument().getId())
             .motherLastName(peopleEntity.getMaternalSurname())
@@ -54,6 +55,8 @@ public class PeopleDtoMapper {
             .phone(peopleEntity.getPhone())
             .hasExternalSource(Boolean.FALSE)
             .dataSource(PersonalDataSourceEnum.INTERNAL.getDisplayName())
+            .sexTypeId(peopleEntity.getSexType().getId())
+            .birthdate(peopleEntity.getBirthdate())
             .build();
     }
 }

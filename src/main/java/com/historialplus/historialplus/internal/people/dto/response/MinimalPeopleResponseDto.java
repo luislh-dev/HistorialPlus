@@ -4,6 +4,8 @@ import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import lombok.Builder;
 import lombok.Data;
 
+import java.sql.Date;
+
 @Data
 @Builder
 public class MinimalPeopleResponseDto {
@@ -15,4 +17,6 @@ public class MinimalPeopleResponseDto {
     private String phone;
     private boolean hasExternalSource;
     private String dataSource;
+    private Date birthdate;
+    private Integer sexTypeId;
 }
