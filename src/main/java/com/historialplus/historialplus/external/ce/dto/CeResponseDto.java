@@ -1,23 +1,13 @@
 package com.historialplus.historialplus.external.ce.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 
-@Getter
-@Setter
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
+@Builder
 public class CeResponseDto {
-    @JsonProperty("nombres")
-    private String names;
-
-    @JsonProperty("apellido_paterno")
-    private String apellidoPaterno;
-
-    @JsonProperty("apellido_materno")
-    private String apellidoMaterno;
-
-    @JsonProperty("numero")
+    private String name;
+    private String maternalSurname;
+    private String paternalSurname;
     private String documentNumber;
 }

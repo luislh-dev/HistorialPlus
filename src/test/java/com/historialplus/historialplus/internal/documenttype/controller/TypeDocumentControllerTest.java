@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.documenttype.controller;
 
+import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import com.historialplus.historialplus.internal.documenttype.projection.TypeDocumentProjection;
 import com.historialplus.historialplus.internal.documenttype.service.TypeDocumentService;
 import org.junit.jupiter.api.Test;
@@ -33,8 +34,8 @@ class TypeDocumentControllerTest {
 	void findAll() throws Exception {
 		List<TypeDocumentProjection> documents = new ArrayList<>();
 		documents.add( new TypeDocumentProjection() {
-			public Integer getId() {
-				return 1;
+			public DocumentTypeEnum getId() {
+				return DocumentTypeEnum.DNI;
 			}
 
 			public String getName() {
@@ -42,8 +43,8 @@ class TypeDocumentControllerTest {
 			}
 		});
 		documents.add(new TypeDocumentProjection() {
-			public Integer getId() {
-				return 2;
+			public DocumentTypeEnum getId() {
+				return DocumentTypeEnum.CE;
 			}
 
 			public String getName() {

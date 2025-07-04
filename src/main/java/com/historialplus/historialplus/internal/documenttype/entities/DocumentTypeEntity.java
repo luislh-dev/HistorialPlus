@@ -5,8 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -20,7 +18,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "type_document")
+@Table(name = "document_type")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,11 +27,11 @@ import java.sql.Timestamp;
 public class DocumentTypeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     @Enumerated(EnumType.STRING)
-    private DocumentTypeEnum name;
+    private DocumentTypeEnum id;
+
+    @Column(name = "name")
+    private String name;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

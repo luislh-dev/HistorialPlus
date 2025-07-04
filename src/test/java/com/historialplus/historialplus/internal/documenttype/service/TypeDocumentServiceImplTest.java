@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.documenttype.service;
 
+import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import com.historialplus.historialplus.internal.documenttype.projection.TypeDocumentProjection;
 import com.historialplus.historialplus.internal.documenttype.repository.TypeDocumentRepository;
 import org.junit.jupiter.api.Test;
@@ -26,8 +27,8 @@ class TypeDocumentServiceImplTest {
 	@Test
 	void findAll() {
 		TypeDocumentProjection projection = new TypeDocumentProjection() {
-			public Integer getId() {
-				return 1;
+			public DocumentTypeEnum getId() {
+				return DocumentTypeEnum.DNI;
 			}
 
 			public String getName() {
@@ -35,8 +36,8 @@ class TypeDocumentServiceImplTest {
 			}
 		};
 		TypeDocumentProjection projection2 = new TypeDocumentProjection() {
-			public Integer getId() {
-				return 2;
+			public DocumentTypeEnum getId() {
+				return DocumentTypeEnum.CE;
 			}
 
 			public String getName() {

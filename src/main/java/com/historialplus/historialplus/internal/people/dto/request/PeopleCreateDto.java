@@ -1,17 +1,20 @@
 package com.historialplus.historialplus.internal.people.dto.request;
 
+import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.sql.Date;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class PeopleCreateDto {
@@ -46,5 +49,5 @@ public class PeopleCreateDto {
     private Integer sexTypeId;
 
     @NotNull(message = "El tipo de documento es obligatorio")
-    private Integer typeDocumentId;
+    private DocumentTypeEnum typeDocumentId;
 }
