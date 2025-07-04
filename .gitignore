@@ -40,3 +40,4 @@ out/
 .vscode/
 /.dockerignore
 /.github/workflows/fly-deploy.yml
+/.github/git-commit-instructions.md
