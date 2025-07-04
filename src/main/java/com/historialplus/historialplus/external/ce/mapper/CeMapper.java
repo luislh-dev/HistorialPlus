@@ -19,7 +19,6 @@ public class CeMapper {
             .documentType(CE)
             .hasExternalSource(Boolean.TRUE)
             .dataSource(PersonalDataSourceEnum.MIGRATION.getDisplayName())
-            .hasExternalSource(Boolean.TRUE)
             .build();
     }
 
