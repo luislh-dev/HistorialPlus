@@ -11,8 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -20,8 +19,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "file_type")
-@Getter
-@Setter
+@Data
 public class FileTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
