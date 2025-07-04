@@ -1,10 +1,8 @@
 package com.historialplus.historialplus.internal.user.dto.request;
 
 import com.historialplus.historialplus.internal.user.dto.BaseUserCreateDto;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class DoctorCreationDto extends BaseUserCreateDto {
 }

@@ -1,14 +1,12 @@
 package com.historialplus.historialplus.internal.record.dto.response;
 
 import com.historialplus.historialplus.internal.recorddetail.dto.response.RecordDetailResponseDto;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 public class RecordResponseDto {
     private UUID recordId;
     private String patientName;

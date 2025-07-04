@@ -1,11 +1,9 @@
 package com.historialplus.historialplus.internal.file.dto.request;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class FilesCreateDto {
     @NotNull(message = "El tipo de archivo es requerido")
     private Integer fileTypeId;

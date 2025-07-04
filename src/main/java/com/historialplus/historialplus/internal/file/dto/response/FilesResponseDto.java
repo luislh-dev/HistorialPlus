@@ -1,10 +1,8 @@
 package com.historialplus.historialplus.internal.file.dto.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class FilesResponseDto {
     private byte[] id;
     private String name;
