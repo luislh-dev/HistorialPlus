@@ -4,9 +4,9 @@ import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.PeopleResponseDto;
+import com.historialplus.historialplus.internal.people.dto.response.PersonBasicDTO;
 import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
 import com.historialplus.historialplus.internal.people.presenters.PeopleRecordPresenter;
-import com.historialplus.historialplus.internal.people.projection.PersonaBasicProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -24,5 +24,5 @@ public interface PeopleService {
 
     Page<PeopleRecordPresenter> findAllWithVisitsStats(String documentNumber, String fullName, Pageable pageable);
 
-    Optional<PersonaBasicProjection> findBasicById(UUID id);
+    Optional<PersonBasicDTO> findBasicById(UUID id);
 }

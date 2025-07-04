@@ -1,5 +1,7 @@
 package com.historialplus.historialplus.internal.people.projection;
 
+import com.historialplus.historialplus.common.constants.SexTypeEnum;
+
 import java.util.UUID;
 
 public interface PersonaBasicProjection {
@@ -20,7 +22,7 @@ public interface PersonaBasicProjection {
     SexTypeProjection getSexType();
 
     interface SexTypeProjection {
-        String getName();
+        SexTypeEnum getName();
     }
 
     DocumentTypeDocument getTypeDocument();

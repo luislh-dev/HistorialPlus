@@ -5,8 +5,8 @@ import com.historialplus.historialplus.common.validators.document.DocumentValid;
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.PeopleResponseDto;
+import com.historialplus.historialplus.internal.people.dto.response.PersonBasicDTO;
 import com.historialplus.historialplus.internal.people.presenters.PeopleRecordPresenter;
-import com.historialplus.historialplus.internal.people.projection.PersonaBasicProjection;
 import com.historialplus.historialplus.internal.people.service.PeopleService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -64,7 +64,7 @@ public class PeopleController {
     }
 
     @GetMapping("findBasicById/{id}")
-    public ResponseEntity<PersonaBasicProjection> findBasicById(@PathVariable UUID id) {
+    public ResponseEntity<PersonBasicDTO> findBasicById(@PathVariable UUID id) {
         return service.findBasicById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
