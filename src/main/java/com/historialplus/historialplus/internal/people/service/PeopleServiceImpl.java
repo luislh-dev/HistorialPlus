@@ -10,11 +10,11 @@ import com.historialplus.historialplus.external.dni.reniec.service.ReniecService
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.PeopleResponseDto;
+import com.historialplus.historialplus.internal.people.dto.response.PersonBasicDTO;
 import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
 import com.historialplus.historialplus.internal.people.mapper.PeopleDtoMapper;
 import com.historialplus.historialplus.internal.people.presenters.PeopleRecordPresenter;
 import com.historialplus.historialplus.internal.people.projection.PeopleRecordProjection;
-import com.historialplus.historialplus.internal.people.projection.PersonaBasicProjection;
 import com.historialplus.historialplus.internal.people.repository.PeopleRepository;
 import com.historialplus.historialplus.internal.record.service.RecordService;
 import lombok.AllArgsConstructor;
@@ -124,7 +124,7 @@ public class PeopleServiceImpl implements PeopleService {
     }
 
     @Override
-    public Optional<PersonaBasicProjection> findBasicById(UUID id) {
-        return repository.findBasicById(id);
+    public Optional<PersonBasicDTO> findBasicById(UUID id) {
+        return repository.findBasicById(id).map(PeopleDtoMapper::toPersonBasicDto);
     }
 }

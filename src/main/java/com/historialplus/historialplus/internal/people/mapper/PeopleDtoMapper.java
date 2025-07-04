@@ -5,7 +5,9 @@ import com.historialplus.historialplus.internal.documenttype.entities.DocumentTy
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.PeopleResponseDto;
+import com.historialplus.historialplus.internal.people.dto.response.PersonBasicDTO;
 import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
+import com.historialplus.historialplus.internal.people.projection.PersonaBasicProjection;
 import com.historialplus.historialplus.internal.sextype.entities.SexTypeEntity;
 
 public class PeopleDtoMapper {
@@ -57,6 +59,20 @@ public class PeopleDtoMapper {
             .dataSource(PersonalDataSourceEnum.INTERNAL.getDisplayName())
             .sexTypeId(peopleEntity.getSexType().getId())
             .birthdate(peopleEntity.getBirthdate())
+            .build();
+    }
+
+    public static PersonBasicDTO toPersonBasicDto(PersonaBasicProjection input) {
+        return PersonBasicDTO.builder()
+            .id(input.getId())
+            .name(input.getName())
+            .paternalSurname(input.getPaternalSurname())
+            .maternalSurname(input.getMaternalSurname())
+            .birthdate(input.getBirthdate())
+            .documentNumber(input.getDocumentNumber())
+            .nationality(input.getNationality())
+            .sexType(input.getSexType().getName().getDisplayName())
+            .documentType(input.getTypeDocument().getName())
             .build();
     }
 }
