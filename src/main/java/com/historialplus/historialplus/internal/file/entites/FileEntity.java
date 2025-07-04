@@ -11,7 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -20,7 +21,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "files")
-@Data
+@Getter
+@Setter
 public class FileEntity {
     @Id
     @GeneratedValue(generator = "UUID")

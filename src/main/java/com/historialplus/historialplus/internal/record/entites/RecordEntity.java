@@ -13,7 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -22,7 +23,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "medical_record")
 public class RecordEntity {
