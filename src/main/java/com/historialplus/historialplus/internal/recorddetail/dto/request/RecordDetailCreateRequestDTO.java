@@ -5,8 +5,6 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -41,8 +39,7 @@ public class RecordDetailCreateRequestDTO {
     @Valid
     private Set<FileDTO> files = new HashSet<>();
 
-    @Getter
-    @Setter
+    @Data
     public static class FileDTO {
         @NotNull(message = "El tipo de archivo es requerido")
         private Integer fileTypeId;
