@@ -22,12 +22,12 @@ public class RecordDetailDtoMapper {
     private RecordDetailDtoMapper() {}
 
     public static RecordDetailResponseDto toResponseDto(RecordDetailEntity detailEntity) {
-        return new RecordDetailResponseDto(
-                detailEntity.getId(),
-                detailEntity.getReason(),
-                detailEntity.getMedicalRecord().getId(),
-                detailEntity.getState().getId()
-        );
+        return RecordDetailResponseDto.builder()
+                .id(detailEntity.getId())
+                .description(detailEntity.getReason())
+                .recordId(detailEntity.getMedicalRecord().getId())
+                .stateId(detailEntity.getState().getId())
+                .build();
     }
 
     // Cambiar la presentacion de los datos de RecordDetailProjection a RecordDetailPresenter
