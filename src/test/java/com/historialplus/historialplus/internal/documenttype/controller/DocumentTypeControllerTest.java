@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.internal.documenttype.controller;
 
 import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
-import com.historialplus.historialplus.internal.documenttype.projection.TypeDocumentProjection;
-import com.historialplus.historialplus.internal.documenttype.service.TypeDocumentService;
+import com.historialplus.historialplus.internal.documenttype.projection.DocumentTypeProjection;
+import com.historialplus.historialplus.internal.documenttype.service.DocumentTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,20 +20,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = TypeDocumentController.class)
-class TypeDocumentControllerTest {
+@WebMvcTest(controllers = DocumentTypeController.class)
+class DocumentTypeControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
 
 	@MockBean
-	private TypeDocumentService service;
+	private DocumentTypeService service;
 
 	@Test
 	@WithMockUser
 	void findAll() throws Exception {
-		List<TypeDocumentProjection> documents = new ArrayList<>();
-		documents.add( new TypeDocumentProjection() {
+		List<DocumentTypeProjection> documents = new ArrayList<>();
+		documents.add( new DocumentTypeProjection() {
 			public DocumentTypeEnum getId() {
 				return DocumentTypeEnum.DNI;
 			}
@@ -42,7 +42,7 @@ class TypeDocumentControllerTest {
 				return "DNI";
 			}
 		});
-		documents.add(new TypeDocumentProjection() {
+		documents.add(new DocumentTypeProjection() {
 			public DocumentTypeEnum getId() {
 				return DocumentTypeEnum.CE;
 			}

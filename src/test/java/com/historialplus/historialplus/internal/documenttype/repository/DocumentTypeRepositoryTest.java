@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.internal.documenttype.repository;
 
 import com.historialplus.historialplus.internal.documenttype.entities.DocumentTypeEntity;
-import com.historialplus.historialplus.internal.documenttype.projection.TypeDocumentProjection;
+import com.historialplus.historialplus.internal.documenttype.projection.DocumentTypeProjection;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @ActiveProfiles("test")
-class TypeDocumentRepositoryTest {
+class DocumentTypeRepositoryTest {
 
 	@Autowired
-	private TypeDocumentRepository repository;
+	private DocumentTypeRepository repository;
 
 	@Test
 	void findAllByOrderByUpdatedAtDesc() {
@@ -38,7 +38,7 @@ class TypeDocumentRepositoryTest {
 		repository.save(entity);
 		repository.save(entity2);
 
-		List<TypeDocumentProjection> documents = repository.findAllByOrderByUpdatedAtDesc();
+		List<DocumentTypeProjection> documents = repository.findAllByOrderByUpdatedAtDesc();
 
 		assertThat(documents).isNotNull();
 		assertEquals(2, documents.size());

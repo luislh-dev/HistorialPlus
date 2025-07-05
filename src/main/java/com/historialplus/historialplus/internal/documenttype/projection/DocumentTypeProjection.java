@@ -2,7 +2,7 @@ package com.historialplus.historialplus.internal.documenttype.projection;
 
 import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
 
-public interface TypeDocumentProjection {
+public interface DocumentTypeProjection {
     DocumentTypeEnum getId();
     String getName();
 }
