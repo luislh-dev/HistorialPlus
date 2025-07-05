@@ -47,9 +47,9 @@ class DocumentTypeServiceImplTest {
 		};
 		given(repository.findAllByOrderByUpdatedAtDesc()).willReturn(List.of(projection, projection2));
 
-		List<DocumentTypeDTO> response = service.findAll();
+		List<DocumentTypeDTO> dtos = service.findAll();
 
-		assertNotNull(response);
-		assertEquals(2, response.size());
+		assertNotNull(dtos);
+		assertEquals(2, dtos.size());
 	}
 }
