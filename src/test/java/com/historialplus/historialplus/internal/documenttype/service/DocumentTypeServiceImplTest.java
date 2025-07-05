@@ -1,6 +1,7 @@
 package com.historialplus.historialplus.internal.documenttype.service;
 
 import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
+import com.historialplus.historialplus.internal.documenttype.dto.DocumentTypeDTO;
 import com.historialplus.historialplus.internal.documenttype.projection.DocumentTypeProjection;
 import com.historialplus.historialplus.internal.documenttype.repository.DocumentTypeRepository;
 import org.junit.jupiter.api.Test;
@@ -46,9 +47,9 @@ class DocumentTypeServiceImplTest {
 		};
 		given(repository.findAllByOrderByUpdatedAtDesc()).willReturn(List.of(projection, projection2));
 
-		List<DocumentTypeProjection> projections = service.findAll();
+		List<DocumentTypeDTO> response = service.findAll();
 
-		assertNotNull(projections);
-		assertEquals(2, projections.size());
+		assertNotNull(response);
+		assertEquals(2, response.size());
 	}
 }

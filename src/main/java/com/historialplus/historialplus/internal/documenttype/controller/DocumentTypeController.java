@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.documenttype.controller;
 
-import com.historialplus.historialplus.internal.documenttype.projection.DocumentTypeProjection;
+import com.historialplus.historialplus.internal.documenttype.dto.DocumentTypeDTO;
 import com.historialplus.historialplus.internal.documenttype.service.DocumentTypeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ public class DocumentTypeController {
     }
 
     @GetMapping
-    public List<DocumentTypeProjection> findAll() {
+    public List<DocumentTypeDTO> findAll() {
         return service.findAll();
     }
 

@@ -1,9 +1,9 @@
 package com.historialplus.historialplus.internal.documenttype.service;
 
-import com.historialplus.historialplus.internal.documenttype.projection.DocumentTypeProjection;
+import com.historialplus.historialplus.internal.documenttype.dto.DocumentTypeDTO;
 
 import java.util.List;
 
 public interface DocumentTypeService {
-    List<DocumentTypeProjection> findAll();
+    List<DocumentTypeDTO> findAll();
 }

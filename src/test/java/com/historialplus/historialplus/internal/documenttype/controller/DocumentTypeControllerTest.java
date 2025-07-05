@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.internal.documenttype.controller;
 
 import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
-import com.historialplus.historialplus.internal.documenttype.projection.DocumentTypeProjection;
+import com.historialplus.historialplus.internal.documenttype.dto.DocumentTypeDTO;
 import com.historialplus.historialplus.internal.documenttype.service.DocumentTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,25 +32,18 @@ class DocumentTypeControllerTest {
 	@Test
 	@WithMockUser
 	void findAll() throws Exception {
-		List<DocumentTypeProjection> documents = new ArrayList<>();
-		documents.add( new DocumentTypeProjection() {
-			public DocumentTypeEnum getId() {
-				return DocumentTypeEnum.DNI;
-			}
-
-			public String getName() {
-				return "DNI";
-			}
-		});
-		documents.add(new DocumentTypeProjection() {
-			public DocumentTypeEnum getId() {
-				return DocumentTypeEnum.CE;
-			}
-
-			public String getName() {
-				return "Carnet de extranjería";
-			}
-		});
+		List<DocumentTypeDTO> documents = new ArrayList<>(List.of());
+		documents.add(DocumentTypeDTO.builder()
+				.id(DocumentTypeEnum.DNI.name())
+				.name(DocumentTypeEnum.DNI.getDisplayName())
+				.build()
+		);
+		documents.add(DocumentTypeDTO.builder()
+				.id(DocumentTypeEnum.CE.name())
+				.name(DocumentTypeEnum.CE.getDisplayName())
+				.build()
+		);
+		
 		given(service.findAll()).willReturn(documents);
 
 		ResultActions response = mvc.perform(get("/api/documentType"));
