@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.internal.user.service;
 
 import com.historialplus.historialplus.auth.service.AuthService;
-import com.historialplus.historialplus.common.constants.StateEnum;
+import com.historialplus.historialplus.common.enums.StateEnum;
 import com.historialplus.historialplus.error.exceptions.NotFoundException;
 import com.historialplus.historialplus.internal.people.service.PeopleService;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;
@@ -33,9 +33,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_ADMIN;
-import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_DOCTOR;
-import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_MANAGEMENT;
+import static com.historialplus.historialplus.common.enums.RoleEnum.ROLE_ADMIN;
+import static com.historialplus.historialplus.common.enums.RoleEnum.ROLE_DOCTOR;
+import static com.historialplus.historialplus.common.enums.RoleEnum.ROLE_MANAGEMENT;
 
 @Service
 @RequiredArgsConstructor

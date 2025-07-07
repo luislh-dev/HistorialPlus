@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.people.repository;
 
-import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
+import com.historialplus.historialplus.common.enums.DocumentTypeEnum;
 import com.historialplus.historialplus.internal.people.entities.PeopleEntity;
 import com.historialplus.historialplus.internal.people.projection.PeopleRecordProjection;
 import com.historialplus.historialplus.internal.people.projection.PersonaBasicProjection;

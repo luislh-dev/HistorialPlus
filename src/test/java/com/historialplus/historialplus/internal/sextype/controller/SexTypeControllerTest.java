@@ -12,8 +12,8 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
-import static com.historialplus.historialplus.common.constants.SexTypeEnum.FEMALE;
-import static com.historialplus.historialplus.common.constants.SexTypeEnum.MALE;
+import static com.historialplus.historialplus.common.enums.SexTypeEnum.FEMALE;
+import static com.historialplus.historialplus.common.enums.SexTypeEnum.MALE;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

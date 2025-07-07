@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.internal.patientallergy.dto.response;
 
-import com.historialplus.historialplus.common.constants.AllergyCategory;
-import com.historialplus.historialplus.common.constants.Severity;
+import com.historialplus.historialplus.common.enums.AllergyCategory;
+import com.historialplus.historialplus.common.enums.Severity;
 import lombok.Builder;
 import lombok.Data;
 

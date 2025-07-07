@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.common.constants;
+package com.historialplus.historialplus.common.enums;
 
 import lombok.Getter;
 

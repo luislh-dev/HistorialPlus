@@ -1,11 +1,11 @@
 package com.historialplus.historialplus.external.ce.mapper;
 
-import com.historialplus.historialplus.common.constants.PersonalDataSourceEnum;
+import com.historialplus.historialplus.common.enums.PersonalDataSourceEnum;
 import com.historialplus.historialplus.external.ce.dto.CeExternalResponseDTO;
 import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 
-import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.CE;
+import static com.historialplus.historialplus.common.enums.DocumentTypeEnum.CE;
 
 public class CeMapper {
     private CeMapper() {}

@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.allergycatalog.service;
 
-import com.historialplus.historialplus.common.constants.StateEnum;
+import com.historialplus.historialplus.common.enums.StateEnum;
 import com.historialplus.historialplus.error.exceptions.ConflictException;
 import com.historialplus.historialplus.error.exceptions.NotFoundException;
 import com.historialplus.historialplus.internal.allergycatalog.dto.request.AllergyCatalogRequestDto;

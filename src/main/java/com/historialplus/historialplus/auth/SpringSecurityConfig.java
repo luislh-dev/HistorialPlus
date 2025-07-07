@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.historialplus.historialplus.auth.filter.JwtAuthenticationFilter;
 import com.historialplus.historialplus.auth.filter.JwtValidationFilter;
 import com.historialplus.historialplus.auth.service.AuthService;
-import com.historialplus.historialplus.common.constants.RoleEnum;
+import com.historialplus.historialplus.common.enums.RoleEnum;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

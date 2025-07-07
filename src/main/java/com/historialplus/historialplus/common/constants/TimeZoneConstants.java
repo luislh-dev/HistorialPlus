@@ -1,4 +1,4 @@
-package com.historialplus.historialplus.common.enums;
+package com.historialplus.historialplus.common.constants;
 
 
 public class TimeZoneConstants {

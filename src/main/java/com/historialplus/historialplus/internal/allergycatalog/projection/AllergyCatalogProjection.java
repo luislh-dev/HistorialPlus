@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.allergycatalog.projection;
 
-import com.historialplus.historialplus.common.constants.AllergyCategory;
+import com.historialplus.historialplus.common.enums.AllergyCategory;
 
 import java.util.UUID;
 

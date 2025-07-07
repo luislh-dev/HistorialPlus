@@ -10,8 +10,8 @@ import org.springframework.test.context.ActiveProfiles;
 import java.sql.Timestamp;
 import java.util.List;
 
-import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.CE;
-import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.DNI;
+import static com.historialplus.historialplus.common.enums.DocumentTypeEnum.CE;
+import static com.historialplus.historialplus.common.enums.DocumentTypeEnum.DNI;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

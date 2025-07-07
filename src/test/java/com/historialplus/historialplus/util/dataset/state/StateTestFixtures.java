@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.util.dataset.state;
 
-import com.historialplus.historialplus.common.constants.StateEnum;
+import com.historialplus.historialplus.common.enums.StateEnum;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 
 import java.util.List;

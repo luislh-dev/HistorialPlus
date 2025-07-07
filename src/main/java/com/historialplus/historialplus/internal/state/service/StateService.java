@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.state.service;
 
-import com.historialplus.historialplus.common.constants.StateEnum;
+import com.historialplus.historialplus.common.enums.StateEnum;
 import com.historialplus.historialplus.internal.state.dto.StateDto;
 import com.historialplus.historialplus.internal.state.entities.StateEntity;
 

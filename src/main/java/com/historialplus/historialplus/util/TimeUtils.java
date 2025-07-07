@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.util;
 
-import com.historialplus.historialplus.common.enums.TimeZoneConstants;
+import com.historialplus.historialplus.common.constants.TimeZoneConstants;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

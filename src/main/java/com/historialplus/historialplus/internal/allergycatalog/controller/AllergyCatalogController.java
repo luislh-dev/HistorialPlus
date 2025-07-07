@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.allergycatalog.controller;
 
-import com.historialplus.historialplus.common.constants.StateEnum;
+import com.historialplus.historialplus.common.enums.StateEnum;
 import com.historialplus.historialplus.internal.allergycatalog.dto.request.AllergyCatalogRequestDto;
 import com.historialplus.historialplus.internal.allergycatalog.dto.response.AllergyCatalogDto;
 import com.historialplus.historialplus.internal.allergycatalog.dto.response.AllergyCatalogPageResponseDTO;

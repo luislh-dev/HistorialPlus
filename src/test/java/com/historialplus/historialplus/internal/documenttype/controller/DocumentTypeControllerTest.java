@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.documenttype.controller;
 
-import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
+import com.historialplus.historialplus.common.enums.DocumentTypeEnum;
 import com.historialplus.historialplus.internal.documenttype.dto.DocumentTypeDTO;
 import com.historialplus.historialplus.internal.documenttype.service.DocumentTypeService;
 import org.junit.jupiter.api.Test;

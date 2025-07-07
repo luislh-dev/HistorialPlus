@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.recorddetail.projection;
 
-import com.historialplus.historialplus.common.constants.SexTypeEnum;
+import com.historialplus.historialplus.common.enums.SexTypeEnum;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

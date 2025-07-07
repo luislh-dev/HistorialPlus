@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.allergycatalog.dto.request;
 
-import com.historialplus.historialplus.common.constants.AllergyCategory;
+import com.historialplus.historialplus.common.enums.AllergyCategory;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

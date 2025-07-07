@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.sextype.entities;
 
-import com.historialplus.historialplus.common.constants.SexTypeEnum;
+import com.historialplus.historialplus.common.enums.SexTypeEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

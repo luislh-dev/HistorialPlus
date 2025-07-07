@@ -1,10 +1,10 @@
 package com.historialplus.historialplus.external.dni.reniec.mapper;
 
-import com.historialplus.historialplus.common.constants.PersonalDataSourceEnum;
+import com.historialplus.historialplus.common.enums.PersonalDataSourceEnum;
 import com.historialplus.historialplus.external.dni.reniec.dto.ReniecResponseDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;
 
-import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.DNI;
+import static com.historialplus.historialplus.common.enums.DocumentTypeEnum.DNI;
 
 public class ReniecMapper {
     private ReniecMapper() {}

@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.people.service;
 
-import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
+import com.historialplus.historialplus.common.enums.DocumentTypeEnum;
 import com.historialplus.historialplus.external.ce.dto.CeResponseDto;
 import com.historialplus.historialplus.external.ce.mapper.CeMapper;
 import com.historialplus.historialplus.external.ce.service.CeService;
@@ -28,8 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.CE;
-import static com.historialplus.historialplus.common.constants.DocumentTypeEnum.DNI;
+import static com.historialplus.historialplus.common.enums.DocumentTypeEnum.CE;
+import static com.historialplus.historialplus.common.enums.DocumentTypeEnum.DNI;
 
 @Service
 @AllArgsConstructor

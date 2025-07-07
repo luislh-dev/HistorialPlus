@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.sextype.mapper;
 
-import com.historialplus.historialplus.common.constants.SexTypeEnum;
+import com.historialplus.historialplus.common.enums.SexTypeEnum;
 import com.historialplus.historialplus.internal.sextype.dto.SexTypeResponseDto;
 import com.historialplus.historialplus.internal.sextype.entities.SexTypeEntity;
 import org.junit.jupiter.api.Test;

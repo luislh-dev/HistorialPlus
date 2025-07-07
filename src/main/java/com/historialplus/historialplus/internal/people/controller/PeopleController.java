@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.people.controller;
 
-import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
+import com.historialplus.historialplus.common.enums.DocumentTypeEnum;
 import com.historialplus.historialplus.common.validators.document.DocumentValid;
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;

@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.filetype.repository;
 
-import com.historialplus.historialplus.common.constants.FileTypeEnum;
+import com.historialplus.historialplus.common.enums.FileTypeEnum;
 import com.historialplus.historialplus.internal.filetype.entities.FileTypeEntity;
 import com.historialplus.historialplus.internal.filetype.projection.FileTypeProjection;
 import org.junit.jupiter.api.Test;

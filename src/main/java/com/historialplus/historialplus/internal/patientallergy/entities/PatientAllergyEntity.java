@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.patientallergy.entities;
 
-import com.historialplus.historialplus.common.constants.Severity;
+import com.historialplus.historialplus.common.enums.Severity;
 import com.historialplus.historialplus.internal.allergycatalog.entities.AllergyCatalogEntity;
 import com.historialplus.historialplus.internal.record.entites.RecordEntity;
 import jakarta.persistence.Column;

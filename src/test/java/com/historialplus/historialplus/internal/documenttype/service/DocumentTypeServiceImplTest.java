@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.documenttype.service;
 
-import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
+import com.historialplus.historialplus.common.enums.DocumentTypeEnum;
 import com.historialplus.historialplus.internal.documenttype.dto.DocumentTypeDTO;
 import com.historialplus.historialplus.internal.documenttype.projection.DocumentTypeProjection;
 import com.historialplus.historialplus.internal.documenttype.repository.DocumentTypeRepository;

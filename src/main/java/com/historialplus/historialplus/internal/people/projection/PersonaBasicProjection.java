@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.people.projection;
 
-import com.historialplus.historialplus.common.constants.SexTypeEnum;
+import com.historialplus.historialplus.common.enums.SexTypeEnum;
 
 import java.util.UUID;
 
