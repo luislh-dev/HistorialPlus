@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.allergycatalog.service;
 
+import com.historialplus.historialplus.common.enums.AllergyCategory;
 import com.historialplus.historialplus.common.enums.StateEnum;
 import com.historialplus.historialplus.error.exceptions.ConflictException;
 import com.historialplus.historialplus.error.exceptions.NotFoundException;
@@ -105,10 +106,12 @@ public class AllergyCatalogServiceImpl implements AllergyCatalogService{
         return allergyCatalogMapper.toDto(savedEntity);
     }
 
-    @Override public Page<AllergyCatalogPageResponseDTO> findAllBy(String name, StateEnum status, Pageable pageable) {
+    @Override
+    public Page<AllergyCatalogPageResponseDTO> findAllBy(String name, String code, StateEnum status, AllergyCategory category, Pageable pageable) {
         Boolean isActive = status == null ? null : status == StateEnum.ACTIVE;
 
-        Page<AllergyCatalogProjection> response = allergyCatalogRepository.findAllWithProjection(name, isActive, pageable);
+        Page<AllergyCatalogProjection> response = allergyCatalogRepository
+            .findAllWithProjection(name,code, isActive,category, pageable);
         return response.map(Mapper::toAllergyCatalogPageResponseDTO);
     }
 

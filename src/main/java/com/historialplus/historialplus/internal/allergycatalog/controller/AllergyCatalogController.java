@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.allergycatalog.controller;
 
+import com.historialplus.historialplus.common.enums.AllergyCategory;
 import com.historialplus.historialplus.common.enums.StateEnum;
 import com.historialplus.historialplus.internal.allergycatalog.dto.request.AllergyCatalogRequestDto;
 import com.historialplus.historialplus.internal.allergycatalog.dto.response.AllergyCatalogDto;
@@ -63,8 +64,10 @@ public class AllergyCatalogController {
     @GetMapping("/findAllBy")
     public ResponseEntity<Page<AllergyCatalogPageResponseDTO>> findAllBy(
             @RequestParam(required = false) String name,
+            @RequestParam(required = false) String code,
             @RequestParam(required = false) StateEnum status,
+            @RequestParam(required = false) AllergyCategory category,
             Pageable pageable) {
-        return ResponseEntity.ok(allergyCatalogService.findAllBy(name, status, pageable));
+        return ResponseEntity.ok(allergyCatalogService.findAllBy(name,code, status,category, pageable));
     }
 }

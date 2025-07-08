@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.allergycatalog.service;
 
+import com.historialplus.historialplus.common.enums.AllergyCategory;
 import com.historialplus.historialplus.common.enums.StateEnum;
 import com.historialplus.historialplus.internal.allergycatalog.dto.request.AllergyCatalogRequestDto;
 import com.historialplus.historialplus.internal.allergycatalog.dto.response.AllergyCatalogDto;
@@ -16,5 +17,5 @@ public interface AllergyCatalogService {
     AllergyCatalogDto update(UUID id, AllergyCatalogRequestDto dto);
     AllergyCatalogDto deactivate(UUID id);
     AllergyCatalogDto reactivate(UUID id);
-    Page<AllergyCatalogPageResponseDTO> findAllBy(String name, StateEnum status, Pageable pageable);
+    Page<AllergyCatalogPageResponseDTO> findAllBy(String name,String code, StateEnum status, AllergyCategory category, Pageable pageable);
 }

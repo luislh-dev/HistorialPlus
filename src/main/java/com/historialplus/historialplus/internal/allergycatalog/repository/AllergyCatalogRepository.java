@@ -1,5 +1,6 @@
 package com.historialplus.historialplus.internal.allergycatalog.repository;
 
+import com.historialplus.historialplus.common.enums.AllergyCategory;
 import com.historialplus.historialplus.internal.allergycatalog.entities.AllergyCatalogEntity;
 import com.historialplus.historialplus.internal.allergycatalog.projection.AllergyCatalogProjection;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,8 @@ public interface AllergyCatalogRepository extends JpaRepository<AllergyCatalogEn
         SELECT a.id AS id, a.code AS code, a.name AS name, a.category AS category, a.isActive AS isActive FROM AllergyCatalogEntity a
         WHERE (:name IS NULL OR LOWER(a.name) LIKE LOWER(CONCAT('%', :name, '%')))
         AND (:isActive IS NULL OR a.isActive = :isActive)
+        AND (:category IS NULL OR a.category = :category)
+        AND (:code IS NULL OR LOWER(a.code) LIKE LOWER(CONCAT('%', :code, '%')))
     """)
-    Page<AllergyCatalogProjection> findAllWithProjection(String name, Boolean isActive, Pageable pageable);
+    Page<AllergyCatalogProjection> findAllWithProjection(String name,String code, Boolean isActive, AllergyCategory category, Pageable pageable);
 }
