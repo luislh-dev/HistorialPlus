@@ -10,10 +10,10 @@ public class TimeUtils {
 	private TimeUtils() {}
 
 	public static LocalDateTime getCurrentTime() {
- 		return LocalDateTime.now().atZone(ZoneId.of(TimeZoneConstants.LIMA)).toLocalDateTime();
+ 		return ZonedDateTime.now(ZoneId.of(TimeZoneConstants.LIMA)).toLocalDateTime();
 	}
 
 	public static Instant getCurrentInstant() {
-		return Instant.now().atZone(ZoneId.of(TimeZoneConstants.LIMA)).toInstant();
+		return ZonedDateTime.now(ZoneId.of(TimeZoneConstants.LIMA)).toInstant();
 	}
 }
