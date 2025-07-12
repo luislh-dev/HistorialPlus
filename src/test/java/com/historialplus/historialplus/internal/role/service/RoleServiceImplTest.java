@@ -13,8 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_ADMIN;
-import static com.historialplus.historialplus.common.constants.RoleEnum.ROLE_MANAGEMENT;
+import static com.historialplus.historialplus.common.enums.RoleEnum.ROLE_ADMIN;
+import static com.historialplus.historialplus.common.enums.RoleEnum.ROLE_MANAGEMENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;

@@ -2,15 +2,11 @@ package com.historialplus.historialplus.audit.context;
 
 import com.historialplus.historialplus.audit.util.IpUtils;
 import com.historialplus.historialplus.auth.service.AuthService;
+import com.historialplus.historialplus.util.TimeUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerMapping;
-
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-
-import static com.historialplus.historialplus.common.enums.TimeZoneEnum.LIMA;
 
 @Component
 @RequiredArgsConstructor
@@ -25,7 +21,7 @@ public class RequestContextExtractorImpl implements RequestContextExtractor{
 			.method(request.getMethod())
 			.endpoint(getEndpoint())
 			.ipAddress(IpUtils.extractClientIp(request))
-			.timestamp(ZonedDateTime.now(ZoneId.of(LIMA.getZoneId())).toInstant())
+			.timestamp(TimeUtils.getCurrentInstant())
 			.build();
 	}
 

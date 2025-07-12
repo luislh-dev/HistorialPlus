@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.allergycatalog.entities;
 
-import com.historialplus.historialplus.common.constants.AllergyCategory;
+import com.historialplus.historialplus.common.enums.AllergyCategory;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

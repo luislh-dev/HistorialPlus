@@ -1,8 +1,8 @@
 package com.historialplus.historialplus.internal.documenttype.controller;
 
-import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
-import com.historialplus.historialplus.internal.documenttype.projection.TypeDocumentProjection;
-import com.historialplus.historialplus.internal.documenttype.service.TypeDocumentService;
+import com.historialplus.historialplus.common.enums.DocumentTypeEnum;
+import com.historialplus.historialplus.internal.documenttype.dto.DocumentTypeDTO;
+import com.historialplus.historialplus.internal.documenttype.service.DocumentTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,37 +20,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = TypeDocumentController.class)
-class TypeDocumentControllerTest {
+@WebMvcTest(controllers = DocumentTypeController.class)
+class DocumentTypeControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
 
 	@MockBean
-	private TypeDocumentService service;
+	private DocumentTypeService service;
 
 	@Test
 	@WithMockUser
 	void findAll() throws Exception {
-		List<TypeDocumentProjection> documents = new ArrayList<>();
-		documents.add( new TypeDocumentProjection() {
-			public DocumentTypeEnum getId() {
-				return DocumentTypeEnum.DNI;
-			}
-
-			public String getName() {
-				return "DNI";
-			}
-		});
-		documents.add(new TypeDocumentProjection() {
-			public DocumentTypeEnum getId() {
-				return DocumentTypeEnum.CE;
-			}
-
-			public String getName() {
-				return "Carnet de extranjería";
-			}
-		});
+		List<DocumentTypeDTO> documents = new ArrayList<>(List.of());
+		documents.add(DocumentTypeDTO.builder()
+				.id(DocumentTypeEnum.DNI.name())
+				.name(DocumentTypeEnum.DNI.getDisplayName())
+				.build()
+		);
+		documents.add(DocumentTypeDTO.builder()
+				.id(DocumentTypeEnum.CE.name())
+				.name(DocumentTypeEnum.CE.getDisplayName())
+				.build()
+		);
+		
 		given(service.findAll()).willReturn(documents);
 
 		ResultActions response = mvc.perform(get("/api/documentType"));

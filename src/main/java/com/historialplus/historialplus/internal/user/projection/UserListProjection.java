@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.user.projection;
 
-import com.historialplus.historialplus.common.constants.StateEnum;
+import com.historialplus.historialplus.common.enums.StateEnum;
 
 import java.util.UUID;
 

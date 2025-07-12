@@ -1,8 +1,9 @@
 package com.historialplus.historialplus.internal.documenttype.service;
 
-import com.historialplus.historialplus.common.constants.DocumentTypeEnum;
-import com.historialplus.historialplus.internal.documenttype.projection.TypeDocumentProjection;
-import com.historialplus.historialplus.internal.documenttype.repository.TypeDocumentRepository;
+import com.historialplus.historialplus.common.enums.DocumentTypeEnum;
+import com.historialplus.historialplus.internal.documenttype.dto.DocumentTypeDTO;
+import com.historialplus.historialplus.internal.documenttype.projection.DocumentTypeProjection;
+import com.historialplus.historialplus.internal.documenttype.repository.DocumentTypeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,17 +17,17 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-class TypeDocumentServiceImplTest {
+class DocumentTypeServiceImplTest {
 
 	@Mock
-	private TypeDocumentRepository repository;
+	private DocumentTypeRepository repository;
 
 	@InjectMocks
-	private TypeDocumentServiceImpl service;
+	private DocumentTypeServiceImpl service;
 
 	@Test
 	void findAll() {
-		TypeDocumentProjection projection = new TypeDocumentProjection() {
+		DocumentTypeProjection projection = new DocumentTypeProjection() {
 			public DocumentTypeEnum getId() {
 				return DocumentTypeEnum.DNI;
 			}
@@ -35,7 +36,7 @@ class TypeDocumentServiceImplTest {
 				return "DNI";
 			}
 		};
-		TypeDocumentProjection projection2 = new TypeDocumentProjection() {
+		DocumentTypeProjection projection2 = new DocumentTypeProjection() {
 			public DocumentTypeEnum getId() {
 				return DocumentTypeEnum.CE;
 			}
@@ -46,9 +47,9 @@ class TypeDocumentServiceImplTest {
 		};
 		given(repository.findAllByOrderByUpdatedAtDesc()).willReturn(List.of(projection, projection2));
 
-		List<TypeDocumentProjection> projections = service.findAll();
+		List<DocumentTypeDTO> dtos = service.findAll();
 
-		assertNotNull(projections);
-		assertEquals(2, projections.size());
+		assertNotNull(dtos);
+		assertEquals(2, dtos.size());
 	}
 }

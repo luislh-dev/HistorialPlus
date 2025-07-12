@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
-import static com.historialplus.historialplus.common.constants.SexTypeEnum.MALE;
+import static com.historialplus.historialplus.common.enums.SexTypeEnum.MALE;
 
 @Component
 public class RecordDetailDtoMapper {

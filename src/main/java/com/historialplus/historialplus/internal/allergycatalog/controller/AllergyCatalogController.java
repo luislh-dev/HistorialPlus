@@ -1,7 +1,10 @@
 package com.historialplus.historialplus.internal.allergycatalog.controller;
 
+import com.historialplus.historialplus.common.enums.AllergyCategory;
+import com.historialplus.historialplus.common.enums.StateEnum;
 import com.historialplus.historialplus.internal.allergycatalog.dto.request.AllergyCatalogRequestDto;
 import com.historialplus.historialplus.internal.allergycatalog.dto.response.AllergyCatalogDto;
+import com.historialplus.historialplus.internal.allergycatalog.dto.response.AllergyCatalogPageResponseDTO;
 import com.historialplus.historialplus.internal.allergycatalog.service.AllergyCatalogService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
@@ -55,5 +59,15 @@ public class AllergyCatalogController {
     @PatchMapping("/{id}/reactivate")
     public ResponseEntity<AllergyCatalogDto> reactivate(@PathVariable UUID id) {
         return ResponseEntity.ok(allergyCatalogService.reactivate(id));
+    }
+
+    @GetMapping("/findAllBy")
+    public ResponseEntity<Page<AllergyCatalogPageResponseDTO>> findAllBy(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String code,
+            @RequestParam(required = false) StateEnum status,
+            @RequestParam(required = false) AllergyCategory category,
+            Pageable pageable) {
+        return ResponseEntity.ok(allergyCatalogService.findAllBy(name,code, status,category, pageable));
     }
 }

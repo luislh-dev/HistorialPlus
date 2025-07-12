@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.patientallergy.dto.request;
 
-import com.historialplus.historialplus.common.constants.Severity;
+import com.historialplus.historialplus.common.enums.Severity;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.state.entities;
 
-import com.historialplus.historialplus.common.constants.StateEnum;
+import com.historialplus.historialplus.common.enums.StateEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

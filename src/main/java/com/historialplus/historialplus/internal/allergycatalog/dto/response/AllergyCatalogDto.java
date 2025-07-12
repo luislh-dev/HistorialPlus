@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.allergycatalog.dto.response;
 
-import com.historialplus.historialplus.common.constants.AllergyCategory;
+import com.historialplus.historialplus.common.enums.AllergyCategory;
 import lombok.Builder;
 import lombok.Data;
 

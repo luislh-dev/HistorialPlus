@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.hospital.service;
 
-import com.historialplus.historialplus.common.constants.StateEnum;
+import com.historialplus.historialplus.common.enums.StateEnum;
 import com.historialplus.historialplus.internal.hospital.dto.request.HospitalCreateDto;
 import com.historialplus.historialplus.internal.hospital.dto.request.HospitalUpdateDto;
 import com.historialplus.historialplus.internal.hospital.dto.response.HospitalFindByResponseDto;

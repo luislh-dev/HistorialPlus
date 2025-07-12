@@ -1,7 +1,7 @@
 package com.historialplus.historialplus.internal.role.entites;
 
 
-import com.historialplus.historialplus.common.constants.RoleEnum;
+import com.historialplus.historialplus.common.enums.RoleEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

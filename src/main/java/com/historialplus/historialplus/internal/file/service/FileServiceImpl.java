@@ -1,9 +1,13 @@
 package com.historialplus.historialplus.internal.file.service;
 
+import com.historialplus.historialplus.error.exceptions.NotFoundException;
+import com.historialplus.historialplus.internal.file.dto.request.FilesCreateDto;
 import com.historialplus.historialplus.internal.file.dto.response.FilesResponseDto;
 import com.historialplus.historialplus.internal.file.entites.FileEntity;
 import com.historialplus.historialplus.internal.file.mapper.FilesDtoMapper;
 import com.historialplus.historialplus.internal.file.repository.FileRepository;
+import com.historialplus.historialplus.internal.recorddetail.entites.RecordDetailEntity;
+import com.historialplus.historialplus.internal.recorddetail.service.RecordDetailService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class FileServiceImpl implements FileService {
 
+    private final RecordDetailService recordDetailService;
     private final FileRepository fileRepository;
 
     @Override
@@ -30,9 +35,13 @@ public class FileServiceImpl implements FileService {
                 .map(FilesDtoMapper::toResponseDto);
     }
 
-    @Override
-    public FileEntity save(FileEntity fileEntity) {
-        return fileRepository.save(fileEntity);
+    @Override public FilesResponseDto save(FilesCreateDto dto) {
+        RecordDetailEntity parentDetail = recordDetailService.findEntityById(dto.getRecordDetailId())
+            .orElseThrow(() -> new NotFoundException("Invalid record detail ID"));
+
+        FileEntity fileEntity = FilesDtoMapper.toEntity(dto, parentDetail);
+        FileEntity savedFile = fileRepository.save(fileEntity);
+        return FilesDtoMapper.toResponseDto(savedFile);
     }
 
 }

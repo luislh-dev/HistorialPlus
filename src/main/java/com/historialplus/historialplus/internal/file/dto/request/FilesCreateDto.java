@@ -3,8 +3,13 @@ package com.historialplus.historialplus.internal.file.dto.request;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class FilesCreateDto {
+    @NotNull(message = "El ID del detalle del registro es requerido")
+    private UUID recordDetailId;
+
     @NotNull(message = "El tipo de archivo es requerido")
     private Integer fileTypeId;
 
@@ -14,9 +19,4 @@ public class FilesCreateDto {
     @NotNull(message = "La URL del archivo es requerida")
     private String url;
 
-    public FilesCreateDto(Integer fileTypeId, String name, String url) {
-        this.fileTypeId = fileTypeId;
-        this.name = name;
-        this.url = url;
-    }
 }

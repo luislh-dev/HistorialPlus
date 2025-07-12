@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.people.mapper;
 
-import com.historialplus.historialplus.common.constants.PersonalDataSourceEnum;
+import com.historialplus.historialplus.common.enums.PersonalDataSourceEnum;
 import com.historialplus.historialplus.internal.documenttype.entities.DocumentTypeEntity;
 import com.historialplus.historialplus.internal.people.dto.request.PeopleCreateDto;
 import com.historialplus.historialplus.internal.people.dto.response.MinimalPeopleResponseDto;

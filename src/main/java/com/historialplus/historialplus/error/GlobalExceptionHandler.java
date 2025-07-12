@@ -20,6 +20,10 @@ import java.util.List;
 import java.util.Map;
 
 import static com.historialplus.historialplus.error.constants.ConstraintMappings.GET_CONSTRAINT_MAPPINGS;
+import static com.historialplus.historialplus.error.constants.ErrorCodes.DATA_INTEGRITY_VIOLATION;
+import static com.historialplus.historialplus.error.constants.ErrorCodes.RESOURCE_CONFLICT;
+import static com.historialplus.historialplus.error.constants.ErrorCodes.RESOURCE_NOT_FOUND;
+import static com.historialplus.historialplus.error.constants.ErrorCodes.VALIDATION_ERROR;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -45,7 +49,7 @@ public class GlobalExceptionHandler {
             .toList();
 
         ApiError response = ApiError.builder()
-            .code("VALIDATION_ERROR")
+            .code(VALIDATION_ERROR)
             .message("Validación fallida")
             .timestamp(LocalDateTime.now())
             .details(details)
@@ -71,7 +75,7 @@ public class GlobalExceptionHandler {
         }
 
         ApiError apiError = ApiError.builder()
-            .code("DATA_INTEGRITY_VIOLATION")
+            .code(DATA_INTEGRITY_VIOLATION)
             .message("Error de integridad de datos")
             .timestamp(LocalDateTime.now())
             .details(Collections.singletonList(errorDetail))
@@ -83,7 +87,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ApiError> handleNotFoundException(NotFoundException ex) {
         ApiError apiError = ApiError.builder()
-                .code("RESOURCE_NOT_FOUND")
+                .code(RESOURCE_NOT_FOUND)
                 .message(ex.getMessage())
                 .timestamp(LocalDateTime.now())
                 .details(Collections.emptyList())
@@ -99,7 +103,7 @@ public class GlobalExceptionHandler {
                 .build();
 
         ApiError apiError = ApiError.builder()
-                .code("RESOURCE_CONFLICT")
+                .code(RESOURCE_CONFLICT)
                 .message("Conflicto de recurso")
                 .timestamp(LocalDateTime.now())
                 .details(Collections.singletonList(detail))

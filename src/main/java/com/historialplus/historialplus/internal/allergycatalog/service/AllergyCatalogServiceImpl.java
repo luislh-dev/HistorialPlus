@@ -1,11 +1,16 @@
 package com.historialplus.historialplus.internal.allergycatalog.service;
 
+import com.historialplus.historialplus.common.enums.AllergyCategory;
+import com.historialplus.historialplus.common.enums.StateEnum;
 import com.historialplus.historialplus.error.exceptions.ConflictException;
 import com.historialplus.historialplus.error.exceptions.NotFoundException;
 import com.historialplus.historialplus.internal.allergycatalog.dto.request.AllergyCatalogRequestDto;
 import com.historialplus.historialplus.internal.allergycatalog.dto.response.AllergyCatalogDto;
+import com.historialplus.historialplus.internal.allergycatalog.dto.response.AllergyCatalogPageResponseDTO;
 import com.historialplus.historialplus.internal.allergycatalog.entities.AllergyCatalogEntity;
 import com.historialplus.historialplus.internal.allergycatalog.mapper.AllergyCatalogMapper;
+import com.historialplus.historialplus.internal.allergycatalog.mapper.Mapper;
+import com.historialplus.historialplus.internal.allergycatalog.projection.AllergyCatalogProjection;
 import com.historialplus.historialplus.internal.allergycatalog.repository.AllergyCatalogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -99,6 +104,15 @@ public class AllergyCatalogServiceImpl implements AllergyCatalogService{
         entity.setIsActive(true);
         AllergyCatalogEntity savedEntity = allergyCatalogRepository.save(entity);
         return allergyCatalogMapper.toDto(savedEntity);
+    }
+
+    @Override
+    public Page<AllergyCatalogPageResponseDTO> findAllBy(String name, String code, StateEnum status, AllergyCategory category, Pageable pageable) {
+        Boolean isActive = status == null ? null : status == StateEnum.ACTIVE;
+
+        Page<AllergyCatalogProjection> response = allergyCatalogRepository
+            .findAllWithProjection(name,code, isActive,category, pageable);
+        return response.map(Mapper::toAllergyCatalogPageResponseDTO);
     }
 
     private NotFoundException allergyNotFoundException(UUID id) {

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.historialplus.historialplus.auth.filter.JwtAuthenticationFilter;
 import com.historialplus.historialplus.auth.filter.JwtValidationFilter;
 import com.historialplus.historialplus.auth.service.AuthService;
-import com.historialplus.historialplus.common.constants.RoleEnum;
+import com.historialplus.historialplus.common.enums.RoleEnum;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -29,18 +29,6 @@ import java.util.List;
 
 @Configuration
 public class SpringSecurityConfig {
-
-    // --- CONSTANTES PARA LAS RUTAS ---
-    private static final String ALLERGY_CATALOG_BASE_URL = "/api/allergy-catalog";
-    private static final String ALLERGY_CATALOG_BY_ID_URL = "/api/allergy-catalog/{id}";
-    private static final String ALLERGY_CATALOG_DEACTIVATE_URL = "/api/allergy-catalog/{id}/deactivate";
-    private static final String ALLERGY_CATALOG_REACTIVATE_URL = "/api/allergy-catalog/{id}/reactivate";
-
-    private static final String PATIENT_ALLERGIES_BASE_URL = "/api/patient-allergies";
-    private static final String PATIENT_ALLERGIES_BY_ID_URL = "/api/patient-allergies/{id}";
-    private static final String PATIENT_ALLERGIES_BY_RECORD_URL = "/api/patient-allergies/by-record/{recordId}";
-    private static final String PATIENT_ALLERGIES_DEACTIVATE_URL = "/api/patient-allergies/{id}/deactivate";
-    private static final String PATIENT_ALLERGIES_REACTIVATE_URL = "/api/patient-allergies/{id}/reactivate";
 
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -94,18 +82,18 @@ public class SpringSecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/api/files").permitAll()
                     .requestMatchers(HttpMethod.DELETE, "/api/hospitals/{id}").hasRole(RoleEnum.admin())
                     // Catálogo de Alergias
-                    .requestMatchers(HttpMethod.POST, ALLERGY_CATALOG_BASE_URL).permitAll()
-                    .requestMatchers(HttpMethod.GET, ALLERGY_CATALOG_BASE_URL).permitAll()
-                    .requestMatchers(HttpMethod.GET, ALLERGY_CATALOG_BY_ID_URL).permitAll()
-                    .requestMatchers(HttpMethod.PUT, ALLERGY_CATALOG_BY_ID_URL).permitAll()
-                    .requestMatchers(HttpMethod.PATCH, ALLERGY_CATALOG_DEACTIVATE_URL).permitAll()
-                    .requestMatchers(HttpMethod.PATCH, ALLERGY_CATALOG_REACTIVATE_URL).permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/allergy-catalog").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/allergy-catalog").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/allergy-catalog/{id}").permitAll()
+                    .requestMatchers(HttpMethod.PUT, "/api/allergy-catalog/{id}").permitAll()
+                    .requestMatchers(HttpMethod.PATCH, "/api/allergy-catalog/{id}/deactivate").permitAll()
+                    .requestMatchers(HttpMethod.PATCH, "/api/allergy-catalog/{id}/reactivate").permitAll()
                     //Alergias del Paciente
-                    .requestMatchers(HttpMethod.POST, PATIENT_ALLERGIES_BASE_URL).permitAll()
-                    .requestMatchers(HttpMethod.GET, PATIENT_ALLERGIES_BY_RECORD_URL).permitAll()
-                    .requestMatchers(HttpMethod.PUT, PATIENT_ALLERGIES_BY_ID_URL).permitAll()
-                    .requestMatchers(HttpMethod.PATCH, PATIENT_ALLERGIES_DEACTIVATE_URL).permitAll()
-                    .requestMatchers(HttpMethod.PATCH, PATIENT_ALLERGIES_REACTIVATE_URL).permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/patient-allergies").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/patient-allergies/by-record/{recordId}").permitAll()
+                    .requestMatchers(HttpMethod.PUT, "/api/patient-allergies/{id}").permitAll()
+                    .requestMatchers(HttpMethod.PATCH, "/api/patient-allergies/{id}/deactivate").permitAll()
+                    .requestMatchers(HttpMethod.PATCH, "/api/patient-allergies/{id}/reactivate").permitAll()
                     .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

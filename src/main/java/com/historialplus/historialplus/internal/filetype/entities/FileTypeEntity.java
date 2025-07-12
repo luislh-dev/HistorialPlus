@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.filetype.entities;
 
-import com.historialplus.historialplus.common.constants.FileTypeEnum;
+import com.historialplus.historialplus.common.enums.FileTypeEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

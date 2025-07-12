@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.file.mapper;
 
-import com.historialplus.historialplus.common.constants.FileTypeEnum;
+import com.historialplus.historialplus.common.enums.FileTypeEnum;
 import com.historialplus.historialplus.internal.file.presenter.FileDetailPresenter;
 import com.historialplus.historialplus.internal.file.projection.FileBasicProjection;
 

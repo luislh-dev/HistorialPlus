@@ -3,9 +3,9 @@ package com.historialplus.historialplus.auth.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.historialplus.historialplus.auth.dto.LoginRequestDTO;
 import com.historialplus.historialplus.auth.service.AuthService;
-import com.historialplus.historialplus.common.enums.TimeZoneEnum;
 import com.historialplus.historialplus.error.dto.ApiError;
 import com.historialplus.historialplus.error.dto.ApiErrorDetail;
+import com.historialplus.historialplus.util.TimeUtils;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,8 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -104,7 +102,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ApiError apiError = ApiError.builder()
             .code("AUTHENTICATION_FAILED")
             .message("Usuario o Contraseña incorrectos")
-            .timestamp(LocalDateTime.now().atZone(ZoneId.of(TimeZoneEnum.LIMA.getZoneId())).toLocalDateTime())
+            .timestamp(TimeUtils.getCurrentTime())
             .details(List.of(
                 ApiErrorDetail.builder()
                     .field(SPRING_SECURITY_FORM_USERNAME_KEY)

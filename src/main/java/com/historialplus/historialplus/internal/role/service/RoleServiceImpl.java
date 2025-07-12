@@ -1,6 +1,6 @@
 package com.historialplus.historialplus.internal.role.service;
 
-import com.historialplus.historialplus.common.constants.RoleEnum;
+import com.historialplus.historialplus.common.enums.RoleEnum;
 import com.historialplus.historialplus.internal.role.dto.RoleDto;
 import com.historialplus.historialplus.internal.role.entites.RoleEntity;
 import com.historialplus.historialplus.internal.role.mapper.RoleMapper;
