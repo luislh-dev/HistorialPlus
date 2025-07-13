@@ -62,3 +62,6 @@ El proyecto incluye hooks de Git para asegurar la calidad del código. **Se conf
 git config core.hooksPath githooks
 chmod +x githooks/*
 ```
+
+## Análisis de código con SonarQube y SonarCloud 🔍
+Este proyecto está integrado con **SonarCloud** para asegurar la calidad del código. También puedes usar **SonarQube for IDE** en tu IDE en modo conectado.
