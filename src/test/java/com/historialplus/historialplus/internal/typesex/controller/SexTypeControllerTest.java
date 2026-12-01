@@ -31,7 +31,7 @@ class SexTypeControllerTest {
 
 	@Test
 	@WithMockUser
-	void getAllSexTypesTest() throws Exception {
+	void findAllTest() throws Exception {
 		List<SexTypeResponseDto> dtos = List.of(
 			SexTypeResponseDto.builder().id(1).name(MALE.getDisplayName()).build(),
 			SexTypeResponseDto.builder().id(2).name(FEMALE.getDisplayName()).build()
